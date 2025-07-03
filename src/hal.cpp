@@ -35,4 +35,12 @@ esp_err_t deinit()
     return ESP_OK;
 }
 
+void reset()
+{
+    for (std::size_t i = 0; i < device_count; ++i) {
+        devices[i] = nullptr;
+    }
+    device_count = 0;
+}
+
 } // namespace hal

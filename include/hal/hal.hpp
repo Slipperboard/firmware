@@ -19,6 +19,7 @@ public:
 esp_err_t register_device(Device* dev);
 esp_err_t init();
 esp_err_t deinit();
+void reset();
 
 } // namespace hal
 
