@@ -9,6 +9,12 @@ This project is the starting point for building a Flipper Zero–compatible firm
 - `lib/` – Optional external libraries.
 - `platformio.ini` – PlatformIO configuration.
 
+## Hardware Abstraction Layer
+
+The `include/hal/hal.h` header defines a simple interface any board device can
+implement. Devices register themselves and are initialized via `hal_init()`,
+allowing common management of sensors, buttons, or other peripherals.
+
 ## Entry Point
 
 The firmware starts from an `app_main()` function instead of Arduino's `setup()` and `loop()` routines. The main loop simply prints a message every second using standard ESP-IDF APIs.
