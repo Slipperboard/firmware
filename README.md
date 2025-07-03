@@ -13,6 +13,14 @@ This project is the starting point for building a Flipper Zero–compatible firm
 
 The firmware starts from an `app_main()` function instead of Arduino's `setup()` and `loop()` routines. The main loop simply prints a message every second using standard ESP-IDF APIs.
 
+### Hardware Abstraction Layer
+
+`include/HAL.hpp` defines an abstract base class named `HAL` with a single
+virtual `init()` method. Generic device classes such as `Module`, `Sensor`,
+`Switch`, `Button`, and `Display` simply inherit from this interface. Specific
+hardware drivers should derive from one of these classes and implement the
+`init()` method to handle device setup.
+
 ### Using Arduino Libraries
 
 If you need to include `Arduino.h` for additional functionality, the build

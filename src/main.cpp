@@ -1,8 +1,10 @@
-#include <stdio.h>
+#include <cstdio>
+extern "C" {
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+}
 
-void app_main(void)
+extern "C" void app_main(void)
 {
     while (true) {
         printf("Hello, Flipper Zero compatible ESP32!\n");
