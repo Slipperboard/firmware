@@ -13,6 +13,14 @@ This project is the starting point for building a Flipper Zero–compatible firm
 
 The firmware starts from an `app_main()` function instead of Arduino's `setup()` and `loop()` routines. The main loop simply prints a message every second using standard ESP-IDF APIs.
 
+### Using Arduino Libraries
+
+If you need to include `Arduino.h` for additional functionality, the build
+already provides weak stub implementations of `setup()` and `loop()` in
+`src/arduino_stubs.cpp`. This prevents linker errors when the Arduino
+framework expects those symbols, while still letting you drive the application
+from `app_main()`.
+
 ## Building
 
 Install PlatformIO and run:
@@ -21,4 +29,4 @@ Install PlatformIO and run:
 platformio run
 ```
 
-This compiles the firmware for the default `esp32dev` environment. A GitHub Actions workflow in `.github/workflows/build.yml` automatically builds the project on every push.
+This compiles the firmware for the default `esp32dev` environment. A GitHub Actions workflow in `.github/workflows/build.yml` builds the project on pushes, pull requests, and can also be triggered manually from the GitHub UI.
