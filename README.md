@@ -11,9 +11,10 @@ This project is the starting point for building a Flipper Zero–compatible firm
 
 ## Hardware Abstraction Layer
 
-The `include/hal/hal.h` header defines a simple interface any board device can
-implement. Devices register themselves and are initialized via `hal_init()`,
-allowing common management of sensors, buttons, or other peripherals.
+The `include/hal/hal.hpp` header provides a small C++ interface that board
+devices can implement. Each device derives from `hal::Device`, registers itself
+with `hal::register_device()`, and is initialized via `hal::init()`. This allows
+common management of sensors, buttons, or other peripherals.
 
 ## Entry Point
 

@@ -1,13 +1,13 @@
-#include <stdio.h>
+#include <cstdio>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "hal/hal.h"
-#include "dummy_device.h"
+#include "hal/hal.hpp"
+#include "dummy_device.hpp"
 
-void app_main(void)
+extern "C" void app_main(void)
 {
-    hal_register_device(&dummy_device);
-    hal_init();
+    hal::register_device(&dummy_device);
+    hal::init();
 
     while (true) {
         printf("Hello, Flipper Zero compatible ESP32!\n");
