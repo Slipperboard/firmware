@@ -6,7 +6,8 @@
 
 extern "C" void app_main(void)
 {
-    hal::register_device(&dummy_device);
+    DummyDevice dummy;
+    hal::register_device(&dummy);
     hal::init();
 
     while (true) {

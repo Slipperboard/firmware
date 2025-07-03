@@ -9,6 +9,4 @@ public:
     esp_err_t deinit() override;
 };
 
-extern DummyDevice dummy_device;
-
 #endif // DUMMY_DEVICE_HPP

@@ -2,7 +2,6 @@
 #define HAL_HAL_HPP
 
 #include <esp_err.h>
-#include <array>
 #include <cstddef>
 
 namespace hal {

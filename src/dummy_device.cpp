@@ -1,8 +1,6 @@
 #include "dummy_device.hpp"
 #include <cstdio>
 
-DummyDevice dummy_device;
-
 esp_err_t DummyDevice::init()
 {
     printf("Dummy device initialized\n");
