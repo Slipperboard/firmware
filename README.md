@@ -38,3 +38,13 @@ platformio run
 ```
 
 This compiles the firmware for the default `esp32dev` environment. A GitHub Actions workflow in `.github/workflows/build.yml` builds the project on pushes, pull requests, and can also be triggered manually from the GitHub UI.
+
+## Running Tests
+
+The unit tests use the [Catch2](https://github.com/catchorg/Catch2) framework. Install the `catch2` package from your distribution and run:
+
+```bash
+platformio test
+```
+
+The CI workflow automatically runs the tests after building the firmware.
