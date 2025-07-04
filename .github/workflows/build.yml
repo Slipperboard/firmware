@@ -22,5 +22,5 @@ jobs:
         run: platformio run
       - name: Run unit tests
         run: |
-          g++ -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 tests/catch_amalgamated.cpp tests/test_peripheral.cpp -o test_peripheral
+          g++ -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 lib/Catch2/catch_amalgamated.cpp tests/test_peripheral.cpp -o test_peripheral
           ./test_peripheral --reporter compact
