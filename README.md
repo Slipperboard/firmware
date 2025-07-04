@@ -15,7 +15,7 @@ The firmware starts from an `app_main()` function instead of Arduino's `setup()`
 
 ### Hardware Abstraction Layer
 
-`include/HAL.hpp` defines an abstract base class named `HAL` with a single
+`include/Peripheral.hpp` defines an abstract base class named `Peripheral` with a single
 virtual `init()` method. Generic device classes such as `Module`, `Sensor`,
 `Switch`, `Button`, and `Display` simply inherit from this interface. Specific
 hardware drivers should derive from one of these classes and implement the

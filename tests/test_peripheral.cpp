@@ -25,7 +25,7 @@ void operator delete[](void* ptr) noexcept {
     allocCount.fetch_sub(1, std::memory_order_relaxed);
     std::free(ptr);
 }
-#include "HAL.hpp"
+#include "Peripheral.hpp"
 
 class DummyModule : public Module {
 public:
