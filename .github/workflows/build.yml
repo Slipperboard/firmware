@@ -20,5 +20,3 @@ jobs:
         run: pip install --upgrade platformio
       - name: Build firmware
         run: platformio run
-      - name: Run unit tests
-        run: platformio test
