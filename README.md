@@ -41,7 +41,9 @@ This compiles the firmware for the default `esp32dev` environment. A GitHub Acti
 
 ## Running Tests
 
-The unit tests use the [Catch2](https://github.com/catchorg/Catch2) framework. Install the `catch2` package from your distribution and run:
+The unit tests use the [Catch2](https://github.com/catchorg/Catch2) framework. A
+prebuilt single-header version of Catch2 is included under `lib/Catch2`, so no
+additional installation is required. Simply run:
 
 ```bash
 platformio test
