@@ -20,3 +20,7 @@ jobs:
         run: pip install --upgrade platformio
       - name: Build firmware
         run: platformio run
+      - name: Run unit tests
+        run: |
+          g++ -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 tests/catch_amalgamated.cpp tests/test_hal.cpp -o test_hal
+          ./test_hal --reporter compact
