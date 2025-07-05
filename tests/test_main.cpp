@@ -2,8 +2,6 @@
 #include "catch_amalgamated.hpp"
 #include "MemoryTracker.hpp"
 
-std::atomic<int> allocCount{0};
-
 void* operator new(std::size_t size) { return trackAlloc(size); }
 void operator delete(void* ptr) noexcept { trackFree(ptr); }
 void* operator new[](std::size_t size) { return trackAlloc(size); }
