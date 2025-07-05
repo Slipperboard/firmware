@@ -40,6 +40,13 @@ platformio run
 
 This compiles the firmware for the default `esp32dev` environment. A GitHub Actions workflow in `.github/workflows/build.yml` builds the project on pushes, pull requests, and can also be triggered manually from the GitHub UI.
 
+You can also use the provided Makefile as a convenience:
+
+```bash
+make build   # builds the firmware via PlatformIO
+make clean   # removes PlatformIO artifacts and the test binary
+```
+
 ## Running Unit Tests
 
 You can compile the Catch2-based test suite with a single `g++` command:
@@ -58,3 +65,11 @@ g++ -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 \
 ```
 
 This reflects the new split test layout. Each device type has its own test file, and `test_main.cpp` defines a shared test runner and allocation counter.
+
+For convenience you can simply run:
+
+```bash
+make test
+```
+
+which compiles and executes the unit tests with a compact output format.
