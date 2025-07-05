@@ -14,8 +14,8 @@ public:
 
     void init() override;
     PinMode getMode() const;
-    T read() const;
-    void write(T value);
+    virtual T read() const = 0;
+    virtual void write(T value) = 0;
 
 protected:
     PinMode mode_;

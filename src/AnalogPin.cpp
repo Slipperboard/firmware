@@ -5,11 +5,13 @@ AnalogPin::AnalogPin(PinMode mode, int value)
 
 AnalogPin::~AnalogPin() = default;
 
-int AnalogPin::analogRead() const {
-    return this->read();
+int AnalogPin::read() const {
+    return this->value_;
 }
 
-void AnalogPin::analogWrite(int value) {
-    this->write(value);
+void AnalogPin::write(int value) {
+    if (this->mode_ == PinMode::Output) {
+        this->value_ = value;
+    }
 }
 

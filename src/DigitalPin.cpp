@@ -5,11 +5,13 @@ DigitalPin::DigitalPin(PinMode mode, bool value)
 
 DigitalPin::~DigitalPin() = default;
 
-bool DigitalPin::digitalRead() const {
-    return this->read();
+bool DigitalPin::read() const {
+    return this->value_;
 }
 
-void DigitalPin::digitalWrite(bool value) {
-    this->write(value);
+void DigitalPin::write(bool value) {
+    if (this->mode_ == PinMode::Output) {
+        this->value_ = value;
+    }
 }
 

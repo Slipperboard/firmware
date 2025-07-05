@@ -8,8 +8,8 @@ public:
     DigitalPin(PinMode mode, bool value = false);
     ~DigitalPin() override;
 
-    bool digitalRead() const;
-    void digitalWrite(bool value);
+    bool read() const override;
+    void write(bool value) override;
 };
 
 #endif // DIGITAL_PIN_HPP

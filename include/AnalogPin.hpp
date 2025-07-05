@@ -8,8 +8,8 @@ public:
     AnalogPin(PinMode mode, int value = 0);
     ~AnalogPin() override;
 
-    int analogRead() const;
-    void analogWrite(int value);
+    int read() const override;
+    void write(int value) override;
 };
 
 #endif // ANALOG_PIN_HPP
