@@ -5,8 +5,17 @@
 
 class Display : public Peripheral {
 public:
-    Display();
+    Display(int width, int height);
     ~Display() override;
+
+    int getWidth() const;
+    int getHeight() const;
+    bool isInitialized() const;
+
+protected:
+    bool initialized;
+    int width;
+    int height;
 };
 
 #endif // DISPLAY_HPP
