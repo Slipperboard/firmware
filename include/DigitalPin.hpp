@@ -3,13 +3,13 @@
 
 #include "Pin.hpp"
 
-class DigitalPin : public Pin {
+class DigitalPin : public Pin<bool> {
 public:
-    DigitalPin(PinMode mode, int value = 0);
-    ~DigitalPin() override;
+    DigitalPin(PinMode mode, bool value = false) : Pin<bool>(mode, value) {}
+    ~DigitalPin() override = default;
 
-    bool digitalRead() const;
-    void digitalWrite(int value);
+    bool digitalRead() const { return this->read(); }
+    void digitalWrite(bool value) { this->write(value); }
 };
 
 #endif // DIGITAL_PIN_HPP

@@ -3,13 +3,13 @@
 
 #include "Pin.hpp"
 
-class AnalogPin : public Pin {
+class AnalogPin : public Pin<int> {
 public:
-    AnalogPin(PinMode mode, int value = 0);
-    ~AnalogPin() override;
+    AnalogPin(PinMode mode, int value = 0) : Pin<int>(mode, value) {}
+    ~AnalogPin() override = default;
 
-    int analogRead() const;
-    void analogWrite(int value);
+    int analogRead() const { return this->read(); }
+    void analogWrite(int value) { this->write(value); }
 };
 
 #endif // ANALOG_PIN_HPP
