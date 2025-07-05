@@ -12,12 +12,4 @@ public:
     virtual void init() = 0;
 };
 
-// Generic hardware categories that extend Peripheral. Specific devices will in
-// turn derive from one of these classes.
-class Module : public Peripheral {};
-class Sensor : public Peripheral {};
-class Switch : public Peripheral {};
-class Button : public Peripheral {};
-class Display : public Peripheral {};
-
 #endif // PERIPHERAL_HPP
