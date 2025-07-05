@@ -12,7 +12,8 @@ test:
 	    tests/test_analogpin.cpp \
 	    src/Module.cpp src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp \
 	    src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp \
-	    -o test_all && ./test_all --reporter compact
+	    -o test_all
+	./test_all --reporter compact
 
 clean:
 	platformio run -t clean
