@@ -10,6 +10,7 @@ TEST_CASE("Oled096Display initializes", "[oled096display]") {
     REQUIRE(d.isInitialized());
     REQUIRE(d.getWidth() == 128);
     REQUIRE(d.getHeight() == 64);
+    REQUIRE(d.getLvglDisplay() != nullptr);
     REQUIRE(allocCount.load() == before);
 }
 
