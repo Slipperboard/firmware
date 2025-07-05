@@ -22,6 +22,11 @@ source files. These classes simply inherit from `Peripheral`. Specific hardware 
 should derive from one of these classes and implement the `init()` method to handle
 device setup.
 
+`Button` now also exposes `press()` and `release()` helpers that measure how long
+the button was held. The acceptable duration for a single click can be modified
+with `setClickThreshold()`, and calling `release()` returns whether the hold time
+was within this limit.
+
 ### Using Arduino Libraries
 
 If you need to include `Arduino.h` for additional functionality, the build

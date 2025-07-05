@@ -1,6 +1,8 @@
 #include "catch_amalgamated.hpp"
 #include "Button.hpp"
 #include "MemoryTracker.hpp"
+#include <chrono>
+#include <thread>
 
 class DummyButton : public Button {
 public:
@@ -14,5 +16,22 @@ TEST_CASE("Button initializes", "[button]") {
     int before = allocCount.load();
     b.init();
     REQUIRE(b.initialized);
+    REQUIRE(allocCount.load() == before);
+}
+
+TEST_CASE("Click duration threshold is configurable", "[button]") {
+    DummyButton b;
+    b.setClickThreshold(std::chrono::milliseconds(30));
+    b.press();
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    int before = allocCount.load();
+    REQUIRE(b.release());
+    REQUIRE(allocCount.load() == before);
+
+    b.setClickThreshold(std::chrono::milliseconds(10));
+    b.press();
+    std::this_thread::sleep_for(std::chrono::milliseconds(20));
+    before = allocCount.load();
+    REQUIRE_FALSE(b.release());
     REQUIRE(allocCount.load() == before);
 }
