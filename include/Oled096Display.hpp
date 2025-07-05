@@ -12,12 +12,14 @@ public:
     ~Oled096Display() override;
 
     void init() override;
+    bool isInitialized() const override;
 
     void drawBytes(int x, int y, const uint8_t* data, std::size_t len);
     uint8_t readByte(int x, int y) const;
 
 private:
     std::vector<uint8_t> buffer;
+    bool initialized;
 };
 
 #endif // OLED096_DISPLAY_HPP

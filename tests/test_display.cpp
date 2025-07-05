@@ -6,6 +6,10 @@ class DummyDisplay : public Display {
 public:
     DummyDisplay() : Display(10, 10) {}
     void init() override { initialized = true; }
+    bool isInitialized() const override { return initialized; }
+
+private:
+    bool initialized = false;
 };
 
 TEST_CASE("Display initializes", "[display]") {

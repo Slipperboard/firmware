@@ -10,10 +10,9 @@ public:
 
     int getWidth() const;
     int getHeight() const;
-    bool isInitialized() const;
+    virtual bool isInitialized() const = 0;
 
 protected:
-    bool initialized;
     int width;
     int height;
 };

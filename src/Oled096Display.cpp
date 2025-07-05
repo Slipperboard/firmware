@@ -2,12 +2,16 @@
 #include <cstring>
 
 Oled096Display::Oled096Display()
-    : Display(128, 64), buffer(width * height, 0) {}
+    : Display(128, 64), buffer(width * height, 0), initialized(false) {}
 
 Oled096Display::~Oled096Display() = default;
 
 void Oled096Display::init() {
     initialized = true;
+}
+
+bool Oled096Display::isInitialized() const {
+    return initialized;
 }
 
 void Oled096Display::drawBytes(int x, int y, const uint8_t* data, std::size_t len) {
