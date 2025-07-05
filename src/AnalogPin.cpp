@@ -6,12 +6,12 @@ AnalogPin::AnalogPin(PinMode mode, int value)
 AnalogPin::~AnalogPin() = default;
 
 int AnalogPin::read() const {
-    return this->value_;
+    return this->value;
 }
 
 void AnalogPin::write(int value) {
-    if (this->mode_ == PinMode::Output) {
-        this->value_ = value;
+    if (this->mode == PinMode::Output) {
+        this->value = value;
     }
 }
 

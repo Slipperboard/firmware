@@ -18,8 +18,8 @@ public:
     virtual void write(T value) = 0;
 
 protected:
-    PinMode mode_;
-    T value_;
+    PinMode mode;
+    T value;
 };
 
 #endif // PIN_HPP

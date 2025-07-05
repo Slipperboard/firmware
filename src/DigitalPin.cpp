@@ -6,12 +6,12 @@ DigitalPin::DigitalPin(PinMode mode, bool value)
 DigitalPin::~DigitalPin() = default;
 
 bool DigitalPin::read() const {
-    return this->value_;
+    return this->value;
 }
 
 void DigitalPin::write(bool value) {
-    if (this->mode_ == PinMode::Output) {
-        this->value_ = value;
+    if (this->mode == PinMode::Output) {
+        this->value = value;
     }
 }
 
