@@ -5,11 +5,11 @@
 
 class AnalogPin : public Pin<int> {
 public:
-    AnalogPin(PinMode mode, int value = 0) : Pin<int>(mode, value) {}
-    ~AnalogPin() override = default;
+    AnalogPin(PinMode mode, int value = 0);
+    ~AnalogPin() override;
 
-    int analogRead() const { return this->read(); }
-    void analogWrite(int value) { this->write(value); }
+    int analogRead() const;
+    void analogWrite(int value);
 };
 
 #endif // ANALOG_PIN_HPP

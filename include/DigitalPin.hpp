@@ -5,11 +5,11 @@
 
 class DigitalPin : public Pin<bool> {
 public:
-    DigitalPin(PinMode mode, bool value = false) : Pin<bool>(mode, value) {}
-    ~DigitalPin() override = default;
+    DigitalPin(PinMode mode, bool value = false);
+    ~DigitalPin() override;
 
-    bool digitalRead() const { return this->read(); }
-    void digitalWrite(bool value) { this->write(value); }
+    bool digitalRead() const;
+    void digitalWrite(bool value);
 };
 
 #endif // DIGITAL_PIN_HPP
