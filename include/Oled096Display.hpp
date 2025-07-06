@@ -17,8 +17,6 @@ public:
     bool isInitialized() const override;
 
     void drawBytes(int x, int y, const uint8_t* data, std::size_t len) override;
-    // Returns the byte stored in the internal buffer at the given coordinates.
-    // This helper is primarily used in unit tests to verify drawBytes.
     uint8_t readByte(int x, int y) const override;
 
     lv_disp_t* getLvglDisplay();
