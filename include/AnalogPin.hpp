@@ -3,8 +3,9 @@
 
 #include "Pin.hpp"
 
-class AnalogPin : public Pin<int> {
-public:
+class AnalogPin : public Pin<int>
+{
+    public:
     AnalogPin(PinMode mode, int value = 0);
     ~AnalogPin() override;
 

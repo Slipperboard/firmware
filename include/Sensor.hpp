@@ -3,8 +3,9 @@
 
 #include "Peripheral.hpp"
 
-class Sensor : public Peripheral {
-public:
+class Sensor : public Peripheral
+{
+    public:
     Sensor();
     ~Sensor() override;
 };

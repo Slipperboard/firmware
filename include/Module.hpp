@@ -3,8 +3,9 @@
 
 #include "Peripheral.hpp"
 
-class Module : public Peripheral {
-public:
+class Module : public Peripheral
+{
+    public:
     Module();
     ~Module() override;
 };

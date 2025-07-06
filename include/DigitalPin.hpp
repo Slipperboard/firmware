@@ -3,8 +3,9 @@
 
 #include "Pin.hpp"
 
-class DigitalPin : public Pin<bool> {
-public:
+class DigitalPin : public Pin<bool>
+{
+    public:
     DigitalPin(PinMode mode, bool value = false);
     ~DigitalPin() override;
 
