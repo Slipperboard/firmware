@@ -18,7 +18,7 @@ optimize:
 	platformio run \
 	--project-option="build_type=release" \
 	--project-option="build_flags=-Os -flto -ffunction-sections -fdata-sections" \
-	--project-option="link_flags=-Wl,--gc-sections"
+	--project-option="link_flags=-Wl,--gc-sections -flto" && \
 	platformio run --target size
 
 test:
