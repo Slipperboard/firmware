@@ -16,7 +16,6 @@ build:
 
 release:
 	platformio run --project-conf platformio-release.ini
-	platformio run --project-conf platformio-release.ini --target size
 
 size:
 	platformio run --target size
