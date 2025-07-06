@@ -33,6 +33,10 @@ Build the firmware using the Makefile:
 make build   # builds the firmware via PlatformIO
 make clean   # removes PlatformIO artifacts and the test binary
 make release # optimized release build and binary size report
+make size    # show the firmware binary size
+make test    # run the unit tests
+make lint    # run static analysis
+make coverage # generate a coverage report
 ```
 
 Additional tools can check code quality and coverage. Install them with:
