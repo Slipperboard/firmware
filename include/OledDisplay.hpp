@@ -13,7 +13,7 @@ public:
     void drawBytes(int x, int y, const unsigned char* data, std::size_t length) override;
 
     // helper for tests
-    unsigned char getPixel(int x, int y) const;
+    void readBytes(int x, int y, unsigned char* out, std::size_t length) const;
 
 private:
     std::vector<unsigned char> buffer;

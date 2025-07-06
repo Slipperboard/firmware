@@ -21,11 +21,17 @@ void OledDisplay::drawBytes(int x, int y, const unsigned char* data,
     }
 }
 
-unsigned char OledDisplay::getPixel(int x, int y) const {
-    if (x < 0 || x >= width || y < 0 || y >= height) {
-        return 0;
+void OledDisplay::readBytes(int x, int y, unsigned char* out,
+                            std::size_t length) const {
+    for (std::size_t i = 0; i < length; ++i) {
+        int px = x + static_cast<int>(i);
+        int py = y;
+        if (px < 0 || px >= width || py < 0 || py >= height) {
+            out[i] = 0;
+        } else {
+            out[i] = buffer[py * width + px];
+        }
     }
-    return buffer[y * width + x];
 }
 
 
