@@ -1,4 +1,4 @@
-.PHONY: build optimize test clean lint coverage
+.PHONY: build release test clean lint coverage
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
 TEST_SRCS = \
@@ -14,7 +14,7 @@ TEST_SRCS = \
 build:
 	platformio run
 
-optimize:
+release:
 	platformio run \
 	--project-option="build_type=release" \
 	--project-option="build_flags=-Os -flto -ffunction-sections -fdata-sections" \
