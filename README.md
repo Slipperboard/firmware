@@ -27,15 +27,7 @@ from `app_main()`.
 
 ## Building
 
-Install PlatformIO and run:
-
-```bash
-platformio run
-```
-
-This compiles the firmware for the default `esp32dev` environment. A GitHub Actions workflow in `.github/workflows/build.yml` builds the project on pushes, pull requests, and can also be triggered manually from the GitHub UI.
-
-You can also use the provided Makefile as a convenience:
+Build the firmware using the Makefile:
 
 ```bash
 make build   # builds the firmware via PlatformIO
@@ -44,25 +36,7 @@ make clean   # removes PlatformIO artifacts and the test binary
 
 ## Running Unit Tests
 
-You can compile the Catch2-based test suite with a single `g++` command:
-
-```bash
-g++ -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 \
-    lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
-    tests/MemoryTracker.cpp \
-    tests/test_module.cpp tests/test_sensor.cpp tests/test_switch.cpp \
-    tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
-    tests/test_analogpin.cpp tests/test_oleddisplay.cpp \
-    src/Module.cpp src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp \
-    src/OledDisplay.cpp \
-    src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp \
-    -o test_all
-./test_all -s
-```
-
-This reflects the new split test layout. Each device type has its own test file, and `test_main.cpp` defines a shared test runner and allocation counter.
-
-For convenience you can simply run:
+Run the Catch2-based test suite with:
 
 ```bash
 make test
