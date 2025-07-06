@@ -33,10 +33,13 @@ bool Oled096Display::isInitialized() const {
 }
 
 void Oled096Display::drawBytes(int x, int y, const uint8_t* data, std::size_t len) {
-    if (x < 0 || y < 0 || x + static_cast<int>(len) > width || y >= height) {
+    if (!initialized || x < 0 || y < 0 || x + static_cast<int>(len) > width || y >= height) {
         return;
     }
-    std::memcpy(&buffer[y * width + x], data, len);
+
+    lv_area_t area{ x, y, x + static_cast<int>(len) - 1, y };
+    // Delegate to the lvgl flush function so the driver buffer stays in sync
+    lvglFlush(&dispDrv, &area, const_cast<lv_color_t*>(data));
 }
 
 uint8_t Oled096Display::readByte(int x, int y) const {
@@ -54,6 +57,9 @@ void Oled096Display::lvglFlush(lv_disp_drv_t* drv, const lv_area_t* area, lv_col
     auto* self = static_cast<Oled096Display*>(drv->user_data);
     for (int y = area->y1; y <= area->y2; ++y) {
         std::memcpy(&self->buffer[y * self->width + area->x1],
+                    color_p + (y - area->y1) * (area->x2 - area->x1 + 1),
+                    area->x2 - area->x1 + 1);
+        std::memcpy(self->driver.getBuffer() + y * self->width + area->x1,
                     color_p + (y - area->y1) * (area->x2 - area->x1 + 1),
                     area->x2 - area->x1 + 1);
     }
