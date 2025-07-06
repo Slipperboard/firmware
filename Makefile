@@ -18,7 +18,7 @@ release:
 	platformio run --project-conf platformio-release.ini
 
 size:
-	platformio run --target size
+	platformio run --project-conf platformio-release.ini --target size
 
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
