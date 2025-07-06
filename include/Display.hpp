@@ -2,6 +2,8 @@
 #define DISPLAY_HPP
 
 #include "Peripheral.hpp"
+#include <cstddef>
+#include <cstdint>
 
 class Display : public Peripheral {
 public:
@@ -11,6 +13,8 @@ public:
     int getWidth() const;
     int getHeight() const;
     virtual bool isInitialized() const = 0;
+    virtual void drawBytes(int x, int y, const uint8_t* data, std::size_t len) = 0;
+    virtual uint8_t readByte(int x, int y) const = 0;
 
 protected:
     int width;
