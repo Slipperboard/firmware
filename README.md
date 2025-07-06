@@ -64,3 +64,22 @@ Generate a coverage report with:
 ```bash
 make coverage
 ```
+
+## Minimizing Firmware Size
+
+For production builds you can enable additional optimization flags to shrink the
+resulting binary. Edit `platformio.ini` and add the following lines under the
+`[env:esp32dev]` section:
+
+```ini
+build_type = release
+build_flags =
+    -Os
+    -flto
+    -ffunction-sections
+    -fdata-sections
+link_flags = -Wl,--gc-sections
+```
+
+These flags optimize the build for size and remove unused code and data during
+linking. Rebuild with `make clean && make build` to produce a smaller firmware image.
