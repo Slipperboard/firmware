@@ -1,17 +1,18 @@
 name: CI
 
 on:
-  push:
-    branches: ["**"]
   pull_request:
-    branches: ["**"]
+    types: [opened, synchronize, reopened, closed]
   workflow_dispatch:
 
 jobs:
   build:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
