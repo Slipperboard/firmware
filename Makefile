@@ -15,11 +15,8 @@ build:
 	platformio run
 
 release:
-	platformio run \
-	--project-option="build_type=release" \
-	--project-option="build_flags=-Os -flto -ffunction-sections -fdata-sections" \
-	--project-option="link_flags=-Wl,--gc-sections -flto" && \
-	platformio run --target size
+	platformio run --project-conf platformio-release.ini
+	platformio run --project-conf platformio-release.ini --target size
 
 size:
 	platformio run --target size
