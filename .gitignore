@@ -42,3 +42,7 @@
 .pio/
 .vscode/
 libdeps/
+*.gcno
+*.gcda
+coverage*
+test_all_cov

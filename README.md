@@ -34,6 +34,13 @@ make build   # builds the firmware via PlatformIO
 make clean   # removes PlatformIO artifacts and the test binary
 ```
 
+Additional tools can check code quality and coverage. Install them with:
+
+```bash
+sudo apt-get update
+sudo apt-get install -y clang-tidy cppcheck gcovr
+```
+
 ## Running Unit Tests
 
 Run the Catch2-based test suite with:
@@ -43,3 +50,17 @@ make test
 ```
 
 which compiles and executes the unit tests with a compact output format.
+
+## Code Quality
+
+Run static analysis with:
+
+```bash
+make lint
+```
+
+Generate a coverage report with:
+
+```bash
+make coverage
+```
