@@ -6,9 +6,9 @@
 // Enumeration for pin mode
 enum class PinMode { Input, Output };
 
-template <typename T>
-class Pin : public Peripheral {
-public:
+template <typename T> class Pin : public Peripheral
+{
+    public:
     Pin(PinMode mode, T value = T{});
     ~Pin() override;
 
@@ -17,7 +17,7 @@ public:
     virtual T read() const = 0;
     virtual void write(T value) = 0;
 
-protected:
+    protected:
     PinMode mode;
     T value;
 };

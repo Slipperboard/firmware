@@ -1,8 +1,9 @@
-#include "catch_amalgamated.hpp"
 #include "DigitalPin.hpp"
 #include "MemoryTracker.hpp"
+#include "catch_amalgamated.hpp"
 
-TEST_CASE("DigitalPin read/write", "[digitalpin]") {
+TEST_CASE("DigitalPin read/write", "[digitalpin]")
+{
     DigitalPin pin(PinMode::Output, false);
     pin.init();
     REQUIRE(pin.read() == false);

@@ -4,8 +4,9 @@
 #include "Peripheral.hpp"
 #include <chrono>
 
-class Button : public Peripheral {
-public:
+class Button : public Peripheral
+{
+    public:
     Button();
     ~Button() override;
 
@@ -15,7 +16,7 @@ public:
     void press();
     bool release();
 
-private:
+    private:
     std::chrono::milliseconds clickThreshold;
     std::chrono::steady_clock::time_point pressTime;
 };

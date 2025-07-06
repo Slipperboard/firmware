@@ -1,14 +1,19 @@
-#include "catch_amalgamated.hpp"
-#include "Switch.hpp"
 #include "MemoryTracker.hpp"
+#include "Switch.hpp"
+#include "catch_amalgamated.hpp"
 
-class DummySwitch : public Switch {
-public:
+class DummySwitch : public Switch
+{
+    public:
     bool initialized = false;
-    void init() override { initialized = true; }
+    void init() override
+    {
+        initialized = true;
+    }
 };
 
-TEST_CASE("Switch initializes", "[switch]") {
+TEST_CASE("Switch initializes", "[switch]")
+{
     DummySwitch sw;
     REQUIRE_FALSE(sw.initialized);
     int before = allocCount.load();

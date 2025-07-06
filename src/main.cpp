@@ -6,7 +6,8 @@ extern "C" {
 
 extern "C" void app_main(void)
 {
-    while (true) {
+    while (true)
+    {
         printf("Hello, Flipper Zero compatible ESP32!\n");
         vTaskDelay(pdMS_TO_TICKS(1000));
     }

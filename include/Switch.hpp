@@ -3,8 +3,9 @@
 
 #include "Peripheral.hpp"
 
-class Switch : public Peripheral {
-public:
+class Switch : public Peripheral
+{
+    public:
     Switch();
     ~Switch() override;
 };

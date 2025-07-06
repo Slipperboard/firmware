@@ -1,8 +1,9 @@
-#include "catch_amalgamated.hpp"
-#include "OledDisplay.hpp"
 #include "MemoryTracker.hpp"
+#include "OledDisplay.hpp"
+#include "catch_amalgamated.hpp"
 
-TEST_CASE("OledDisplay draws bytes", "[oled]") {
+TEST_CASE("OledDisplay draws bytes", "[oled]")
+{
     OledDisplay disp;
     disp.init();
     unsigned char bytes[3] = {1, 2, 3};

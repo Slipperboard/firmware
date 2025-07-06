@@ -1,8 +1,9 @@
-#include "catch_amalgamated.hpp"
 #include "AnalogPin.hpp"
 #include "MemoryTracker.hpp"
+#include "catch_amalgamated.hpp"
 
-TEST_CASE("AnalogPin read/write", "[analogpin]") {
+TEST_CASE("AnalogPin read/write", "[analogpin]")
+{
     AnalogPin pin(PinMode::Output, 128);
     pin.init();
     REQUIRE(pin.read() == 128);
