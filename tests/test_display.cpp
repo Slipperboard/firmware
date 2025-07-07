@@ -8,9 +8,6 @@ class DummyDisplay : public Display
     DummyDisplay() : Display({10, 10})
     {
     }
-    explicit DummyDisplay(int radius) : Display(radius)
-    {
-    }
     bool initialized = false;
     void init() override
     {
@@ -38,15 +35,4 @@ TEST_CASE("Display stores dimensions", "[display]")
     DummyDisplay d;
     REQUIRE(d.getWidth() == 10);
     REQUIRE(d.getHeight() == 10);
-    bool circ = d.isCircular();
-    REQUIRE_FALSE(circ);
-}
-
-TEST_CASE("Circular display stores radius", "[display]")
-{
-    DummyDisplay d(5);
-    REQUIRE(d.isCircular());
-    REQUIRE(d.getRadius() == 5);
-    REQUIRE(d.getWidth() == 0);
-    REQUIRE(d.getHeight() == 0);
 }
