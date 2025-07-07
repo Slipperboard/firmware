@@ -68,3 +68,13 @@ Generate a coverage report with:
 make coverage
 ```
 
+
+## Nix Development Shell
+
+You can create a reproducible environment using [Nix](https://nixos.org/). After installing Nix, run:
+
+```bash
+nix develop
+```
+
+This command drops you into a shell with PlatformIO, gcc and the tools used by the Makefile targets. From there, use `make build`, `make test` and the other commands as described above.
