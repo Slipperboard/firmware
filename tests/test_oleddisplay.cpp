@@ -18,3 +18,27 @@ TEST_CASE("OledDisplay draws bytes", "[oled]")
     REQUIRE(read[2] == 3);
     REQUIRE(allocCount.load() == before);
 }
+
+TEST_CASE("OledDisplay ignores draw before init", "[oled]")
+{
+    OledDisplay disp;
+    const unsigned char bytes[1] = {42};
+    disp.drawBytes(0, 0, bytes, 1);
+    disp.init();
+    unsigned char read[1];
+    disp.readBytes(0, 0, read, 1);
+    REQUIRE(read[0] == 0);
+}
+
+TEST_CASE("OledDisplay reads zero out of bounds", "[oled]")
+{
+    OledDisplay disp;
+    disp.init();
+    unsigned char bytes[1] = {9};
+    disp.drawBytes(0, 0, bytes, 1);
+    unsigned char out[2];
+    disp.readBytes(-1, 0, out, 1);
+    disp.readBytes(0, 64, out + 1, 1);
+    REQUIRE(out[0] == 0);
+    REQUIRE(out[1] == 0);
+}

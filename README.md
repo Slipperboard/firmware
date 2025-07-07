@@ -62,11 +62,12 @@ The linter returns a non-zero exit code if any issues are detected. It
 searches the `include`, `src`, and `tests` directories so project headers
 are recognized by cppcheck.
 
-Generate a coverage report with:
+Generate a coverage report:
 
 ```bash
 make coverage
 ```
+This target fails if line coverage is below 100%.
 
 ## Formatting
 

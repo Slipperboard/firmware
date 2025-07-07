@@ -46,3 +46,4 @@ libdeps/
 *.gcda
 coverage*
 test_all_cov
+test_all
