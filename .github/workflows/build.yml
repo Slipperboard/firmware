@@ -35,6 +35,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy
       - name: Check formatting
         run: make check-format
+      - name: Conventions
+        run: make conventions
       - name: Lint
         run: make lint
       - name: Static analysis

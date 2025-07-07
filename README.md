@@ -91,6 +91,14 @@ Check formatting without modifying files:
 make check-format
 ```
 
+## Code Conventions
+
+Verify that open braces start on a new line and tabs are absent:
+
+```bash
+make conventions
+```
+
 ## Nix Development Shell
 
 You can create a reproducible environment using [Nix](https://nixos.org/). After installing Nix, run:

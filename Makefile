@@ -1,4 +1,4 @@
-.PHONY: build test clean lint tidy coverage format check-format
+.PHONY: build test clean lint tidy coverage format check-format conventions
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
 TEST_SRCS = \
@@ -47,6 +47,12 @@ format:
 
 check-format:
 	clang-format --dry-run --Werror $(FMT_FILES)
+
+conventions: check-format
+	@if grep -nP '\t' $(FMT_FILES); then \
+	echo "Tabs detected. Use spaces only."; \
+	exit 1; \
+	fi
 
 clean:
 	platformio run -t clean
