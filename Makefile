@@ -12,7 +12,7 @@ TEST_SRCS = \
     src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp
 
 build:
-    platformio run
+	platformio run
 
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
