@@ -1,4 +1,4 @@
-.PHONY: build test clean lint coverage format check-format
+.PHONY: build test clean lint tidy coverage format check-format
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
 TEST_SRCS = \
@@ -27,6 +27,9 @@ lint:
 	--suppress=missingInclude --suppress=unmatchedSuppression --suppress=unusedFunction \
 	--error-exitcode=1 -Iinclude -Isrc \
 	src include
+tidy:
+	clang-tidy $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp') -- -std=c++17 -Iinclude -quiet || true
+
 	
 coverage:
 	g++ $(TEST_FLAGS) --coverage $(TEST_SRCS) -o test_all_cov

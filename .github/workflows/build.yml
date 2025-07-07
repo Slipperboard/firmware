@@ -32,11 +32,13 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
       - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y cppcheck clang-format
+        run: sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy
       - name: Check formatting
         run: make check-format
       - name: Lint
         run: make lint
+      - name: Static analysis
+        run: make tidy
 
   unit-tests:
     if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true

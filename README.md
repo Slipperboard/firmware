@@ -62,6 +62,12 @@ The linter returns a non-zero exit code if any issues are detected. It
 searches the `include`, `src`, and `tests` directories so project headers
 are recognized by cppcheck.
 
+For additional diagnostics, run clang-tidy over the source files with:
+
+```bash
+make tidy
+```
+
 Generate a coverage report:
 
 ```bash
