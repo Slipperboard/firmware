@@ -46,9 +46,15 @@ TEST_CASE("Circular display reports radius", "[display]")
     class CircleDisplay : public Display
     {
         public:
-        CircleDisplay() : Display(5) {}
-        void init() override {}
-        void drawBytes(int, int, const unsigned char *, std::size_t) override {}
+        CircleDisplay() : Display(5)
+        {
+        }
+        void init() override
+        {
+        }
+        void drawBytes(int, int, const unsigned char *, std::size_t) override
+        {
+        }
     };
 
     CircleDisplay c;
