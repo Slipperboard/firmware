@@ -29,7 +29,7 @@ lint:
 coverage:
 	g++ $(TEST_FLAGS) --coverage $(TEST_SRCS) -o test_all_cov
 	./test_all_cov --reporter compact
-	gcovr -r . --exclude-directories=lib --exclude='.*Catch2.*' --print-summary
+	gcovr -r . --exclude-directories=lib --exclude='.*Catch2.*' --print-summary --fail-under-line=100
 	$(RM) *.gcno *.gcda test_all_cov
 
 clean:
