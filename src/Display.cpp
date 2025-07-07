@@ -1,6 +1,6 @@
 #include "Display.hpp"
 
-Display::Display(int width, int height) : circular(false), width(width), height(height), radius(0)
+Display::Display(Dimensions dims) : circular(false), width(dims.width), height(dims.height), radius(0)
 {
 }
 

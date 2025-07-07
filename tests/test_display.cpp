@@ -5,7 +5,7 @@
 class DummyDisplay : public Display
 {
     public:
-    DummyDisplay() : Display(10, 10)
+    DummyDisplay() : Display({10, 10})
     {
     }
     explicit DummyDisplay(int radius) : Display(radius)
@@ -16,7 +16,7 @@ class DummyDisplay : public Display
     {
         initialized = true;
     }
-    void drawBytes(int, int, const unsigned char *, std::size_t) override
+    void drawBytes(Point, const unsigned char *, std::size_t) override
     {
     }
 };
@@ -28,7 +28,7 @@ TEST_CASE("Display initializes", "[display]")
     int before = allocCount.load();
     d.init();
     // call the virtual function to ensure coverage
-    d.drawBytes(0, 0, nullptr, 0);
+    d.drawBytes({0, 0}, nullptr, 0);
     REQUIRE(d.initialized);
     REQUIRE(allocCount.load() == before);
 }

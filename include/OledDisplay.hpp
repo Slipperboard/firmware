@@ -11,10 +11,10 @@ class OledDisplay : public Display
     ~OledDisplay() override = default;
 
     void init() override;
-    void drawBytes(int x, int y, const unsigned char *data, std::size_t length) override;
+    void drawBytes(Point pos, const unsigned char *data, std::size_t length) override;
 
     // helper for tests
-    void readBytes(int x, int y, unsigned char *out, std::size_t length) const;
+    void readBytes(Point pos, unsigned char *out, std::size_t length) const;
 
     private:
     std::vector<unsigned char> buffer;
