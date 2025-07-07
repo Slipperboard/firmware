@@ -77,6 +77,12 @@ Automatically apply the project's clang-format style with:
 make format
 ```
 
+Check formatting without modifying files:
+
+```bash
+make check-format
+```
+
 ## Nix Development Shell
 
 You can create a reproducible environment using [Nix](https://nixos.org/). After installing Nix, run:
