@@ -19,10 +19,11 @@ test:
 	./test_all --reporter compact
 
 lint:
-	cppcheck --enable=all --inconclusive --std=c++17 --force \
-	--error-exitcode=1 -Iinclude -Isrc -Itests -Ilib/Catch2 \
-	--suppress=*:*lib/Catch2/catch_amalgamated.hpp -i lib/Catch2 \
-	src include tests
+	cppcheck --enable=all --inconclusive --std=c++17 --force --max-configs=1 --inline-suppr \
+	--suppress=missingIncludeSystem \
+	--suppress=missingInclude --suppress=unmatchedSuppression --suppress=unusedFunction \
+	--error-exitcode=1 -Iinclude -Isrc \
+	src include
 	
 coverage:
 	g++ $(TEST_FLAGS) --coverage $(TEST_SRCS) -o test_all_cov

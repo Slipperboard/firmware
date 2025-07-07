@@ -16,7 +16,9 @@ TEST_CASE("Module initializes", "[module]")
 {
     DummyModule m;
     REQUIRE_FALSE(m.initialized);
+    // cppcheck-suppress unreadVariable
     int before = allocCount.load();
+    static_cast<void>(before);
     m.init();
     REQUIRE(m.initialized);
     REQUIRE(allocCount.load() == before);
