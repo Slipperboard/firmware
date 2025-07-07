@@ -30,7 +30,7 @@ from `app_main()`.
 Build the firmware using the Makefile:
 
 ```bash
-make build   # builds the firmware via PlatformIO
+make build   # builds the firmware via PlatformIO and shows size
 make clean   # removes PlatformIO artifacts and the test binary
 ```
 
