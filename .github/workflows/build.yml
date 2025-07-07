@@ -39,6 +39,15 @@ jobs:
           clang-format --dry-run --Werror $files
       - name: Lint
         run: make lint
+      - uses: cachix/install-nix-action@v22
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Check flake.nix
+        run: nix flake show
+      - name: Build inside Nix shell
+        run: nix develop --command bash -c "make build && make lint && make test"
 
   unit-tests:
     if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
