@@ -30,7 +30,7 @@ lint:
 	src include
 
 cpplint:
-	cpplint $(CPPLINT_FILES) || true
+	cpplint $(CPPLINT_FILES)
 TIDY_FILES := $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp')
 tidy:
 	clang-tidy $(TIDY_FILES) -- -std=c++17 -Iinclude > clang-tidy.log 2>&1
