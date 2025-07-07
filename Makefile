@@ -19,8 +19,8 @@ build:
 
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
-	./test_all --reporter compact
-
+	./test_all --reporter console --success
+	
 lint:
 	cppcheck --enable=all --inconclusive --std=c++17 --force --max-configs=1 --inline-suppr \
 	--suppress=missingIncludeSystem \
@@ -30,7 +30,7 @@ lint:
 	
 coverage:
 	g++ $(TEST_FLAGS) --coverage $(TEST_SRCS) -o test_all_cov
-	./test_all_cov --reporter compact
+	./test_all_cov --reporter console --success
 	gcovr -r . --exclude-directories=lib --exclude='.*Catch2.*' --print-summary --fail-under-line=100
 	$(RM) *.gcno *.gcda test_all_cov
 
