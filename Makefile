@@ -27,8 +27,12 @@ lint:
 	--suppress=missingInclude --suppress=unmatchedSuppression --suppress=unusedFunction \
 	--error-exitcode=1 -Iinclude -Isrc \
 	src include
+TIDY_FILES := $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp')
 tidy:
-	clang-tidy -quiet $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp') -- -std=c++17 -Iinclude
+	clang-tidy $(TIDY_FILES) -- -std=c++17 -Iinclude > clang-tidy.log 2>&1
+	cat clang-tidy.log
+	! grep -E "(warning:|error:)" clang-tidy.log
+	rm clang-tidy.log
 
 	
 coverage:
