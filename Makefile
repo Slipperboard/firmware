@@ -1,4 +1,4 @@
-.PHONY: build test clean lint coverage format
+.PHONY: build test clean lint coverage format check-format
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
 TEST_SRCS = \
@@ -34,8 +34,12 @@ coverage:
 	gcovr -r . --exclude-directories=lib --exclude='.*Catch2.*' --print-summary --fail-under-line=100
 	$(RM) *.gcno *.gcda test_all_cov
 
+
 format:
 	clang-format -i $(FMT_FILES)
+
+check-format:
+	clang-format --dry-run --Werror $(FMT_FILES)
 
 clean:
 	platformio run -t clean
