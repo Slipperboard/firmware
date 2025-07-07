@@ -25,6 +25,13 @@ TEST_CASE("Button initializes", "[button]")
     REQUIRE(allocCount.load() == before);
 }
 
+TEST_CASE("Button returns configured threshold", "[button]")
+{
+    DummyButton b;
+    b.setClickThreshold(std::chrono::milliseconds(42));
+    REQUIRE(b.getClickThreshold() == std::chrono::milliseconds(42));
+}
+
 TEST_CASE("Click duration threshold is configurable", "[button]")
 {
     DummyButton b;
