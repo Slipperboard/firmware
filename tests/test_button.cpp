@@ -46,3 +46,10 @@ TEST_CASE("Click duration threshold is configurable", "[button]")
     REQUIRE_FALSE(b.release());
     REQUIRE(allocCount.load() == before);
 }
+
+TEST_CASE("Click threshold getter works", "[button]")
+{
+    DummyButton b;
+    b.setClickThreshold(std::chrono::milliseconds(42));
+    REQUIRE(b.getClickThreshold() == std::chrono::milliseconds(42));
+}

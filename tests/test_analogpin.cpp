@@ -13,3 +13,12 @@ TEST_CASE("AnalogPin read/write", "[analogpin]")
     REQUIRE(pin.read() == 64);
     REQUIRE(allocCount.load() == before);
 }
+
+TEST_CASE("AnalogPin reports mode", "[analogpin]")
+{
+    AnalogPin pin(PinMode::Input, 0);
+    REQUIRE(pin.getMode() == PinMode::Input);
+    // write should have no effect in Input mode
+    pin.write(10);
+    REQUIRE(pin.read() == 0);
+}

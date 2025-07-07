@@ -14,3 +14,12 @@ TEST_CASE("DigitalPin read/write", "[digitalpin]")
     REQUIRE(state);
     REQUIRE(allocCount.load() == before);
 }
+
+TEST_CASE("DigitalPin reports mode", "[digitalpin]")
+{
+    DigitalPin pin(PinMode::Input, true);
+    REQUIRE(pin.getMode() == PinMode::Input);
+    // write should not change value in Input mode
+    pin.write(false);
+    REQUIRE(pin.read() == true);
+}
