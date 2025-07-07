@@ -67,6 +67,7 @@ Generate a coverage report with:
 ```bash
 make coverage
 ```
+The command fails if line coverage is below 100%.
 
 
 ## Nix Development Shell
