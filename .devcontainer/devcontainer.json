@@ -1,0 +1,15 @@
+{
+    "name": "Slipperboard",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "postCreateCommand": "platformio --version",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "platformio.platformio-ide"
+            ]
+        }
+    }
+}

@@ -59,3 +59,13 @@ jobs:
         run: make test
       - name: Coverage
         run: make coverage
+
+  devcontainer:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+      - name: Build devcontainer image
+        run: docker build -f .devcontainer/Dockerfile -t slipperboard-dev .
