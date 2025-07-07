@@ -58,6 +58,7 @@ Run static analysis with:
 ```bash
 make lint
 ```
+The linter returns a non-zero exit code if any issues are detected.
 
 Generate a coverage report with:
 

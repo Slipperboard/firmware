@@ -19,7 +19,8 @@ test:
 	./test_all --reporter compact
 
 lint:
-	cppcheck --enable=all --inconclusive --std=c++17 --force src include tests
+	cppcheck --enable=all --inconclusive --std=c++17 --force \
+	--error-exitcode=1 src include tests
 
 coverage:
 	g++ $(TEST_FLAGS) --coverage $(TEST_SRCS) -o test_all_cov
