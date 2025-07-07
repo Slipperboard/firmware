@@ -22,9 +22,7 @@ jobs:
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck gcovr
       - name: Build firmware
-        run: platformio run
-      - name: Show firmware size
-        run: platformio run --target size
+        run: make build
 
   sanity:
     if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
