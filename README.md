@@ -67,7 +67,8 @@ For additional diagnostics, run clang-tidy over the source files with:
 ```bash
 make tidy
 ```
-This command fails if clang-tidy finds any issues.
+This command fails if clang-tidy reports any warnings or errors. The
+project's `.clang-tidy` configuration marks all diagnostics as errors.
 
 Generate a coverage report:
 
