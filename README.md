@@ -95,6 +95,17 @@ Check formatting without modifying files:
 make check-format
 ```
 
+## Precommit
+
+Run all checks sequentially before committing:
+
+```bash
+make precommit
+```
+
+This command runs `make build`, `make check-format`, `make lint`, `make tidy`,
+`make test` and `make coverage` in order.
+
 ## Nix Development Shell
 
 You can create a reproducible environment using [Nix](https://nixos.org/). After installing Nix, run:
