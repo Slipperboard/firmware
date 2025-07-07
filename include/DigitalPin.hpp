@@ -6,7 +6,7 @@
 class DigitalPin : public Pin<bool>
 {
     public:
-    DigitalPin(PinMode mode, bool value = false);
+    explicit DigitalPin(PinMode mode, bool value = false);
     ~DigitalPin() override;
 
     bool read() const override;

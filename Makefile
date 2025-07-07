@@ -21,8 +21,9 @@ test:
 lint:
 	cppcheck --enable=all --inconclusive --std=c++17 --force \
 	--error-exitcode=1 -Iinclude -Isrc -Itests -Ilib/Catch2 \
+	--suppress=*:*lib/Catch2/catch_amalgamated.hpp -i lib/Catch2 \
 	src include tests
-
+	
 coverage:
 	g++ $(TEST_FLAGS) --coverage $(TEST_SRCS) -o test_all_cov
 	./test_all_cov --reporter compact
