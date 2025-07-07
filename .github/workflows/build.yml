@@ -34,7 +34,11 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
       - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y cppcheck
+        run: sudo apt-get update && sudo apt-get install -y cppcheck clang-format
+      - name: Check formatting
+        run: |
+          files=$(git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tests/*.hpp')
+          clang-format --dry-run --Werror $files
       - name: Lint
         run: make lint
 
