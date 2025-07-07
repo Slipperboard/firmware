@@ -38,7 +38,7 @@ Additional tools can check code quality and coverage. Install them with:
 
 ```bash
 sudo apt-get update
-sudo apt-get install -y clang-tidy cppcheck gcovr
+sudo apt-get install -y clang-tidy clang-format cppcheck gcovr
 ```
 
 ## Running Unit Tests
@@ -66,5 +66,13 @@ Generate a coverage report with:
 
 ```bash
 make coverage
+```
+
+## Formatting
+
+Automatically apply the project's clang-format style with:
+
+```bash
+make format
 ```
 
