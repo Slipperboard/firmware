@@ -6,9 +6,11 @@ TEST_CASE("DigitalPin read/write", "[digitalpin]")
 {
     DigitalPin pin(PinMode::Output, false);
     pin.init();
-    REQUIRE(pin.read() == false);
+    bool state = pin.read();
+    REQUIRE_FALSE(state);
     int before = allocCount.load();
     pin.write(true);
-    REQUIRE(pin.read() == true);
+    state = pin.read();
+    REQUIRE(state);
     REQUIRE(allocCount.load() == before);
 }

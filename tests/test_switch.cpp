@@ -16,7 +16,9 @@ TEST_CASE("Switch initializes", "[switch]")
 {
     DummySwitch sw;
     REQUIRE_FALSE(sw.initialized);
+    // cppcheck-suppress unreadVariable
     int before = allocCount.load();
+    static_cast<void>(before);
     sw.init();
     REQUIRE(sw.initialized);
     REQUIRE(allocCount.load() == before);

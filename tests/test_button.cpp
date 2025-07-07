@@ -19,6 +19,7 @@ TEST_CASE("Button initializes", "[button]")
     DummyButton b;
     REQUIRE_FALSE(b.initialized);
     int before = allocCount.load();
+    static_cast<void>(before);
     b.init();
     REQUIRE(b.initialized);
     REQUIRE(allocCount.load() == before);
@@ -31,6 +32,8 @@ TEST_CASE("Click duration threshold is configurable", "[button]")
     b.press();
     std::this_thread::sleep_for(std::chrono::milliseconds(20));
     int before = allocCount.load();
+    static_cast<void>(before);
+    // cppcheck-suppress comparisonOfFuncReturningBoolError
     REQUIRE(b.release());
     REQUIRE(allocCount.load() == before);
 
@@ -38,6 +41,8 @@ TEST_CASE("Click duration threshold is configurable", "[button]")
     b.press();
     std::this_thread::sleep_for(std::chrono::milliseconds(20));
     before = allocCount.load();
+    static_cast<void>(before);
+    // cppcheck-suppress comparisonOfFuncReturningBoolError
     REQUIRE_FALSE(b.release());
     REQUIRE(allocCount.load() == before);
 }
