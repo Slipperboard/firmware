@@ -1,5 +1,9 @@
 # Slipperboard
 
+<p align="center">
+  <img src="assets/repo-logo.png" alt="Slipperboard logo" width="200" />
+</p>
+
 This project is the starting point for building a Flipper Zero–compatible firmware targeting an ESP32-based board. It uses [PlatformIO](https://platformio.org/) for the build environment and the [ESP-IDF](https://docs.espressif.com/projects/esp-idf/en/latest/) framework.
 
 ## Directory Layout
