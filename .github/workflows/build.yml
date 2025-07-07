@@ -44,6 +44,7 @@ jobs:
           nix_path: nixpkgs=channel:nixos-unstable
           extra_nix_config: |
             experimental-features = nix-command flakes
+            sandbox = false
       - name: Check flake.nix
         run: nix flake show
       - name: Build inside Nix shell
