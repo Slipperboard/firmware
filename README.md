@@ -73,6 +73,8 @@ Check code conventions with cpplint:
 make cpplint
 ```
 This command fails if cpplint reports any style issues.
+The included `CPPLINT.cfg` file sets a 120-character line length and
+disables several noisy checks so that the current codebase passes.
 
 For additional diagnostics, run clang-tidy over the source files with:
 
