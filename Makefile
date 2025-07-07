@@ -28,7 +28,7 @@ lint:
 	--error-exitcode=1 -Iinclude -Isrc \
 	src include
 tidy:
-	clang-tidy $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp') -- -std=c++17 -Iinclude -quiet || true
+	clang-tidy -quiet $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp') -- -std=c++17 -Iinclude || true
 
 	
 coverage:

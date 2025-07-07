@@ -4,11 +4,21 @@
 #include "Peripheral.hpp"
 #include <cstddef>
 
+struct Dimensions {
+    int width;
+    int height;
+};
+
+struct Point {
+    int x;
+    int y;
+};
+
 class Display : public Peripheral
 {
     public:
     // Construct a rectangular display
-    Display(int width, int height);
+    explicit Display(Dimensions dims);
     // Construct a circular display
     explicit Display(int radius);
     ~Display() override;
@@ -18,8 +28,8 @@ class Display : public Peripheral
     int getRadius() const;
     bool isCircular() const;
 
-    // Draw a series of bytes at the given x/y coordinate
-    virtual void drawBytes(int x, int y, const unsigned char *data, std::size_t length) = 0;
+    // Draw a series of bytes at the given coordinate
+    virtual void drawBytes(Point pos, const unsigned char *data, std::size_t length) = 0;
 
     protected:
     bool circular;
