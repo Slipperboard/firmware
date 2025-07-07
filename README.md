@@ -82,7 +82,7 @@ make format
 You can create a reproducible environment using [Nix](https://nixos.org/). After installing Nix, run:
 
 ```bash
-nix develop
+nix develop --option sandbox false
 ```
 
-This command drops you into a shell with PlatformIO, gcc and the tools used by the Makefile targets. From there, use `make build`, `make test` and the other commands as described above.
+This command drops you into a shell with PlatformIO, gcc and the tools used by the Makefile targets. The `--option sandbox false` flag avoids `bubblewrap` permission errors on systems where user namespaces are unavailable. Inside the shell, use `make build`, `make test` and the other commands as described above.
