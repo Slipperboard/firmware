@@ -20,7 +20,8 @@ test:
 
 lint:
 	cppcheck --enable=all --inconclusive --std=c++17 --force \
-	--error-exitcode=1 src include tests
+	--error-exitcode=1 -Iinclude -Isrc -Itests -Ilib/Catch2 \
+	src include tests
 
 coverage:
 	g++ $(TEST_FLAGS) --coverage $(TEST_SRCS) -o test_all_cov
