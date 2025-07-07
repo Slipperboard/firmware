@@ -1,4 +1,4 @@
-.PHONY: build test clean lint tidy coverage format check-format precommit
+.PHONY: build test clean lint tidy cpplint coverage format check-format precommit
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
 TEST_SRCS = \
@@ -12,6 +12,7 @@ TEST_SRCS = \
 	src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp
 
 FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tests/*.hpp')
+CPPLINT_FILES := $(FMT_FILES)
 
 build:
 	platformio run
@@ -27,6 +28,9 @@ lint:
 	--suppress=missingInclude --suppress=unmatchedSuppression --suppress=unusedFunction \
 	--error-exitcode=1 -Iinclude -Isrc \
 	src include
+
+cpplint:
+	cpplint $(CPPLINT_FILES) || true
 TIDY_FILES := $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp')
 tidy:
 	clang-tidy $(TIDY_FILES) -- -std=c++17 -Iinclude > clang-tidy.log 2>&1
@@ -56,6 +60,7 @@ clean:
 precommit:
 	$(MAKE) build
 	$(MAKE) check-format
+	$(MAKE) cpplint
 	$(MAKE) lint
 	$(MAKE) tidy
 	$(MAKE) test

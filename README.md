@@ -43,6 +43,7 @@ Additional tools can check code quality and coverage. Install them with:
 ```bash
 sudo apt-get update
 sudo apt-get install -y clang-tidy clang-format cppcheck gcovr
+pip install --user cpplint
 ```
 
 ## Running Unit Tests
@@ -65,6 +66,13 @@ make lint
 The linter returns a non-zero exit code if any issues are detected. It
 searches the `include`, `src`, and `tests` directories so project headers
 are recognized by cppcheck.
+
+Check code conventions with cpplint:
+
+```bash
+make cpplint
+```
+This command fails if cpplint reports any style issues.
 
 For additional diagnostics, run clang-tidy over the source files with:
 
@@ -103,8 +111,8 @@ Run all checks sequentially before committing:
 make precommit
 ```
 
-This command runs `make build`, `make check-format`, `make lint`, `make tidy`,
-`make test` and `make coverage` in order.
+This command runs `make build`, `make check-format`, `make cpplint`,
+`make lint`, `make tidy`, `make test` and `make coverage` in order.
 
 ## Nix Development Shell
 
