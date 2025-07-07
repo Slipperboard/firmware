@@ -36,9 +36,8 @@ void OledDisplay::readBytes(Point pos, unsigned char *out, std::size_t length) c
         if (px < 0 || px >= width || py < 0 || py >= height)
         {
             out[i] = 0;
-        } else
-        {
-            out[i] = buffer[py * width + px];
+            continue;
         }
+        out[i] = buffer[py * width + px];
     }
 }
