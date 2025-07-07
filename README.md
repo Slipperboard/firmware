@@ -67,6 +67,7 @@ For additional diagnostics, run clang-tidy over the source files with:
 ```bash
 make tidy
 ```
+This command fails if clang-tidy finds any issues.
 
 Generate a coverage report:
 

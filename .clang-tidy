@@ -1,2 +1,2 @@
 Checks: '-*,bugprone-*,clang-analyzer-*'
-WarningsAsErrors: ''
+WarningsAsErrors: '*'
