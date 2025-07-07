@@ -17,6 +17,7 @@
             pkgs.gcc
             pkgs.cppcheck
             pkgs.clang-tools
+            pkgs.python3Packages.cpplint
             pkgs.gcovr
           ];
         };

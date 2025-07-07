@@ -32,11 +32,15 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
       - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy
+        run: |
+          sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy
+          pip install --user cpplint
       - name: Check formatting
         run: make check-format
       - name: Lint
         run: make lint
+      - name: Cpplint
+        run: make cpplint
       - name: Static analysis
         run: make tidy
 
