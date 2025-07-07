@@ -1,25 +1,18 @@
-.PHONY: build release test clean lint coverage
+.PHONY: build test clean lint coverage
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
 TEST_SRCS = \
-    lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
-    tests/MemoryTracker.cpp \
-    tests/test_module.cpp tests/test_sensor.cpp tests/test_switch.cpp \
-    tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
-    tests/test_analogpin.cpp tests/test_oleddisplay.cpp \
-    src/Module.cpp src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp \
-    src/OledDisplay.cpp \
-    src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp
+	lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
+	tests/MemoryTracker.cpp \
+	tests/test_module.cpp tests/test_sensor.cpp tests/test_switch.cpp \
+	tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
+	tests/test_analogpin.cpp tests/test_oleddisplay.cpp \
+	src/Module.cpp src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp \
+	src/OledDisplay.cpp \
+	src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp
 
 build:
 	platformio run
-
-release:
-	platformio run \
-	--project-option="build_type=release" \
-	--project-option="build_flags=-Os -flto -ffunction-sections -fdata-sections" \
-	--project-option="link_flags=-Wl,--gc-sections -flto" && \
-	platformio run --target size
 
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
