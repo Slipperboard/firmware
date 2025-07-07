@@ -30,7 +30,7 @@ from `app_main()`.
 Build the firmware using the Makefile:
 
 ```bash
-make build   # builds the firmware via PlatformIO
+make build   # builds the firmware via PlatformIO and shows size
 make clean   # removes PlatformIO artifacts and the test binary
 ```
 
@@ -76,3 +76,12 @@ Automatically apply the project's clang-format style with:
 make format
 ```
 
+## Nix Development Shell
+
+You can create a reproducible environment using [Nix](https://nixos.org/). After installing Nix, run:
+
+```bash
+nix develop
+```
+
+This command drops you into a shell with PlatformIO, gcc and the tools used by the Makefile targets. From there, use `make build`, `make test` and the other commands as described above.

@@ -15,6 +15,7 @@ FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tes
 
 build:
 	platformio run
+	platformio run --target size
 
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
