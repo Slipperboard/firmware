@@ -86,3 +86,7 @@ nix develop
 ```
 
 This command drops you into a shell with PlatformIO, gcc and the tools used by the Makefile targets. From there, use `make build`, `make test` and the other commands as described above.
+
+## VS Code Dev Container
+
+The repository includes a [devcontainer](.devcontainer) setup for VS Code. With the Remote Containers extension installed, you can open the project inside a container that has PlatformIO and the required C++ tools pre-installed. The CI workflow builds this image and runs a quick smoke test to ensure it stays in sync with the code base.
