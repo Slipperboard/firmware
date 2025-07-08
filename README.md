@@ -13,7 +13,7 @@ This project is the starting point for building a Flipper Zero–compatible firm
 - `lib/` – Optional external libraries.
 - `platformio.ini` – PlatformIO configuration.
 
-## Entry Point
+## Entrypoint
 
 The firmware starts from an `app_main()` function instead of Arduino's `setup()` and `loop()` routines. The main loop simply prints a message every second using standard ESP-IDF APIs.
 
@@ -38,13 +38,6 @@ make build   # builds the firmware via PlatformIO and shows size
 make clean   # removes PlatformIO artifacts and the test binary
 ```
 
-Additional tools can check code quality and coverage. Install them with:
-
-```bash
-sudo apt-get update
-sudo apt-get install -y clang-tidy clang-format cppcheck gcovr
-pip install --user cpplint
-```
 
 ## Running Unit Tests
 
@@ -63,27 +56,18 @@ Run static analysis with:
 ```bash
 make lint
 ```
-The linter returns a non-zero exit code if any issues are detected. It
-searches the `include`, `src`, and `tests` directories so project headers
-are recognized by cppcheck.
 
 Check code conventions with cpplint:
 
 ```bash
 make cpplint
 ```
-This command fails if cpplint reports any style issues.
-The included `CPPLINT.cfg` file sets a 120-character line length and
-disables several noisy checks so that the current codebase passes.
-The GitHub Actions workflow also runs `make cpplint` on every push.
 
 For additional diagnostics, run clang-tidy over the source files with:
 
 ```bash
 make tidy
 ```
-This command fails if clang-tidy reports any warnings or errors. The
-project's `.clang-tidy` configuration marks all diagnostics as errors.
 
 Generate a coverage report:
 
@@ -125,4 +109,4 @@ You can create a reproducible environment using [Nix](https://nixos.org/). After
 nix develop
 ```
 
-This command drops you into a shell with PlatformIO, gcc and the tools used by the Makefile targets. From there, use `make build`, `make test` and the other commands as described above.
+This drops you into a shell with PlatformIO, gcc and the Makefile tools available.
