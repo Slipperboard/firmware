@@ -1,6 +1,7 @@
 #ifndef OLED_DISPLAY_HPP
 #define OLED_DISPLAY_HPP
 
+#include "AdafruitDisplayStub.hpp"
 #include "Display.hpp"
 #include <vector>
 
@@ -19,6 +20,7 @@ class OledDisplay : public Display
     private:
     std::vector<unsigned char> buffer;
     bool initialized = false;
+    AdafruitDisplayStub hw;
 };
 
 #endif // OLED_DISPLAY_HPP
