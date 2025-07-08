@@ -13,13 +13,6 @@ This project is the starting point for building a Flipper Zero–compatible firm
 - `lib/` – Optional external libraries.
 - `platformio.ini` – PlatformIO configuration.
 
-## Libraries
-
-The project includes dependencies for [LVGL](https://lvgl.io) and
-the [Adafruit SSD1306](https://github.com/adafruit/Adafruit_SSD1306) OLED
-display library (along with its GFX core). PlatformIO automatically
-downloads these libraries based on the entries in `platformio.ini`.
-
 ## Entrypoint
 
 The firmware starts from an `app_main()` function instead of Arduino's `setup()` and `loop()` routines. The main loop simply prints a message every second using standard ESP-IDF APIs.
