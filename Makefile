@@ -52,7 +52,7 @@ SIM_SRCS := $(shell git ls-files 'src/*.cpp') simulator/sim_main.cpp simulator/f
 simulate:
 	@mkdir -p simulator/bin
 	@g++ $(SIM_FLAGS) $(SIM_SRCS) -o simulator/bin/simulator
-	@timeout 2s ./simulator/bin/simulator || true
+	@timeout 2s ./simulator/bin/simulator
 
 
 format:
