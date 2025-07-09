@@ -81,8 +81,8 @@ This target fails if line coverage is below 100%.
 Run the firmware on your desktop with a small stub of FreeRTOS. The
 `simulate` target compiles the normal firmware sources together with the
 headers and C++ implementation under `simulator/` and then executes the
-resulting binary on the host. The Makefile limits execution to a couple
-of seconds so the build won't hang.
+resulting binary on the host. The Makefile limits execution to ten
+seconds so the build won't hang.
 
 ```bash
 make simulate
