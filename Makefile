@@ -1,12 +1,13 @@
-.PHONY: build test clean lint tidy cpplint coverage format check-format precommit
+.PHONY: build test clean lint tidy cpplint coverage format check-format precommit simulate
 
-TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
+TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -Isimulator -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
 TEST_SRCS = \
 	lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
 	tests/MemoryTracker.cpp \
 	tests/test_module.cpp tests/test_sensor.cpp tests/test_switch.cpp \
 	tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
 	tests/test_analogpin.cpp tests/test_oleddisplay.cpp \
+	tests/test_simulator.cpp simulator/freertos/freertos.cpp \
 	src/Module.cpp src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp \
 	src/OledDisplay.cpp \
 	src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp
@@ -45,6 +46,14 @@ coverage:
 	gcovr -r . --exclude-directories=lib --exclude='.*Catch2.*' --print-summary --fail-under-line=100
 	$(RM) *.gcno *.gcda test_all_cov
 
+SIM_FLAGS = -Isrc -Iinclude -Isimulator -std=c++17
+SIM_SRCS := $(shell git ls-files 'src/*.cpp') simulator/sim_main.cpp simulator/freertos/freertos.cpp
+
+simulate:
+	@mkdir -p simulator/bin
+	@g++ $(SIM_FLAGS) $(SIM_SRCS) -o simulator/bin/simulator
+	@timeout 2s ./simulator/bin/simulator || true
+
 
 format:
 	clang-format -i $(FMT_FILES)
@@ -65,3 +74,4 @@ precommit:
 	$(MAKE) tidy
 	$(MAKE) test
 	$(MAKE) coverage
+	$(MAKE) simulate

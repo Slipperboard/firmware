@@ -76,6 +76,22 @@ make coverage
 ```
 This target fails if line coverage is below 100%.
 
+## Simulator
+
+Run the firmware on your desktop with a small stub of FreeRTOS. The
+`simulate` target compiles the normal firmware sources together with the
+headers and C++ implementation under `simulator/` and then executes the
+resulting binary on the host. The Makefile limits execution to a couple
+of seconds so the build won't hang.
+
+```bash
+make simulate
+```
+
+Use this to quickly check that the firmware builds and prints the expected
+messages without needing any ESP32 hardware. The simulator is intentionally
+minimal and only implements what the demo application requires.
+
 ## Formatting
 
 Automatically apply the project's clang-format style with:
