@@ -1,4 +1,4 @@
-.PHONY: build test clean lint tidy cpplint coverage format check-format precommit emulate
+.PHONY: build test clean lint tidy cpplint coverage format check-format precommit emulate wokwi-sanity
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
 TEST_SRCS = \
@@ -68,3 +68,6 @@ precommit:
 
 emulate: build
 	wokwi-cli .
+
+wokwi-sanity:
+	python3 scripts/wokwi_sanity.py

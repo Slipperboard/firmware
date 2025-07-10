@@ -23,6 +23,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck gcovr
       - name: Build firmware
         run: make build
+      - name: Wokwi config sanity
+        run: make wokwi-sanity
 
   sanity:
     if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
