@@ -110,3 +110,32 @@ nix develop
 ```
 
 This drops you into a shell with PlatformIO, gcc and the Makefile tools available.
+
+## Emulator
+
+You can also run the firmware inside the [Wokwi](https://wokwi.com/) emulator to
+test changes without hardware. First install the Wokwi CLI (e.g.
+`npm install -g @wokwi/cli`) and build the project:
+
+```bash
+make build
+```
+
+Then start the simulator:
+
+```bash
+make emulate
+```
+
+The emulator uses `wokwi.toml` and `diagram.json` to locate the firmware files
+and board settings. The simulator opens a browser window with the running
+firmware.
+
+To verify your emulator configuration without launching the simulator, run:
+
+```bash
+make wokwi-sanity
+```
+
+This checks that `wokwi.toml` and `diagram.json` are well-formed and reference
+existing files.

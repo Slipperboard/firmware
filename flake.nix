@@ -19,6 +19,7 @@
             pkgs.clang-tools
             pkgs.python3Packages.cpplint
             pkgs.gcovr
+            pkgs.nodejs
           ];
         };
       });
