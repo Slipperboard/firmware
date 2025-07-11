@@ -9,11 +9,21 @@
       "top": 0,
       "left": 0,
       "attrs": { "fullBoot": "1" }
+    },
+    {
+      "type": "wokwi-ssd1306",
+      "id": "oled",
+      "top": -60,
+      "left": 140
     }
   ],
   "connections": [
     ["esp:TX0", "$serialMonitor:RX", "", []],
-    ["esp:RX0", "$serialMonitor:TX", "", []]
+    ["esp:RX0", "$serialMonitor:TX", "", []],
+    ["esp:21", "oled:SDA", "green", []],
+    ["esp:22", "oled:SCL", "green", []],
+    ["esp:3V3", "oled:VCC", "red", []],
+    ["esp:GND.1", "oled:GND", "black", []]
   ],
   "serialMonitor": {
     "display": "terminal"
