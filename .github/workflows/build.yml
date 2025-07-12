@@ -77,7 +77,7 @@ jobs:
         with:
           imageName: slipperboard-devcontainer
           push: never
-          subFolder: .devcontainer
+          subFolder: .
           runCmd: make precommit
 
 
