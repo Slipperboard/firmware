@@ -75,6 +75,9 @@ jobs:
           ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
       - uses: devcontainers/ci@v0.3
         with:
+          imageName: slipperboard-devcontainer
+          push: never
+          subFolder: .devcontainer
           runCmd: make precommit
 
 

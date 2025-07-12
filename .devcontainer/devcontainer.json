@@ -1,7 +1,8 @@
 {
     "name": "Slipperboard",
     "build": {
-        "dockerfile": "Dockerfile"
+        "dockerfile": "Dockerfile",
+        "context": ".."
     },
     "features": {},
     "postCreateCommand": "make build || true",
