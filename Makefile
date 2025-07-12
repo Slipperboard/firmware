@@ -38,14 +38,10 @@ tidy:
 	! grep -E "(warning:|error:)" clang-tidy.log
 	rm clang-tidy.log
 qodana:
-	docker run --rm 
-		-e QODANA_ACCEPT_LICENSE=yes 
-		-v $(PWD):/data/project 
+	docker run --rm \
+		-e QODANA_ACCEPT_LICENSE=yes \
+		-v $(PWD):/data/project \
 		jetbrains/qodana-cpp:latest
-
-
-
-	
 coverage:
 	g++ $(TEST_FLAGS) --coverage $(TEST_SRCS) -o test_all_cov
 	./test_all_cov --reporter console --success
