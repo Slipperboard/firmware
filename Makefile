@@ -71,3 +71,6 @@ emulate: build
 
 wokwi-sanity:
 	python3 scripts/wokwi_sanity.py
+
+devcontainer:
+	devcontainer up --workspace-folder .
