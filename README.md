@@ -111,6 +111,16 @@ nix develop
 
 This drops you into a shell with PlatformIO, gcc and the Makefile tools available.
 
+## Dev Container
+
+To work inside a fully configured VS Code dev container, run:
+
+```bash
+make devcontainer
+```
+
+This command starts the container defined in `.devcontainer` and attaches to it.
+
 ## Emulator
 
 You can also run the firmware inside the [Wokwi](https://wokwi.com/) emulator to

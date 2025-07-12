@@ -1,0 +1,15 @@
+{
+    "name": "Slipperboard",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "features": {},
+    "postCreateCommand": "make build || true",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "C_Cpp.clang_format_style": "file"
+            }
+        }
+    }
+}
