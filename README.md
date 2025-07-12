@@ -33,6 +33,17 @@ from `app_main()`.
 
 Build the firmware using the Makefile:
 
+### Install PlatformIO
+
+The build relies on the PlatformIO CLI. If it is not already available, install
+it with:
+
+```bash
+pip install --user platformio
+```
+
+After the CLI is installed you can run the build targets below.
+
 ```bash
 make build   # builds the firmware via PlatformIO and shows size
 make clean   # removes PlatformIO artifacts and the test binary
