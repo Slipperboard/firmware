@@ -5,7 +5,7 @@
         "context": ".."
     },
     "features": {},
-    "postCreateCommand": "make build || true",
+    "postCreateCommand": "make build",
     "customizations": {
         "vscode": {
             "settings": {
