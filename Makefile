@@ -1,4 +1,4 @@
-.PHONY: build test clean lint tidy cpplint coverage format check-format precommit emulate wokwi-sanity
+.PHONY: build test clean lint tidy cpplint coverage format check-format precommit emulate wokwi-sanity qodana
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
 TEST_SRCS = \
@@ -37,6 +37,13 @@ tidy:
 	cat clang-tidy.log
 	! grep -E "(warning:|error:)" clang-tidy.log
 	rm clang-tidy.log
+qodana:
+	docker run --rm 
+		-e QODANA_ACCEPT_LICENSE=yes 
+		-v $(PWD):/data/project 
+		jetbrains/qodana-cpp:latest
+
+
 
 	
 coverage:

@@ -69,6 +69,12 @@ For additional diagnostics, run clang-tidy over the source files with:
 make tidy
 ```
 
+Run JetBrains Qodana static analysis with:
+
+```bash
+make qodana
+```
+
 Generate a coverage report:
 
 ```bash

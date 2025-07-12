@@ -45,6 +45,8 @@ jobs:
         run: make cpplint
       - name: Static analysis
         run: make tidy
+      - name: Qodana
+        run: make qodana
 
   unit-tests:
     if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
