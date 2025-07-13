@@ -28,7 +28,7 @@ DistanceReading HcSr04::readDistance() const
 
     // Wait for echo to go HIGH with a timeout
     auto timeout = std::chrono::steady_clock::now() + std::chrono::milliseconds(60);
-    while (!echoPin.read())
+    while (echoPin.read() == false)
     {
         if (std::chrono::steady_clock::now() > timeout)
             return {};
@@ -36,7 +36,7 @@ DistanceReading HcSr04::readDistance() const
     auto start = std::chrono::steady_clock::now();
 
     // Measure how long echo stays HIGH
-    while (echoPin.read())
+    while (echoPin.read() == true)
     {
         if (std::chrono::steady_clock::now() > timeout)
             return {};
