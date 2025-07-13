@@ -1,5 +1,6 @@
-#include "HcSr04.hpp"
 #include <thread>
+
+#include "HcSr04.hpp"
 
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
 HcSr04::HcSr04(const DigitalPin &trigger, const DigitalPin &echo) : triggerPin(trigger), echoPin(echo)
