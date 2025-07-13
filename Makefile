@@ -33,9 +33,11 @@ check-format:
 cpplint:
 	cpplint $(CPPLINT_FILES) || (echo "cpplint style violations found" && exit 1)
 
+# Use --force to check all preprocessor configurations.
+# --max-configs suppresses cppcheck's "too many #ifdef" warnings.
 lint:
 	cppcheck --enable=all --inconclusive --std=c++17 --force --max-configs=2 --inline-suppr \
-        --suppress=missingIncludeSystem \
+	--suppress=missingIncludeSystem \
 	--suppress=missingInclude --suppress=unmatchedSuppression --suppress=unusedFunction \
 	--error-exitcode=1 -Iinclude -Isrc \
 	src include
