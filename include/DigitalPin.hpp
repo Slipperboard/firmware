@@ -10,7 +10,7 @@ class DigitalPin : public Pin<bool>
     ~DigitalPin() override;
 
     bool read() const override;
-    void write(bool value) override;
+    void write(bool value) const override;
 };
 
 #endif // DIGITAL_PIN_HPP

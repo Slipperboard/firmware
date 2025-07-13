@@ -13,15 +13,15 @@ struct __attribute__((packed)) DistanceReading {
 class HcSr04 : public Module
 {
     public:
-    HcSr04(DigitalPin &trigger, DigitalPin &echo);
+    HcSr04(const DigitalPin &trigger, const DigitalPin &echo);
     ~HcSr04() override = default;
 
     void init() override;
     DistanceReading readDistance() const;
 
     private:
-    DigitalPin &triggerPin;
-    DigitalPin &echoPin;
+    const DigitalPin &triggerPin;
+    const DigitalPin &echoPin;
     bool initialized = false;
 };
 

@@ -10,7 +10,7 @@ class AnalogPin : public Pin<int>
     ~AnalogPin() override;
 
     int read() const override;
-    void write(int value) override;
+    void write(int value) const override;
 };
 
 #endif // ANALOG_PIN_HPP

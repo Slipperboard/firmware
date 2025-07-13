@@ -11,7 +11,7 @@ bool DigitalPin::read() const
     return this->value;
 }
 
-void DigitalPin::write(bool value)
+void DigitalPin::write(bool value) const
 {
     if (this->mode == PinMode::Output)
     {

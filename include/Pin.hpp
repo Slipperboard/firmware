@@ -15,11 +15,11 @@ template <typename T> class Pin : public Peripheral
     void init() override;
     PinMode getMode() const;
     virtual T read() const = 0;
-    virtual void write(T value) = 0;
+    virtual void write(T value) const = 0;
 
     protected:
     PinMode mode;
-    T value;
+    mutable T value;
 };
 
 #endif // PIN_HPP

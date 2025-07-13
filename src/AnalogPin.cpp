@@ -11,7 +11,7 @@ int AnalogPin::read() const
     return this->value;
 }
 
-void AnalogPin::write(int value)
+void AnalogPin::write(int value) const
 {
     if (this->mode == PinMode::Output)
     {
