@@ -15,7 +15,9 @@ void OledDisplay::drawBytes(Point pos, const unsigned char *data, std::size_t le
 {
     // Simple buffer write emulation. Each byte represents a pixel.
     if (!initialized)
+    {
         return;
+    }
     for (std::size_t i = 0; i < length; ++i)
     {
         int px = pos.x + static_cast<int>(i);
