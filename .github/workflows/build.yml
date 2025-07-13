@@ -26,26 +26,6 @@ jobs:
       - name: Wokwi config sanity
         run: make wokwi-sanity
 
-  sanity:
-    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
-      - name: Install tools
-        run: |
-          sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy
-          pip install --user cpplint
-      - name: Check formatting
-        run: make check-format
-      - name: Lint
-        run: make lint
-      - name: Cpplint
-        run: make cpplint
-      - name: Static analysis
-        run: make tidy
-
   unit-tests:
     if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
@@ -66,4 +46,22 @@ jobs:
       - name: Coverage
         run: make coverage
 
-
+  sanity:
+    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+      - name: Install tools
+        run: |
+          sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy
+          pip install --user cpplint
+      - name: Check formatting
+        run: make check-format
+      - name: Lint
+        run: make lint
+      - name: Cpplint
+        run: make cpplint
+      - name: Static analysis
+        run: make tidy
