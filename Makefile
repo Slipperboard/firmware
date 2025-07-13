@@ -34,8 +34,8 @@ cpplint:
 	cpplint $(CPPLINT_FILES) || (echo "cpplint style violations found" && exit 1)
 
 lint:
-	cppcheck --enable=all --inconclusive --std=c++17 --force --max-configs=1 --inline-suppr \
-	--suppress=missingIncludeSystem \
+	cppcheck --enable=all --inconclusive --std=c++17 --force --max-configs=2 --inline-suppr \
+        --suppress=missingIncludeSystem \
 	--suppress=missingInclude --suppress=unmatchedSuppression --suppress=unusedFunction \
 	--error-exitcode=1 -Iinclude -Isrc \
 	src include
