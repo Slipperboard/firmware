@@ -13,8 +13,7 @@ void DigitalPin::init()
 {
 #ifdef ESP_PLATFORM
     gpio_reset_pin(static_cast<gpio_num_t>(number));
-    gpio_set_direction(static_cast<gpio_num_t>(number),
-                       mode == PinMode::Output ? GPIO_MODE_OUTPUT : GPIO_MODE_INPUT);
+    gpio_set_direction(static_cast<gpio_num_t>(number), mode == PinMode::Output ? GPIO_MODE_OUTPUT : GPIO_MODE_INPUT);
 #endif
 }
 

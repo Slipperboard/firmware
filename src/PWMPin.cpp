@@ -3,8 +3,7 @@
 #include "driver/ledc.h"
 #endif
 
-PWMPin::PWMPin(int number, PinMode mode, int value)
-    : Pin<int>(number, mode, value), channel(0)
+PWMPin::PWMPin(int number, PinMode mode, int value) : Pin<int>(number, mode, value), channel(0)
 {
 #ifdef ESP_PLATFORM
     channel = LEDC_CHANNEL_0;
