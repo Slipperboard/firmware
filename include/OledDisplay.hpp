@@ -4,6 +4,13 @@
 #include "Display.hpp"
 #include <vector>
 
+#ifdef ESP_PLATFORM
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <Wire.h>
+#include <lvgl.h>
+#endif
+
 class OledDisplay : public Display
 {
     public:
@@ -19,6 +26,9 @@ class OledDisplay : public Display
     private:
     std::vector<unsigned char> buffer;
     bool initialized = false;
+#ifdef ESP_PLATFORM
+    Adafruit_SSD1306 oled{128, 64, &Wire, -1};
+#endif
 };
 
 #endif // OLED_DISPLAY_HPP
