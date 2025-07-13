@@ -21,10 +21,10 @@ void AnalogPin::init()
     {
         if (number == 25)
         {
-            dac_output_enable(DAC_CHANNEL_1);
+            dac_output_enable(DAC_CHAN_0);
         } else if (number == 26) // NOLINT(readability/braces)
         {
-            dac_output_enable(DAC_CHANNEL_2);
+            dac_output_enable(DAC_CHAN_1);
         }
     }
 #endif
@@ -48,10 +48,10 @@ void AnalogPin::write(int value)
 #ifdef ESP_PLATFORM
         if (number == 25)
         {
-            dac_output_voltage(DAC_CHANNEL_1, static_cast<uint8_t>(value));
+            dac_output_voltage(DAC_CHAN_0, static_cast<uint8_t>(value));
         } else if (number == 26) // NOLINT(readability/braces)
         {
-            dac_output_voltage(DAC_CHANNEL_2, static_cast<uint8_t>(value));
+            dac_output_voltage(DAC_CHAN_1, static_cast<uint8_t>(value));
         }
 #endif
         this->value = value;
