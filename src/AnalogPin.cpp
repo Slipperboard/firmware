@@ -1,5 +1,8 @@
 #include "AnalogPin.hpp"
 #ifdef ESP_PLATFORM
+// Silence deprecation warning from the legacy ADC driver until the
+// new oneshot/continuous APIs are adopted.
+#define ADC_FORCE_USE_LEGACY_DRIVER
 #include "driver/adc.h"
 #include "driver/dac.h"
 #endif
