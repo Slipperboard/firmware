@@ -6,7 +6,7 @@
 class AnalogPin : public Pin<int>
 {
     public:
-    explicit AnalogPin(int pinNumber, PinMode mode, int value = 0);
+    explicit AnalogPin(int number, PinMode mode, int value = 0);
     ~AnalogPin() override;
 
     void init() override;

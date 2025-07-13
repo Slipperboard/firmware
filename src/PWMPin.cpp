@@ -3,7 +3,7 @@
 #include "driver/ledc.h"
 #endif
 
-PWMPin::PWMPin(int pinNumber, PinMode mode, int value) : Pin<int>(pinNumber, mode, value)
+PWMPin::PWMPin(int number, PinMode mode, int value) : Pin<int>(number, mode, value)
 {
 #ifdef ESP_PLATFORM
     channel = LEDC_CHANNEL_0;
@@ -23,7 +23,7 @@ void PWMPin::init()
     ledc_timer_config(&timer_conf);
 
     ledc_channel_config_t ch_conf{};
-    ch_conf.gpio_num = pinNumber;
+    ch_conf.gpio_num = number;
     ch_conf.speed_mode = LEDC_LOW_SPEED_MODE;
     ch_conf.channel = static_cast<ledc_channel_t>(channel);
     ch_conf.timer_sel = LEDC_TIMER_0;

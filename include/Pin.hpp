@@ -9,7 +9,7 @@ enum class PinMode { Input, Output };
 template <typename T> class Pin : public Peripheral
 {
     public:
-    Pin(int pinNumber, PinMode mode, T value = T{});
+    Pin(int number, PinMode mode, T value = T{});
     ~Pin() override;
 
     void init() override;
@@ -19,7 +19,7 @@ template <typename T> class Pin : public Peripheral
     virtual void write(T value) = 0;
 
     protected:
-    int pinNumber;
+    int number;
     PinMode mode;
     T value;
 };

@@ -1,6 +1,6 @@
 #include "Pin.hpp"
 
-template <typename T> Pin<T>::Pin(int pinNumber, PinMode mode, T value) : pinNumber(pinNumber), mode(mode), value(value)
+template <typename T> Pin<T>::Pin(int number, PinMode mode, T value) : number(number), mode(mode), value(value)
 {
 }
 
@@ -19,7 +19,7 @@ template <typename T> PinMode Pin<T>::getMode() const
 
 template <typename T> int Pin<T>::getPinNumber() const
 {
-    return pinNumber;
+    return number;
 }
 
 // Explicit template instantiations for bool and int
