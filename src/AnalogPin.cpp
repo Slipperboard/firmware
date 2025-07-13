@@ -19,7 +19,7 @@ void AnalogPin::init()
     if (mode == PinMode::Input)
     {
         adc1_config_width(ADC_WIDTH_BIT_12);
-        adc1_config_channel_atten(static_cast<adc1_channel_t>(number), ADC_ATTEN_DB_11);
+        adc1_config_channel_atten(static_cast<adc1_channel_t>(number), ADC_ATTEN_DB_12);
     } else // NOLINT(readability/braces)
     {
         if (number == 25)
