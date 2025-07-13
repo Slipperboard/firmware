@@ -14,9 +14,7 @@ class PWMPin : public Pin<int>
     void write(int value) override;
 
     private:
-#ifdef ESP_PLATFORM
     int channel;
-#endif
 };
 
 #endif // PWM_PIN_HPP
