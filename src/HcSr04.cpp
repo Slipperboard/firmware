@@ -27,17 +27,22 @@ DistanceReading HcSr04::readDistance() const
     triggerPin.write(false);
 
     // Wait for echo to go HIGH with a timeout
+
     auto timeout = std::chrono::steady_clock::now() + std::chrono::milliseconds(60);
-    while (echoPin.read() == false)
+    while (true)
     {
+        if (echoPin.read())
+            break;
         if (std::chrono::steady_clock::now() > timeout)
             return {};
     }
     auto start = std::chrono::steady_clock::now();
 
     // Measure how long echo stays HIGH
-    while (echoPin.read() == true)
+    while (true)
     {
+        if (!echoPin.read())
+            break;
         if (std::chrono::steady_clock::now() > timeout)
             return {};
     }
