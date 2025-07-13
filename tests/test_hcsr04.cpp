@@ -6,8 +6,8 @@
 
 TEST_CASE("HcSr04 measures pulse duration", "[hcsr04]")
 {
-    DigitalPin trig(PinMode::Output, false);
-    DigitalPin echo(PinMode::Input, false);
+    DigitalPin trig(5, PinMode::Output, false);
+    DigitalPin echo(18, PinMode::Input, false);
     HcSr04 sensor(trig, echo);
     sensor.init();
 

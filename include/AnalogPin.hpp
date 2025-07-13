@@ -6,9 +6,10 @@
 class AnalogPin : public Pin<int>
 {
     public:
-    explicit AnalogPin(PinMode mode, int value = 0);
+    AnalogPin(int number, PinMode mode, int value = 0);
     ~AnalogPin() override;
 
+    void init() override;
     int read() const override;
     void write(int value) const override;
 };
