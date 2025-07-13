@@ -2,8 +2,7 @@
 #include <thread>
 
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-HcSr04::HcSr04(const DigitalPin &trigger, const DigitalPin &echo)
-    : triggerPin(trigger), echoPin(echo)
+HcSr04::HcSr04(const DigitalPin &trigger, const DigitalPin &echo) : triggerPin(trigger), echoPin(echo)
 {
 }
 
