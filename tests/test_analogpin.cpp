@@ -4,8 +4,9 @@
 
 TEST_CASE("AnalogPin read/write", "[analogpin]")
 {
-    AnalogPin pin(PinMode::Output, 128);
+    AnalogPin pin(36, PinMode::Output, 128);
     pin.init();
+    REQUIRE(pin.getPinNumber() == 36);
     REQUIRE(pin.getMode() == PinMode::Output);
     REQUIRE(pin.read() == 128);
     int before = allocCount.load();

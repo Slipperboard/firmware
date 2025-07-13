@@ -1,0 +1,22 @@
+#ifndef PWM_PIN_HPP
+#define PWM_PIN_HPP
+
+#include "Pin.hpp"
+
+class PWMPin : public Pin<int>
+{
+    public:
+    explicit PWMPin(int pinNumber, PinMode mode, int value = 0);
+    ~PWMPin() override;
+
+    void init() override;
+    int read() const override;
+    void write(int value) override;
+
+    private:
+#ifdef ESP_PLATFORM
+    int channel;
+#endif
+};
+
+#endif // PWM_PIN_HPP
