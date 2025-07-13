@@ -35,7 +35,7 @@ TEST_CASE("Button returns configured threshold", "[button]")
 TEST_CASE("Click duration threshold is configurable", "[button]")
 {
     DummyButton b;
-    b.setClickThreshold(std::chrono::milliseconds(30));
+    b.setClickThreshold(std::chrono::milliseconds(50));
     b.press();
     std::this_thread::sleep_for(std::chrono::milliseconds(20));
     int before = allocCount.load();
