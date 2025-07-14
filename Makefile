@@ -5,11 +5,11 @@ TEST_SRCS = \
 	lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
 	tests/MemoryTracker.cpp \
 	tests/test_module.cpp tests/test_sensor.cpp tests/test_switch.cpp \
-	tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
-	tests/test_analogpin.cpp tests/test_oleddisplay.cpp \
-	src/Module.cpp src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp \
-	src/OledDisplay.cpp \
-	src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp
+        tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
+        tests/test_analogpin.cpp tests/test_pwmpin.cpp tests/test_oleddisplay.cpp \
+        src/Module.cpp src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp \
+        src/OledDisplay.cpp \
+        src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp src/PWMPin.cpp
 
 FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tests/*.hpp')
 CPPLINT_FILES := $(FMT_FILES)
@@ -33,8 +33,10 @@ check-format:
 cpplint:
 	cpplint $(CPPLINT_FILES) || (echo "cpplint style violations found" && exit 1)
 
+# Use --force to check all preprocessor configurations.
+# --max-configs suppresses cppcheck's "too many #ifdef" warnings.
 lint:
-	cppcheck --enable=all --inconclusive --std=c++17 --force --max-configs=1 --inline-suppr \
+	cppcheck --enable=all --inconclusive --std=c++17 --force --max-configs=2 --inline-suppr \
 	--suppress=missingIncludeSystem \
 	--suppress=missingInclude --suppress=unmatchedSuppression --suppress=unusedFunction \
 	--error-exitcode=1 -Iinclude -Isrc \

@@ -3,14 +3,26 @@
 
 #include "Pin.hpp"
 
+#ifdef ESP_PLATFORM
+#include <driver/dac.h>
+#include <esp_adc/adc_oneshot.h>
+#endif
+
 class AnalogPin : public Pin<int>
 {
     public:
-    explicit AnalogPin(PinMode mode, int value = 0);
+    explicit AnalogPin(int number, PinMode mode, int value = 0);
     ~AnalogPin() override;
+
+    void init() override;
 
     int read() const override;
     void write(int value) override;
+
+    private:
+#ifdef ESP_PLATFORM
+    adc_oneshot_unit_handle_t adc_handle{};
+#endif
 };
 
 #endif // ANALOG_PIN_HPP
