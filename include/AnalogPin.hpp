@@ -4,7 +4,7 @@
 #include "Pin.hpp"
 
 #ifdef ESP_PLATFORM
-#include <driver/dac.h>
+#include <driver/dac_oneshot.h>
 #include <esp_adc/adc_oneshot.h>
 #endif
 
