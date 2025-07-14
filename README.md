@@ -38,6 +38,9 @@ make build   # builds the firmware via PlatformIO and shows size
 make clean   # removes PlatformIO artifacts and the test binary
 ```
 
+Compiler warnings are treated as errors, so address any warnings that appear
+during the build.
+
 
 ## Running Unit Tests
 

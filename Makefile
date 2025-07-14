@@ -1,6 +1,6 @@
 .PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity
 
-TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17
+TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
 	lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
 	tests/MemoryTracker.cpp \
