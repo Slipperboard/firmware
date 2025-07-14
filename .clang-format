@@ -1,65 +1,69 @@
-# Base style to inherit from
-BasedOnStyle: LLVM                # Start with LLVM formatting rules
+# Use LLVM style as a base (common, minimal, and readable)
+BasedOnStyle: LLVM
 
-# Indentation and line width
-IndentWidth: 4                   # Use 4 spaces per indentation level
-ColumnLimit: 120                 # Max line length before breaking
+# === Indentation and Line Width ===
+IndentWidth: 4                   # Indent using 4 spaces per level
+ColumnLimit: 120                # Maximum allowed line length before wrapping
 
-# Brace formatting (forces braces to start on new lines)
-BreakBeforeBraces: Custom         # Use a custom brace wrapping configuration
-BraceWrapping:                    # Detailed brace wrapping options
-  AfterClass: true               # New line after class declaration
-  AfterControlStatement: true    # New line after if, for, while, etc.
-  AfterEnum: true                # New line after enum declaration
-  AfterFunction: true            # New line after function definition
-  AfterNamespace: true           # New line after namespace block
-  AfterStruct: true              # New line after struct declaration
-  AfterUnion: true               # New line after union declaration
-  BeforeCatch: true              # Place 'catch' on a new line
-  BeforeElse: true               # Place 'else' on a new line
-  SplitEmptyFunction: true       # Split empty function bodies onto multiple lines
-  SplitEmptyRecord: true         # Same for empty structs/classes/unions
-  SplitEmptyNamespace: true      # New lines for empty namespaces too
+# === Brace Formatting ===
+BreakBeforeBraces: Custom       # Use custom brace wrapping instead of default style
+BraceWrapping:                  # Control how braces are placed
+  AfterClass: true              # Place opening brace of a class on a new line
+  AfterControlStatement: true   # Place brace on a new line after if, for, while, etc.
+  AfterEnum: true               # Place brace on a new line after enum declaration
+  AfterFunction: true           # Place brace on a new line after function definition
+  AfterNamespace: true          # Place brace on a new line after namespace
+  AfterStruct: true             # Place brace on a new line after struct declaration
+  AfterUnion: true              # Place brace on a new line after union declaration
+  BeforeCatch: true             # Place `catch` on a new line after `try`
+  BeforeElse: true              # Place `else` on a new line after `if` or `else if`
+  SplitEmptyFunction: true      # Even empty functions get separate lines for braces
+  SplitEmptyRecord: true        # Empty classes/structs/unions get braces on separate lines
+  SplitEmptyNamespace: true     # Empty namespaces also use separate lines for braces
 
-# Disallow compact one-line bodies
-AllowShortFunctionsOnASingleLine: None   # Never allow 1-line function bodies
-AllowShortBlocksOnASingleLine: false     # Multi-line even if block is short
-AllowShortIfStatementsOnASingleLine: false  # Always wrap if bodies
-AllowShortLoopsOnASingleLine: false      # Always wrap loop bodies
-AllowShortCaseLabelsOnASingleLine: false  # Always wrap case labels
+# === Short Constructs ===
+AllowShortFunctionsOnASingleLine: None       # Never allow functions on a single line
+AllowShortBlocksOnASingleLine: false         # Even short blocks like `{ return; }` are multiline
+AllowShortIfStatementsOnASingleLine: false   # Always wrap if-statements
+AllowShortLoopsOnASingleLine: false          # Always wrap for/while loops
+AllowShortCaseLabelsOnASingleLine: false     # Always use multiline case labels
 
-# No offset for private/protected/public labels
-AccessModifierOffset: 0           # Do not indent public/protected/private labels
+# === Access Modifier Formatting ===
+AccessModifierOffset: 0          # Do not indent public/protected/private specifiers in classes
 
-# Pointers aligned to the type (e.g., int* ptr)
-PointerAlignment: Left            # Align * with the type
+# === Pointer and Reference Formatting ===
+PointerAlignment: Left           # Align `*` with type (e.g., `int* ptr`, not `int *ptr`)
 
-# Include handling
-SortIncludes: true              # Automatically sort includes
-IncludeBlocks: Preserve         # Keep existing blank lines between include blocks
-IncludeCategories:              # Custom include sorting order
-  - Regex: '^<.*\.h>$'          # System includes (e.g., <vector>)
-    Priority: 1                   # Sort this category first
-    SortPriority: 0               # Additional sorting key
-  - Regex: '^".*"$'             # Local/project includes (e.g., "myfile.h")
-    Priority: 2                   # Sort this category second
-    SortPriority: 1               # Additional sorting key
+# === Include Handling ===
+SortIncludes: true               # Automatically sort `#include` statements
+IncludeBlocks: Preserve          # Preserve blank lines between include blocks (e.g., system vs. local)
+IncludeCategories:               # Define custom order for includes
+  - Regex: '^<.*\.h>$'           # Match system includes like `<vector>` or `<string>`
+    Priority: 1                  # Sort these first
+  - Regex: '^".*"$'              # Match project/local includes like "myfile.h"
+    Priority: 2                  # Sort these second
 
-# Whitespace style
-SpaceBeforeParens: ControlStatements    # Require space before parens in control flow
-SpaceAfterCStyleCast: true              # Add space after C-style casts
-SpacesInParentheses: false              # No spaces inside ( )
-SpacesInSquareBrackets: false           # No spaces inside [ ]
-SpaceBeforeAssignmentOperators: true    # Spaces around =, +=, etc.
+# === Whitespace Rules ===
+SpaceBeforeParens: ControlStatements   # Add space before parens in control statements (`if (...)`)
+SpaceAfterCStyleCast: true             # Require space after a C-style cast: `(int) x`
+SpacesInParentheses: false             # No spaces inside regular parentheses
+SpacesInSquareBrackets: false          # No spaces inside square brackets (`arr[0]`)
+SpaceBeforeAssignmentOperators: true   # Add space around assignment and compound assignment operators
 
-# Constructor initializer formatting
-BreakConstructorInitializers: BeforeColon  # Break before colon in constructor initializer
-ConstructorInitializerAllOnOneLineOrOnePerLine: true  # Force one initializer per line
-AlignAfterOpenBracket: Align                # Align parameters in multi-line calls
-BinPackArguments: false           # Put each function call argument on its own line
-BinPackParameters: false          # Put each function parameter on its own line
+# === Constructor Initializer Formatting ===
+BreakConstructorInitializers: BeforeColon      # Break line before the colon (`:`) in constructor initializers
+ConstructorInitializerAllOnOneLineOrOnePerLine: true  # Force initializer list to be either all on one line or each on its own line
 
-# Misc formatting rules
-InsertTrailingCommas: Wrapped          # Add trailing commas in multi-line containers
-KeepEmptyLinesAtTheStartOfBlocks: false  # Don't preserve empty lines at block start
-MaxEmptyLinesToKeep: 1                 # Allow only one consecutive empty line
+# === Function Call Formatting ===
+AlignAfterOpenBracket: Align           # Align parameters or arguments after the opening bracket
+BinPackArguments: false                # Do not put multiple function call arguments on the same line
+BinPackParameters: false               # Do not pack multiple function parameters on the same line
+
+# === Miscellaneous Formatting ===
+InsertTrailingCommas: Wrapped          # Add trailing commas in multi-line lists for cleaner diffs
+KeepEmptyLinesAtTheStartOfBlocks: false  # Remove empty lines at the start of code blocks
+MaxEmptyLinesToKeep: 1                 # Allow at most one consecutive empty line
+
+# === Comment and Namespace Enhancements ===
+ReflowComments: true                   # Automatically wrap comments to fit within ColumnLimit
+FixNamespaceComments: true            # Add closing comments like `// namespace foo` after long namespaces
