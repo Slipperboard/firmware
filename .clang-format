@@ -1,13 +1,13 @@
 # Base style to inherit from
-BasedOnStyle: LLVM
+BasedOnStyle: LLVM                # Start with LLVM formatting rules
 
 # Indentation and line width
 IndentWidth: 4                   # Use 4 spaces per indentation level
 ColumnLimit: 120                 # Max line length before breaking
 
 # Brace formatting (forces braces to start on new lines)
-BreakBeforeBraces: Custom
-BraceWrapping:
+BreakBeforeBraces: Custom         # Use a custom brace wrapping configuration
+BraceWrapping:                    # Detailed brace wrapping options
   AfterClass: true               # New line after class declaration
   AfterControlStatement: true    # New line after if, for, while, etc.
   AfterEnum: true                # New line after enum declaration
@@ -22,28 +22,28 @@ BraceWrapping:
   SplitEmptyNamespace: true      # New lines for empty namespaces too
 
 # Disallow compact one-line bodies
-AllowShortFunctionsOnASingleLine: None
-AllowShortBlocksOnASingleLine: false
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: None   # Never allow 1-line function bodies
+AllowShortBlocksOnASingleLine: false     # Multi-line even if block is short
+AllowShortIfStatementsOnASingleLine: false  # Always wrap if bodies
+AllowShortLoopsOnASingleLine: false      # Always wrap loop bodies
+AllowShortCaseLabelsOnASingleLine: false  # Always wrap case labels
 
 # No offset for private/protected/public labels
-AccessModifierOffset: 0
+AccessModifierOffset: 0           # Do not indent public/protected/private labels
 
 # Pointers aligned to the type (e.g., int* ptr)
-PointerAlignment: Left
+PointerAlignment: Left            # Align * with the type
 
 # Include handling
 SortIncludes: true              # Automatically sort includes
 IncludeBlocks: Preserve         # Keep existing blank lines between include blocks
 IncludeCategories:              # Custom include sorting order
   - Regex: '^<.*\.h>$'          # System includes (e.g., <vector>)
-    Priority: 1
-    SortPriority: 0
+    Priority: 1                   # Sort this category first
+    SortPriority: 0               # Additional sorting key
   - Regex: '^".*"$'             # Local/project includes (e.g., "myfile.h")
-    Priority: 2
-    SortPriority: 1
+    Priority: 2                   # Sort this category second
+    SortPriority: 1               # Additional sorting key
 
 # Whitespace style
 SpaceBeforeParens: ControlStatements    # Require space before parens in control flow
@@ -56,8 +56,8 @@ SpaceBeforeAssignmentOperators: true    # Spaces around =, +=, etc.
 BreakConstructorInitializers: BeforeColon  # Break before colon in constructor initializer
 ConstructorInitializerAllOnOneLineOrOnePerLine: true  # Force one initializer per line
 AlignAfterOpenBracket: Align                # Align parameters in multi-line calls
-BinPackArguments: false
-BinPackParameters: false
+BinPackArguments: false           # Put each function call argument on its own line
+BinPackParameters: false          # Put each function parameter on its own line
 
 # Misc formatting rules
 InsertTrailingCommas: Wrapped          # Add trailing commas in multi-line containers
