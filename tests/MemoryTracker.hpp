@@ -5,6 +5,6 @@
 
 extern std::atomic<int> allocCount;
 
-void *trackAlloc(std::size_t size);
-void trackFree(void *ptr);
+void* trackAlloc(std::size_t size);
+void trackFree(void* ptr);
 #endif // MEMORY_TRACKER_HPP

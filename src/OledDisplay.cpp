@@ -11,7 +11,7 @@ void OledDisplay::init()
     initialized = true;
 }
 
-void OledDisplay::drawBytes(Point pos, const unsigned char *data, std::size_t length)
+void OledDisplay::drawBytes(Point pos, const unsigned char* data, std::size_t length)
 {
     // Simple buffer write emulation. Each byte represents a pixel.
     if (!initialized)
@@ -29,7 +29,7 @@ void OledDisplay::drawBytes(Point pos, const unsigned char *data, std::size_t le
     }
 }
 
-void OledDisplay::readBytes(Point pos, unsigned char *out, std::size_t length) const
+void OledDisplay::readBytes(Point pos, unsigned char* out, std::size_t length) const
 {
     for (std::size_t i = 0; i < length; ++i)
     {

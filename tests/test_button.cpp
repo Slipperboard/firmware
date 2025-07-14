@@ -1,8 +1,8 @@
+#include <chrono>
+#include <thread>
 #include "Button.hpp"
 #include "MemoryTracker.hpp"
 #include "catch_amalgamated.hpp"
-#include <chrono>
-#include <thread>
 
 class DummyButton : public Button
 {

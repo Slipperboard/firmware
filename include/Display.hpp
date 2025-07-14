@@ -1,15 +1,17 @@
 #ifndef DISPLAY_HPP
 #define DISPLAY_HPP
 
-#include "Peripheral.hpp"
 #include <cstddef>
+#include "Peripheral.hpp"
 
-struct Dimensions {
+struct Dimensions
+{
     int width;
     int height;
 };
 
-struct Point {
+struct Point
+{
     int x;
     int y;
 };
@@ -25,7 +27,7 @@ class Display : public Peripheral
     int getHeight() const;
 
     // Draw a series of bytes at the given coordinate
-    virtual void drawBytes(Point pos, const unsigned char *data, std::size_t length) = 0;
+    virtual void drawBytes(Point pos, const unsigned char* data, std::size_t length) = 0;
 
     protected:
     int width;
