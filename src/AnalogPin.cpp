@@ -43,8 +43,7 @@ void AnalogPin::init()
         if (number == 25)
         {
             dac_cfg.chan_id = DAC_CHAN_0;
-        }
-        else
+        } else
         {
             dac_cfg.chan_id = DAC_CHAN_1;
         }
