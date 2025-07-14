@@ -1,17 +1,36 @@
-# Guidance for AI Agents
+# AGENTS.md
 
-This repository uses PlatformIO and Makefile targets for building and testing.
-Follow these practices when preparing commits and pull requests:
+...
 
-1. **Read the README** – It describes the project structure and available Make
-   targets.
-2. **Run `make precommit` before each commit** – This runs the full build,
-   formatting checks, static analysis, unit tests and coverage. Fix any issues
-   before committing.
-3. **Verify builds** – Use `make build` to ensure the firmware compiles and to
-   display its size.
-4. **Open Pull Requests with summaries** – Clearly describe what changed and why
-   in the PR body.
-5. **Leave the working tree clean** – Commit only complete changes and confirm
-   `git status` shows no untracked files before ending a PR.
+## Agent: Precommit Agent
 
+- **Type**: Universal validation gate
+- **Purpose**: Enforce code quality and consistency before integration
+- **Command**: `make precommit`
+- **Scope**: **Applies to all contributors and systems**, including:
+  - Human developers
+  - Codex (LLM assistant)
+  - CI jobs (pre-merge verification)
+  - Any automated tool or bot producing a pull request
+- **Checks Run**:
+  - Code formatting (`make format-check`)
+  - Compilation (`make build`)
+  - Unit tests (`make test`)
+  - Static analysis or linting (if configured)
+- **Policy**:
+  - If `make precommit` fails, the code **must not** be submitted for review
+  - All agents are expected to self-verify via this mechanism before initiating a PR or push
+  - CI will redundantly enforce it to ensure compliance
+- **Interacts With**:
+  - Makefile (delegates to individual targets)
+  - All other agents (enforcement and feedback)
+
+...
+
+## Contributor Policy
+
+> **All contributors — including AI agents, humans, CI scripts, and bots — must run:**
+
+```bash
+make precommit
+```
