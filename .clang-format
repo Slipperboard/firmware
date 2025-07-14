@@ -1,5 +1,5 @@
 # Use LLVM style as a base (common, minimal, and readable)
-BasedOnStyle: LLVM
+BasedOnStyle: LLVM # Start with LLVM defaults
 
 # === Indentation and Line Width ===
 IndentWidth: 4                   # Indent using 4 spaces per level
