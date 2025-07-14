@@ -25,3 +25,12 @@ TEST_CASE("AnalogPin write ignored in input mode", "[analogpin]")
     pin.write(42);
     REQUIRE(pin.read() == 0);
 }
+
+TEST_CASE("AnalogPin dynamic alloc", "[analogpin]")
+{
+    int before = allocCount.load();
+    auto *pin = new AnalogPin(32, PinMode::Output);
+    pin->init();
+    delete pin;
+    REQUIRE(allocCount.load() == before);
+}
