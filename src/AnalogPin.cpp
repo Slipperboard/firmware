@@ -1,7 +1,7 @@
 #include "AnalogPin.hpp"
 #ifdef ESP_PLATFORM
-#include "esp_adc/adc_oneshot.h"
 #include "driver/dac.h"
+#include "esp_adc/adc_oneshot.h"
 #endif
 
 AnalogPin::AnalogPin(int number, PinMode mode, int value) : Pin<int>(number, mode, value)

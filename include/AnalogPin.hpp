@@ -4,8 +4,8 @@
 #include "Pin.hpp"
 
 #ifdef ESP_PLATFORM
-#include "esp_adc/adc_oneshot.h"
 #include "driver/dac.h"
+#include "esp_adc/adc_oneshot.h"
 #endif
 
 class AnalogPin : public Pin<int>
