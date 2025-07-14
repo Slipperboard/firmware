@@ -13,7 +13,7 @@ class DummyDisplay : public Display
     {
         initialized = true;
     }
-    void drawBytes(Point, const unsigned char *, std::size_t) override
+    void drawBytes(Point, const unsigned char*, std::size_t) override
     {
     }
 };

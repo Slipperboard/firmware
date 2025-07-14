@@ -1,8 +1,8 @@
 #ifndef BUTTON_HPP
 #define BUTTON_HPP
 
-#include "Peripheral.hpp"
 #include <chrono>
+#include "Peripheral.hpp"
 
 class Button : public Peripheral
 {

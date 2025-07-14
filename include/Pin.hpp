@@ -4,7 +4,11 @@
 #include "Peripheral.hpp"
 
 // Enumeration for pin mode
-enum class PinMode { Input, Output };
+enum class PinMode
+{
+    Input,
+    Output
+};
 
 template <typename T> class Pin : public Peripheral
 {
