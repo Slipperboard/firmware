@@ -10,11 +10,19 @@ void operator delete(void* ptr) noexcept
 {
     trackFree(ptr);
 }
+void operator delete(void* ptr, std::size_t) noexcept
+{
+    trackFree(ptr);
+}
 void* operator new[](std::size_t size)
 {
     return trackAlloc(size);
 }
 void operator delete[](void* ptr) noexcept
+{
+    trackFree(ptr);
+}
+void operator delete[](void* ptr, std::size_t) noexcept
 {
     trackFree(ptr);
 }
