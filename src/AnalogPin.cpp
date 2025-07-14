@@ -1,11 +1,6 @@
 #include "AnalogPin.hpp"
 #ifdef ESP_PLATFORM
-// Silence deprecation warning from the legacy ADC driver until the
-// new oneshot/continuous APIs are adopted.
-#define ADC_FORCE_USE_LEGACY_DRIVER
-// Silence deprecation warning from the legacy DAC driver as well.
-#define DAC_FORCE_USE_LEGACY_DRIVER
-#include "driver/adc.h"
+#include "esp_adc/adc_oneshot.h"
 #include "driver/dac.h"
 #endif
 
@@ -13,15 +8,29 @@ AnalogPin::AnalogPin(int number, PinMode mode, int value) : Pin<int>(number, mod
 {
 }
 
-AnalogPin::~AnalogPin() = default;
+AnalogPin::~AnalogPin()
+{
+#ifdef ESP_PLATFORM
+    if (mode == PinMode::Input && adc_handle != nullptr)
+    {
+        adc_oneshot_del_unit(adc_handle);
+    }
+#endif
+}
 
 void AnalogPin::init()
 {
 #ifdef ESP_PLATFORM
     if (mode == PinMode::Input)
     {
-        adc1_config_width(ADC_WIDTH_BIT_12);
-        adc1_config_channel_atten(static_cast<adc1_channel_t>(number), ADC_ATTEN_DB_12);
+        adc_oneshot_unit_init_cfg_t unit_cfg{};
+        unit_cfg.unit_id = ADC_UNIT_1;
+        adc_oneshot_new_unit(&unit_cfg, &adc_handle);
+
+        adc_oneshot_chan_cfg_t chan_cfg{};
+        chan_cfg.atten = ADC_ATTEN_DB_12;
+        chan_cfg.bitwidth = ADC_BITWIDTH_12;
+        adc_oneshot_config_channel(adc_handle, static_cast<adc_channel_t>(number), &chan_cfg);
     } else // NOLINT(readability/braces)
     {
         if (number == 25)
@@ -40,7 +49,9 @@ int AnalogPin::read() const
 #ifdef ESP_PLATFORM
     if (mode == PinMode::Input)
     {
-        return adc1_get_raw(static_cast<adc1_channel_t>(number));
+        int result = 0;
+        adc_oneshot_read(adc_handle, static_cast<adc_channel_t>(number), &result);
+        return result;
     }
 #endif
     return this->value;
