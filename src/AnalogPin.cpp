@@ -31,15 +31,16 @@ void AnalogPin::init()
         chan_cfg.atten = ADC_ATTEN_DB_12;
         chan_cfg.bitwidth = ADC_BITWIDTH_12;
         adc_oneshot_config_channel(adc_handle, static_cast<adc_channel_t>(number), &chan_cfg);
-    } else // NOLINT(readability/braces)
+        return;
+    }
+    if (number == 25)
     {
-        if (number == 25)
-        {
-            dac_output_enable(DAC_CHAN_0);
-        } else if (number == 26) // NOLINT(readability/braces)
-        {
-            dac_output_enable(DAC_CHAN_1);
-        }
+        dac_output_enable(DAC_CHAN_0);
+        return;
+    }
+    if (number == 26)
+    {
+        dac_output_enable(DAC_CHAN_1);
     }
 #endif
 }
@@ -59,17 +60,19 @@ int AnalogPin::read() const
 
 void AnalogPin::write(int value)
 {
-    if (this->mode == PinMode::Output)
+    if (this->mode != PinMode::Output)
     {
-#ifdef ESP_PLATFORM
-        if (number == 25)
-        {
-            dac_output_voltage(DAC_CHAN_0, static_cast<uint8_t>(value));
-        } else if (number == 26) // NOLINT(readability/braces)
-        {
-            dac_output_voltage(DAC_CHAN_1, static_cast<uint8_t>(value));
-        }
-#endif
-        this->value = value;
+        return;
     }
+#ifdef ESP_PLATFORM
+    if (number == 25)
+    {
+        dac_output_voltage(DAC_CHAN_0, static_cast<uint8_t>(value));
+    }
+    if (number == 26)
+    {
+        dac_output_voltage(DAC_CHAN_1, static_cast<uint8_t>(value));
+    }
+#endif
+    this->value = value;
 }
