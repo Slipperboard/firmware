@@ -49,6 +49,10 @@ jobs:
   sanity:
     if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [check-format, lint, cpplint, tidy]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -57,11 +61,5 @@ jobs:
         run: |
           sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy
           pip install --user cpplint
-      - name: Check formatting
-        run: make check-format
-      - name: Lint
-        run: make lint
-      - name: Cpplint
-        run: make cpplint
-      - name: Static analysis
-        run: make tidy
+      - name: Run ${{ matrix.task }}
+        run: make ${{ matrix.task }}
