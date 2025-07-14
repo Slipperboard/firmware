@@ -22,6 +22,7 @@ class AnalogPin : public Pin<int>
     private:
 #ifdef ESP_PLATFORM
     adc_oneshot_unit_handle_t adc_handle{};
+    // Channel handle managed when the pin is configured for DAC output
     dac_oneshot_handle_t dac_handle{};
 #endif
 };
