@@ -1,13 +1,63 @@
+# Base style to inherit from
 BasedOnStyle: LLVM
-IndentWidth: 4
-ColumnLimit: 120
+
+# Indentation and line width
+IndentWidth: 4                   # Use 4 spaces per indentation level
+ColumnLimit: 120                 # Max line length before breaking
+
+# Brace formatting (forces braces to start on new lines)
 BreakBeforeBraces: Custom
 BraceWrapping:
-  AfterFunction: true
-  AfterClass: true
-  AfterControlStatement: true
-  AfterEnum: false
+  AfterClass: true               # New line after class declaration
+  AfterControlStatement: true    # New line after if, for, while, etc.
+  AfterEnum: true                # New line after enum declaration
+  AfterFunction: true            # New line after function definition
+  AfterNamespace: true           # New line after namespace block
+  AfterStruct: true              # New line after struct declaration
+  AfterUnion: true               # New line after union declaration
+  BeforeCatch: true              # Place 'catch' on a new line
+  BeforeElse: true               # Place 'else' on a new line
+  SplitEmptyFunction: true       # Split empty function bodies onto multiple lines
+  SplitEmptyRecord: true         # Same for empty structs/classes/unions
+  SplitEmptyNamespace: true      # New lines for empty namespaces too
+
+# Disallow compact one-line bodies
 AllowShortFunctionsOnASingleLine: None
 AllowShortBlocksOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: false
+AllowShortLoopsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+
+# No offset for private/protected/public labels
 AccessModifierOffset: 0
+
+# Pointers aligned to the type (e.g., int* ptr)
+PointerAlignment: Left
+
+# Include handling
+SortIncludes: true              # Automatically sort includes
+IncludeBlocks: Preserve         # Keep existing blank lines between include blocks
+IncludeCategories:              # Custom include sorting order
+  - Regex: '^<.*\.h>$'          # System includes (e.g., <vector>)
+    Priority: 1
+    SortPriority: 0
+  - Regex: '^".*"$'             # Local/project includes (e.g., "myfile.h")
+    Priority: 2
+    SortPriority: 1
+
+# Whitespace style
+SpaceBeforeParens: ControlStatements    # Require space before parens in control flow
+SpaceAfterCStyleCast: true              # Add space after C-style casts
+SpacesInParentheses: false              # No spaces inside ( )
+SpacesInSquareBrackets: false           # No spaces inside [ ]
+SpaceBeforeAssignmentOperators: true    # Spaces around =, +=, etc.
+
+# Constructor initializer formatting
+BreakConstructorInitializers: BeforeColon  # Break before colon in constructor initializer
+ConstructorInitializerAllOnOneLineOrOnePerLine: true  # Force one initializer per line
+AlignAfterOpenBracket: Align                # Align parameters in multi-line calls
+
+# Misc formatting rules
+InsertTrailingCommas: Wrapped          # Add trailing commas in multi-line containers
+KeepEmptyLinesAtTheStartOfBlocks: false  # Don't preserve empty lines at block start
+MaxEmptyLinesToKeep: 1                 # Allow only one consecutive empty line
