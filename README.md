@@ -66,18 +66,22 @@ make coverage      # [CI]
 
 This coverage target fails if line coverage is below 100%.
 
-## Emulator
+## Precommit
 
-You can also run the firmware inside the [Wokwi](https://wokwi.com/) emulator to
-test changes without hardware. First install the Wokwi CLI (e.g.
-`npm install -g @wokwi/cli`) and build the project:
+Run the full suite of formatting, linting, and tests before submitting a change:
 
 ```bash
-make build # [CI]
+make precommit
 ```
 
+## Emulator
+
+You can run the firmware inside the [Wokwi](https://wokwi.com/) emulator to test
+changes without hardware. First install the Wokwi CLI (for example with
+`npm install -g @wokwi/cli`), build the project, and launch the emulator:
 
 ```bash
+make build   # [CI]
 make emulate
 ```
 
