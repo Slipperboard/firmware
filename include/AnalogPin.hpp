@@ -19,7 +19,7 @@ class AnalogPin : public Pin<int>
     int read() const override;
     void write(int value) override;
 
-private:
+    private:
 #ifdef ESP_PLATFORM
     adc_oneshot_unit_handle_t adc_handle{};
     dac_oneshot_handle_t dac_handle{};

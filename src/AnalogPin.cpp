@@ -11,12 +11,10 @@ AnalogPin::AnalogPin(int number, PinMode mode, int value) : Pin<int>(number, mod
 AnalogPin::~AnalogPin()
 {
 #ifdef ESP_PLATFORM
-    if (mode == PinMode::Input && adc_handle != nullptr)
-    {
+    if (mode == PinMode::Input && adc_handle != nullptr) {
         adc_oneshot_del_unit(adc_handle);
     }
-    if (mode == PinMode::Output && dac_handle != nullptr)
-    {
+    if (mode == PinMode::Output && dac_handle != nullptr) {
         dac_oneshot_del_channel(dac_handle);
     }
 #endif
@@ -25,8 +23,7 @@ AnalogPin::~AnalogPin()
 void AnalogPin::init()
 {
 #ifdef ESP_PLATFORM
-    if (mode == PinMode::Input)
-    {
+    if (mode == PinMode::Input) {
         adc_oneshot_unit_init_cfg_t unit_cfg{};
         unit_cfg.unit_id = ADC_UNIT_1;
         adc_oneshot_new_unit(&unit_cfg, &adc_handle);
@@ -39,16 +36,11 @@ void AnalogPin::init()
     }
 
     dac_oneshot_config_t dac_cfg{};
-    if (number == 25)
-    {
+    if (number == 25) {
         dac_cfg.chan_id = DAC_CHAN_0;
-    }
-    else if (number == 26)
-    {
+    } else if (number == 26) {
         dac_cfg.chan_id = DAC_CHAN_1;
-    }
-    else
-    {
+    } else {
         return;
     }
     dac_oneshot_new_channel(&dac_cfg, &dac_handle);
@@ -58,8 +50,7 @@ void AnalogPin::init()
 int AnalogPin::read() const
 {
 #ifdef ESP_PLATFORM
-    if (mode == PinMode::Input)
-    {
+    if (mode == PinMode::Input) {
         int result = 0;
         adc_oneshot_read(adc_handle, static_cast<adc_channel_t>(number), &result);
         return result;
@@ -70,13 +61,11 @@ int AnalogPin::read() const
 
 void AnalogPin::write(int value)
 {
-    if (this->mode != PinMode::Output)
-    {
+    if (this->mode != PinMode::Output) {
         return;
     }
 #ifdef ESP_PLATFORM
-    if (number == 25 || number == 26)
-    {
+    if (number == 25 || number == 26) {
         dac_oneshot_output_voltage(dac_handle, static_cast<uint8_t>(value));
     }
 #endif

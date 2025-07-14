@@ -9,14 +9,14 @@ ColumnLimit: 120                # Maximum allowed line length before wrapping
 BreakBeforeBraces: Custom       # Use custom brace wrapping instead of default style
 BraceWrapping:                  # Control how braces are placed
   AfterClass: true              # Place opening brace of a class on a new line
-  AfterControlStatement: true   # Place brace on a new line after if, for, while, etc.
+  AfterControlStatement: false  # Place brace on the same line for control statements
   AfterEnum: true               # Place brace on a new line after enum declaration
   AfterFunction: true           # Place brace on a new line after function definition
   AfterNamespace: true          # Place brace on a new line after namespace
   AfterStruct: true             # Place brace on a new line after struct declaration
   AfterUnion: true              # Place brace on a new line after union declaration
   BeforeCatch: true             # Place `catch` on a new line after `try`
-  BeforeElse: true              # Place `else` on a new line after `if` or `else if`
+  BeforeElse: false             # Keep `else` on the same line as the closing brace
   SplitEmptyFunction: true      # Even empty functions get separate lines for braces
   SplitEmptyRecord: true        # Empty classes/structs/unions get braces on separate lines
   SplitEmptyNamespace: true     # Empty namespaces also use separate lines for braces
