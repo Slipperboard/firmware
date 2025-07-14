@@ -1,6 +1,6 @@
 #include "DigitalPin.hpp"
 #ifdef ESP_PLATFORM
-#include "driver/gpio.h"
+#include <driver/gpio.h>
 #endif
 
 DigitalPin::DigitalPin(int number, PinMode mode, bool value) : Pin<bool>(number, mode, value)
