@@ -53,6 +53,7 @@ platformio lib install "lvgl" "Adafruit SSD1306" "Adafruit GFX Library"
 
 If these libraries are missing, the compiler may report errors such as
 `fatal error: Adafruit_SSD1306.h: No such file or directory`.
+Without these dependencies `make build` or `make precommit` will fail when PlatformIO attempts to download them.
 
 
 ## Running Unit Tests
