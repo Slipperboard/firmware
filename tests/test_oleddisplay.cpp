@@ -6,6 +6,8 @@ TEST_CASE("OledDisplay draws bytes", "[oled]")
 {
     OledDisplay disp;
     disp.init();
+    // init a second time should be a no-op
+    disp.init();
     const unsigned char bytes[3] = {1, 2, 3};
     // cppcheck-suppress unreadVariable
     int before = allocCount.load();

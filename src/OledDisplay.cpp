@@ -9,6 +9,10 @@ OledDisplay::OledDisplay() : Display({128, 64}), buffer(static_cast<std::size_t>
 
 void OledDisplay::init()
 {
+    if (initialized)
+    {
+        return;
+    }
 #ifdef ESP_PLATFORM
     Wire.begin();
     ssd1306.begin(SSD1306_SWITCHCAPVCC, 0x3C);
