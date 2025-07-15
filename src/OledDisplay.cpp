@@ -55,9 +55,6 @@ void OledDisplay::drawBytes(Point pos, const unsigned char* data, std::size_t le
 #endif
         }
     }
-#ifdef ESP_PLATFORM
-    ssd1306.display();
-#endif
 }
 
 void OledDisplay::readBytes(Point pos, unsigned char* out, std::size_t length) const
