@@ -1,14 +1,14 @@
 #include <cstdio>
-extern "C" {
-#include "freertos/FreeRTOS.h"
-#include "freertos/task.h"
-}
+#include "ArduinoCompat.hpp"
 
 extern "C" void app_main(void)
 {
+#ifdef ESP_PLATFORM
+    initArduino();
+#endif
     while (true)
     {
         printf("Hello, Flipper Zero compatible ESP32!\n");
-        vTaskDelay(pdMS_TO_TICKS(1000));
+        delay(1000);
     }
 }

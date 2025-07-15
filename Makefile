@@ -10,7 +10,8 @@ TEST_SRCS = \
         tests/test_memory.cpp \
         src/Module.cpp src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp \
         src/OledDisplay.cpp \
-        src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp src/PWMPin.cpp
+        src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp src/PWMPin.cpp \
+        src/arduino_stubs.cpp
 
 FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tests/*.hpp')
 CPPLINT_FILES := $(FMT_FILES)
