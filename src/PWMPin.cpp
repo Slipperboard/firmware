@@ -4,16 +4,13 @@
 PWMPin::PWMPin(int number, PinMode mode, int value)
     : Pin<int>(number, mode, value), channel(0)
 {
-}
-
-PWMPin::~PWMPin() = default;
-
-void PWMPin::init()
-{
     ledcSetup(channel, 5000, 8);
     ledcAttachPin(number, channel);
     ledcWrite(channel, value);
 }
+
+PWMPin::~PWMPin() = default;
+
 
 int PWMPin::read() const
 {

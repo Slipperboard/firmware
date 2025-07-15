@@ -5,7 +5,6 @@
 TEST_CASE("OledDisplay draws bytes", "[oled]")
 {
     OledDisplay disp;
-    disp.init();
     const unsigned char bytes[3] = {1, 2, 3};
     // cppcheck-suppress unreadVariable
     int before = allocCount.load();
@@ -19,21 +18,19 @@ TEST_CASE("OledDisplay draws bytes", "[oled]")
     REQUIRE(allocCount.load() == before);
 }
 
-TEST_CASE("OledDisplay ignores draw before init", "[oled]")
+TEST_CASE("OledDisplay draws without explicit init", "[oled]")
 {
     OledDisplay disp;
     const unsigned char bytes[1] = {42};
     disp.drawBytes({0, 0}, bytes, 1);
-    disp.init();
     unsigned char read[1];
     disp.readBytes({0, 0}, read, 1);
-    REQUIRE(read[0] == 0);
+    REQUIRE(read[0] == 42);
 }
 
 TEST_CASE("OledDisplay reads zero out of bounds", "[oled]")
 {
     OledDisplay disp;
-    disp.init();
     unsigned char bytes[1] = {9};
     disp.drawBytes({0, 0}, bytes, 1);
     unsigned char out[2];

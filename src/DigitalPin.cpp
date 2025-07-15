@@ -1,16 +1,14 @@
 #include "DigitalPin.hpp"
 #include "ArduinoCompat.hpp"
 
-DigitalPin::DigitalPin(int number, PinMode mode, bool value) : Pin<bool>(number, mode, value)
+DigitalPin::DigitalPin(int number, PinMode mode, bool value)
+    : Pin<bool>(number, mode, value)
 {
+    pinMode(number, mode == PinMode::Output ? OUTPUT : INPUT);
 }
 
 DigitalPin::~DigitalPin() = default;
 
-void DigitalPin::init()
-{
-    pinMode(number, mode == PinMode::Output ? OUTPUT : INPUT);
-}
 
 bool DigitalPin::read() const
 {

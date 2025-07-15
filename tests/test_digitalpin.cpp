@@ -5,7 +5,6 @@
 TEST_CASE("DigitalPin read/write", "[digitalpin]")
 {
     DigitalPin pin(5, PinMode::Output, false);
-    pin.init();
     REQUIRE(pin.getPinNumber() == 5);
     REQUIRE(pin.getMode() == PinMode::Output);
     bool state = pin.read();

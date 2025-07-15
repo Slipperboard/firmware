@@ -6,12 +6,6 @@ template <typename T> Pin<T>::Pin(int number, PinMode mode, T value) : number(nu
 
 template <typename T> Pin<T>::~Pin() = default;
 
-// GCOVR_EXCL_START
-template <typename T> void Pin<T>::init()
-{
-}
-// GCOVR_EXCL_STOP
-
 template <typename T> PinMode Pin<T>::getMode() const
 {
     return mode;

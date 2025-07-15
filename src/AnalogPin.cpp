@@ -3,14 +3,11 @@
 
 AnalogPin::AnalogPin(int number, PinMode mode, int value) : Pin<int>(number, mode, value)
 {
+    pinMode(number, mode == PinMode::Output ? OUTPUT : INPUT);
 }
 
 AnalogPin::~AnalogPin() = default;
 
-void AnalogPin::init()
-{
-    pinMode(number, mode == PinMode::Output ? OUTPUT : INPUT);
-}
 
 int AnalogPin::read() const
 {

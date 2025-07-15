@@ -15,8 +15,6 @@ template <typename T> class Pin : public Peripheral
     public:
     Pin(int number, PinMode mode, T value = T{});
     ~Pin() override;
-
-    void init() override;
     PinMode getMode() const;
     int getPinNumber() const;
     virtual T read() const = 0;

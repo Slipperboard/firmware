@@ -8,20 +8,15 @@ class DummyButton : public Button
 {
     public:
     bool initialized = false;
-    void init() override
-    {
-        initialized = true;
-    }
+    DummyButton() { initialized = true; }
 };
 
 TEST_CASE("Button initializes", "[button]")
 {
     DummyButton b;
-    REQUIRE_FALSE(b.initialized);
+    REQUIRE(b.initialized);
     int before = allocCount.load();
     static_cast<void>(before);
-    b.init();
-    REQUIRE(b.initialized);
     REQUIRE(allocCount.load() == before);
 }
 
