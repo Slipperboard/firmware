@@ -41,6 +41,19 @@ make clean   # removes PlatformIO artifacts and the test binary
 Compiler warnings are treated as errors, so address any warnings that appear
 during the build.
 
+### PlatformIO Dependencies
+
+The first hardware build fetches the `Adafruit SSD1306`, `Adafruit GFX Library`,
+and `lvgl` packages from the PlatformIO registry. Ensure the build machine has
+network access or install them ahead of time with:
+
+```bash
+platformio lib install "lvgl" "Adafruit SSD1306" "Adafruit GFX Library"
+```
+
+If these libraries are missing, the compiler may report errors such as
+`fatal error: Adafruit_SSD1306.h: No such file or directory`.
+
 
 ## Running Unit Tests
 
