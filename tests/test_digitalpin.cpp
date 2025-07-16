@@ -36,3 +36,13 @@ TEST_CASE("DigitalPin read respects mode", "[digitalpin]")
     DigitalPin outputPin(8, OUTPUT, false);
     REQUIRE_FALSE(outputPin.read());
 }
+
+TEST_CASE("DigitalPin constructor sets hardware pin mode", "[digitalpin]")
+{
+    pinModes[9] = -1;
+    DigitalPin pin(9, OUTPUT);
+    REQUIRE(pinModes[9] == OUTPUT);
+    pinModes[10] = -1;
+    DigitalPin inputPin(10, INPUT);
+    REQUIRE(pinModes[10] == INPUT);
+}

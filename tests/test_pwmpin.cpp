@@ -14,3 +14,13 @@ TEST_CASE("PWMPin read/write", "[pwmpin]")
     REQUIRE(pin.read() == 20);
     REQUIRE(allocCount.load() == before);
 }
+
+TEST_CASE("PWMPin constructor sets hardware pin mode", "[pwmpin]")
+{
+    pinModes[11] = -1;
+    PWMPin pin(11, OUTPUT);
+    REQUIRE(pinModes[11] == OUTPUT);
+    pinModes[12] = -1;
+    PWMPin inputPin(12, INPUT);
+    REQUIRE(pinModes[12] == INPUT);
+}

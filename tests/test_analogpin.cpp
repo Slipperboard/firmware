@@ -32,3 +32,13 @@ TEST_CASE("AnalogPin dynamic alloc", "[analogpin]")
     delete pin;
     REQUIRE(allocCount.load() == before);
 }
+
+TEST_CASE("AnalogPin constructor sets hardware pin mode", "[analogpin]")
+{
+    pinModes[31] = -1;
+    AnalogPin pin(31, OUTPUT);
+    REQUIRE(pinModes[31] == OUTPUT);
+    pinModes[30] = -1;
+    AnalogPin inputPin(30, INPUT);
+    REQUIRE(pinModes[30] == INPUT);
+}
