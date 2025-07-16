@@ -1,6 +1,6 @@
 #include "OledDisplay.hpp"
 
-OledDisplay::OledDisplay() : Display({128, 64}), buffer(static_cast<std::size_t>(128) * 64, 0)
+OledDisplay::OledDisplay() : Display({128, 64}), buffer(static_cast<std::size_t>(width) * height, 0)
 {
     // In a real implementation this would initialize the Adafruit and lvgl
     // libraries. Here we simply mark the display as ready.
