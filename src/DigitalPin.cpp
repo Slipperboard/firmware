@@ -11,7 +11,11 @@ DigitalPin::~DigitalPin()
 
 bool DigitalPin::read() const
 {
-    return digitalRead(number);
+    if (mode == INPUT)
+    {
+        return digitalRead(number);
+    }
+    return this->value;
 }
 
 void DigitalPin::write(bool value)

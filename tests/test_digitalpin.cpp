@@ -25,3 +25,14 @@ TEST_CASE("DigitalPin write", "[digitalpin]")
     pin.write(false);
     REQUIRE_FALSE(pin.read());
 }
+
+TEST_CASE("DigitalPin read respects mode", "[digitalpin]")
+{
+    digitalPinStates[7] = HIGH;
+    DigitalPin inputPin(7, INPUT);
+    REQUIRE(inputPin.read());
+
+    digitalPinStates[8] = HIGH;
+    DigitalPin outputPin(8, OUTPUT, false);
+    REQUIRE_FALSE(outputPin.read());
+}
