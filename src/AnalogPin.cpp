@@ -8,7 +8,6 @@ AnalogPin::AnalogPin(int number, PinMode mode, int value) : Pin<int>(number, mod
 
 AnalogPin::~AnalogPin() = default;
 
-
 int AnalogPin::read() const
 {
     if (mode == PinMode::Input)

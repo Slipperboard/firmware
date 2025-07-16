@@ -9,7 +9,6 @@ PWMPin::PWMPin(int number, PinMode mode, int value) : Pin<int>(number, mode, val
 
 PWMPin::~PWMPin() = default;
 
-
 int PWMPin::read() const
 {
     return this->value;

@@ -8,7 +8,6 @@ DigitalPin::DigitalPin(int number, PinMode mode, bool value) : Pin<bool>(number,
 
 DigitalPin::~DigitalPin() = default;
 
-
 bool DigitalPin::read() const
 {
     return digitalRead(number);
