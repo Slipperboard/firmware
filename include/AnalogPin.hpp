@@ -3,9 +3,8 @@
 
 #include "Pin.hpp"
 
-#ifdef ESP_PLATFORM
-#include <driver/dac_oneshot.h>
-#include <esp_adc/adc_oneshot.h>
+#ifdef ARDUINO
+#include <Arduino.h>
 #endif
 
 class AnalogPin : public Pin<int>
@@ -20,10 +19,8 @@ class AnalogPin : public Pin<int>
     void write(int value) override;
 
     private:
-#ifdef ESP_PLATFORM
-    adc_oneshot_unit_handle_t adc_handle{};
-    // Channel handle managed when the pin is configured for DAC output
-    dac_oneshot_handle_t dac_handle{};
+#ifdef ARDUINO
+    // no additional members needed when using Arduino APIs
 #endif
 };
 

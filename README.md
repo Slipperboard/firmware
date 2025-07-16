@@ -4,7 +4,7 @@
   <img src="assets/repo-logo.png" alt="Slipperboard logo" width="200" />
 </p>
 
-This project is the starting point for building a Flipper Zero–compatible firmware targeting an ESP32-based board. It uses [PlatformIO](https://platformio.org/) for the build environment and the [ESP-IDF](https://docs.espressif.com/projects/esp-idf/en/latest/) framework.
+This project is the starting point for building a Flipper Zero–compatible firmware targeting an ESP32-based board. It uses [PlatformIO](https://platformio.org/) for the build environment and the Arduino framework.
 
 ## Directory Layout
 
@@ -15,7 +15,7 @@ This project is the starting point for building a Flipper Zero–compatible firm
 
 ## Entrypoint
 
-The firmware starts from an `app_main()` function instead of Arduino's `setup()` and `loop()` routines. The main loop simply prints a message every second using standard ESP-IDF APIs.
+The firmware uses the standard Arduino `setup()` and `loop()` routines. The main loop simply prints a message every second using `Serial.println()`.
 
 ### Hardware Abstraction Layer
 
@@ -23,11 +23,8 @@ See [docs/HARDWARE_ABSTRACTION_LAYER.md](docs/HARDWARE_ABSTRACTION_LAYER.md) for
 
 ### Using Arduino Libraries
 
-If you need to include `Arduino.h` for additional functionality, the build
-already provides weak stub implementations of `setup()` and `loop()` in
-`src/arduino_stubs.cpp`. This prevents linker errors when the Arduino
-framework expects those symbols, while still letting you drive the application
-from `app_main()`.
+Because the firmware targets the Arduino framework, you can include `Arduino.h`
+and any other Arduino libraries directly in your code.
 
 ## Building
 

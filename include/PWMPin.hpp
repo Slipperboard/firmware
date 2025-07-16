@@ -12,9 +12,6 @@ class PWMPin : public Pin<int>
     void init() override;
     int read() const override;
     void write(int value) override;
-
-    private:
-    int channel;
 };
 
 #endif // PWM_PIN_HPP
