@@ -3,7 +3,6 @@
 
 PWMPin::PWMPin(int number, int mode, int value) : Pin<int>(number, mode, value)
 {
-    analogWrite(number, value);
 }
 
 PWMPin::~PWMPin()
