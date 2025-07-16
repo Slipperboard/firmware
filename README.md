@@ -4,7 +4,7 @@
   <img src="assets/repo-logo.png" alt="Slipperboard logo" width="200" />
 </p>
 
-This project is the starting point for building a Flipper Zero–compatible firmware targeting an ESP32-based board. It uses [PlatformIO](https://platformio.org/) for the build environment and the Arduino framework.
+This project is a template for building a Flipper Zero–compatible firmware for an ESP32-based board. It uses [PlatformIO](https://platformio.org/) as the build environment with the Arduino framework.
 
 ## Directory Layout
 
@@ -23,8 +23,7 @@ See [docs/HARDWARE_ABSTRACTION_LAYER.md](docs/HARDWARE_ABSTRACTION_LAYER.md) for
 
 ### Using Arduino Libraries
 
-Because the firmware targets the Arduino framework, you can include `Arduino.h`
-and any other Arduino libraries directly in your code.
+Because the firmware targets the Arduino framework, you can include `Arduino.h` and any other Arduino libraries directly in your code.
 
 ## Building
 
