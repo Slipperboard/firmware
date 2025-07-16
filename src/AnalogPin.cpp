@@ -6,7 +6,9 @@ AnalogPin::AnalogPin(int number, PinMode mode, int value) : Pin<int>(number, mod
     pinMode(number, mode == PinMode::Output ? OUTPUT : INPUT);
 }
 
-AnalogPin::~AnalogPin() = default;
+AnalogPin::~AnalogPin()
+{
+}
 
 int AnalogPin::read() const
 {

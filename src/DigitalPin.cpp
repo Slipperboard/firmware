@@ -6,7 +6,9 @@ DigitalPin::DigitalPin(int number, PinMode mode, bool value) : Pin<bool>(number,
     pinMode(number, mode == PinMode::Output ? OUTPUT : INPUT);
 }
 
-DigitalPin::~DigitalPin() = default;
+DigitalPin::~DigitalPin()
+{
+}
 
 bool DigitalPin::read() const
 {

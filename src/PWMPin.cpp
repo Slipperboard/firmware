@@ -7,7 +7,9 @@ PWMPin::PWMPin(int number, PinMode mode, int value) : Pin<int>(number, mode, val
     analogWrite(number, value);
 }
 
-PWMPin::~PWMPin() = default;
+PWMPin::~PWMPin()
+{
+}
 
 int PWMPin::read() const
 {
