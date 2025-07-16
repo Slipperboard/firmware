@@ -45,7 +45,7 @@ lint:
 	src include
 
 tidy:
-	clang-tidy $(TIDY_FILES) -- -std=c++17 -Iinclude > clang-tidy.log 2>&1
+	clang-tidy $(TIDY_FILES) -- -std=c++17 -Iinclude -Itests > clang-tidy.log 2>&1
 	cat clang-tidy.log
 	! grep -E "(warning:|error:)" clang-tidy.log
 	rm clang-tidy.log
