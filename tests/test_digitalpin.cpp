@@ -1,4 +1,4 @@
-#include "Arduino.h"
+#include <Arduino.h>
 #include "DigitalPin.hpp"
 #include "MemoryTracker.hpp"
 #include "catch_amalgamated.hpp"
