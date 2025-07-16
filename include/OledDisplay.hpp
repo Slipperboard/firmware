@@ -9,8 +9,6 @@ class OledDisplay : public Display
     public:
     OledDisplay();
     ~OledDisplay() override = default;
-
-    void init() override;
     void drawBytes(Point pos, const unsigned char* data, std::size_t length) override;
 
     // helper for tests

@@ -9,8 +9,6 @@ class DigitalPin : public Pin<bool>
     explicit DigitalPin(int number, PinMode mode, bool value = false);
     ~DigitalPin() override;
 
-    void init() override;
-
     bool read() const override;
     void write(bool value) override;
 };

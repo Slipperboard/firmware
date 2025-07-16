@@ -5,7 +5,6 @@
 TEST_CASE("AnalogPin read/write", "[analogpin]")
 {
     AnalogPin pin(36, PinMode::Output, 128);
-    pin.init();
     REQUIRE(pin.getPinNumber() == 36);
     REQUIRE(pin.getMode() == PinMode::Output);
     REQUIRE(pin.read() == 128);
@@ -19,7 +18,6 @@ TEST_CASE("AnalogPin read/write", "[analogpin]")
 TEST_CASE("AnalogPin write ignored in input mode", "[analogpin]")
 {
     AnalogPin pin(34, PinMode::Input);
-    pin.init();
     REQUIRE(pin.getPinNumber() == 34);
     REQUIRE(pin.getMode() == PinMode::Input);
     pin.write(42);
@@ -30,7 +28,6 @@ TEST_CASE("AnalogPin dynamic alloc", "[analogpin]")
 {
     int before = allocCount.load();
     auto* pin = new AnalogPin(32, PinMode::Output);
-    pin->init();
     delete pin;
     REQUIRE(allocCount.load() == before);
 }

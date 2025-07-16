@@ -3,15 +3,12 @@
 
 PWMPin::PWMPin(int number, PinMode mode, int value) : Pin<int>(number, mode, value)
 {
+    pinMode(number, OUTPUT);
+    analogWrite(number, value);
 }
 
 PWMPin::~PWMPin() = default;
 
-void PWMPin::init()
-{
-    pinMode(number, OUTPUT);
-    analogWrite(number, value);
-}
 
 int PWMPin::read() const
 {

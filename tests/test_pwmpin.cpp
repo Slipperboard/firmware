@@ -5,7 +5,6 @@
 TEST_CASE("PWMPin read/write", "[pwmpin]")
 {
     PWMPin pin(4, PinMode::Output, 10);
-    pin.init();
     REQUIRE(pin.getPinNumber() == 4);
     REQUIRE(pin.getMode() == PinMode::Output);
     REQUIRE(pin.read() == 10);

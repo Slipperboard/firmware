@@ -8,9 +8,6 @@ class Peripheral
     public:
     Peripheral() = default;
     virtual ~Peripheral() = default;
-
-    // Derived classes must implement their own initialization logic.
-    virtual void init() = 0;
 };
 
 #endif // PERIPHERAL_HPP

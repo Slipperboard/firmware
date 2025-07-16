@@ -11,8 +11,6 @@ class AnalogPin : public Pin<int>
     explicit AnalogPin(int number, PinMode mode, int value = 0);
     ~AnalogPin() override;
 
-    void init() override;
-
     int read() const override;
     void write(int value) override;
 
