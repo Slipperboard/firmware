@@ -1,13 +1,13 @@
+#include <Arduino.h>
 #include "MemoryTracker.hpp"
 #include "PWMPin.hpp"
 #include "catch_amalgamated.hpp"
 
 TEST_CASE("PWMPin read/write", "[pwmpin]")
 {
-    PWMPin pin(4, PinMode::Output, 10);
-    pin.init();
+    PWMPin pin(4, OUTPUT, 10);
     REQUIRE(pin.getPinNumber() == 4);
-    REQUIRE(pin.getMode() == PinMode::Output);
+    REQUIRE(pin.getMode() == OUTPUT);
     REQUIRE(pin.read() == 10);
     int before = allocCount.load();
     pin.write(20);

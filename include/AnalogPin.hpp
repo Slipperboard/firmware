@@ -3,28 +3,16 @@
 
 #include "Pin.hpp"
 
-#ifdef ESP_PLATFORM
-#include <driver/dac_oneshot.h>
-#include <esp_adc/adc_oneshot.h>
-#endif
+#include <Arduino.h>
 
 class AnalogPin : public Pin<int>
 {
     public:
-    explicit AnalogPin(int number, PinMode mode, int value = 0);
+    explicit AnalogPin(int number, int mode, int value = 0);
     ~AnalogPin() override;
-
-    void init() override;
 
     int read() const override;
     void write(int value) override;
-
-    private:
-#ifdef ESP_PLATFORM
-    adc_oneshot_unit_handle_t adc_handle{};
-    // Channel handle managed when the pin is configured for DAC output
-    dac_oneshot_handle_t dac_handle{};
-#endif
 };
 
 #endif // ANALOG_PIN_HPP
