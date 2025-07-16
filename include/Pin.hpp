@@ -1,6 +1,7 @@
 #ifndef PIN_HPP
 #define PIN_HPP
 
+#include <Arduino.h>
 #include "Peripheral.hpp"
 
 template <typename T> class Pin : public Peripheral

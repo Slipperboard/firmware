@@ -3,7 +3,6 @@
 
 AnalogPin::AnalogPin(int number, int mode, int value) : Pin<int>(number, mode, value)
 {
-    pinMode(number, mode);
 }
 
 AnalogPin::~AnalogPin()

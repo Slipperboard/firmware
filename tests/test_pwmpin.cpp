@@ -1,6 +1,6 @@
+#include "Arduino.h"
 #include "MemoryTracker.hpp"
 #include "PWMPin.hpp"
-#include "Arduino.h"
 #include "catch_amalgamated.hpp"
 
 TEST_CASE("PWMPin read/write", "[pwmpin]")

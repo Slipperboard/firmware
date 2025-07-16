@@ -3,7 +3,6 @@
 
 DigitalPin::DigitalPin(int number, int mode, bool value) : Pin<bool>(number, mode, value)
 {
-    pinMode(number, mode);
 }
 
 DigitalPin::~DigitalPin()
@@ -17,9 +16,14 @@ bool DigitalPin::read() const
 
 void DigitalPin::write(bool value)
 {
+    this->digitalWrite(value);
+}
+
+void DigitalPin::digitalWrite(bool state)
+{
     if (this->mode == OUTPUT)
     {
-        digitalWrite(number, value ? HIGH : LOW);
-        this->value = value;
+        ::digitalWrite(number, state ? HIGH : LOW);
+        this->value = state;
     }
 }

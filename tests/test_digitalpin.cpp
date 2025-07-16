@@ -1,5 +1,5 @@
-#include "DigitalPin.hpp"
 #include "Arduino.h"
+#include "DigitalPin.hpp"
 #include "MemoryTracker.hpp"
 #include "catch_amalgamated.hpp"
 
@@ -15,4 +15,13 @@ TEST_CASE("DigitalPin read/write", "[digitalpin]")
     state = pin.read();
     REQUIRE(state);
     REQUIRE(allocCount.load() == before);
+}
+
+TEST_CASE("DigitalPin digitalWrite", "[digitalpin]")
+{
+    DigitalPin pin(6, OUTPUT);
+    pin.digitalWrite(true);
+    REQUIRE(pin.read());
+    pin.digitalWrite(false);
+    REQUIRE_FALSE(pin.read());
 }
