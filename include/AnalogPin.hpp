@@ -3,9 +3,7 @@
 
 #include "Pin.hpp"
 
-#ifdef ARDUINO
 #include <Arduino.h>
-#endif
 
 class AnalogPin : public Pin<int>
 {
@@ -18,10 +16,6 @@ class AnalogPin : public Pin<int>
     int read() const override;
     void write(int value) override;
 
-    private:
-#ifdef ARDUINO
-    // no additional members needed when using Arduino APIs
-#endif
 };
 
 #endif // ANALOG_PIN_HPP
