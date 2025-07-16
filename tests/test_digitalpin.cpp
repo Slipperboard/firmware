@@ -17,11 +17,11 @@ TEST_CASE("DigitalPin read/write", "[digitalpin]")
     REQUIRE(allocCount.load() == before);
 }
 
-TEST_CASE("DigitalPin digitalWrite", "[digitalpin]")
+TEST_CASE("DigitalPin write", "[digitalpin]")
 {
     DigitalPin pin(6, OUTPUT);
-    pin.digitalWrite(true);
+    pin.write(true);
     REQUIRE(pin.read());
-    pin.digitalWrite(false);
+    pin.write(false);
     REQUIRE_FALSE(pin.read());
 }
