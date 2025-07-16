@@ -1,7 +1,7 @@
 #include "PWMPin.hpp"
 #include <Arduino.h>
 
-PWMPin::PWMPin(int number, PinMode mode, int value) : Pin<int>(number, mode, value)
+PWMPin::PWMPin(int number, int mode, int value) : Pin<int>(number, mode, value)
 {
     pinMode(number, OUTPUT);
     analogWrite(number, value);
@@ -18,7 +18,7 @@ int PWMPin::read() const
 
 void PWMPin::write(int value)
 {
-    if (mode == PinMode::Output)
+    if (mode == OUTPUT)
     {
         analogWrite(number, value);
         this->value = value;

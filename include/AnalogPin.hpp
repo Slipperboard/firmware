@@ -8,7 +8,7 @@
 class AnalogPin : public Pin<int>
 {
     public:
-    explicit AnalogPin(int number, PinMode mode, int value = 0);
+    explicit AnalogPin(int number, int mode, int value = 0);
     ~AnalogPin() override;
 
     int read() const override;

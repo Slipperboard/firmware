@@ -3,26 +3,19 @@
 
 #include "Peripheral.hpp"
 
-// Enumeration for pin mode
-enum class PinMode
-{
-    Input,
-    Output
-};
-
 template <typename T> class Pin : public Peripheral
 {
     public:
-    Pin(int number, PinMode mode, T value = T{});
+    Pin(int number, int mode, T value = T{});
     ~Pin() override;
-    PinMode getMode() const;
+    int getMode() const;
     int getPinNumber() const;
     virtual T read() const = 0;
     virtual void write(T value) = 0;
 
     protected:
     int number;
-    PinMode mode;
+    int mode;
     T value;
 };
 

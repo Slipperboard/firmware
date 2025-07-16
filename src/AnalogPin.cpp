@@ -1,9 +1,9 @@
 #include "AnalogPin.hpp"
 #include <Arduino.h>
 
-AnalogPin::AnalogPin(int number, PinMode mode, int value) : Pin<int>(number, mode, value)
+AnalogPin::AnalogPin(int number, int mode, int value) : Pin<int>(number, mode, value)
 {
-    pinMode(number, mode == PinMode::Output ? OUTPUT : INPUT);
+    pinMode(number, mode);
 }
 
 AnalogPin::~AnalogPin()
@@ -12,7 +12,7 @@ AnalogPin::~AnalogPin()
 
 int AnalogPin::read() const
 {
-    if (mode == PinMode::Input)
+    if (mode == INPUT)
     {
         return analogRead(number);
     }
@@ -21,7 +21,7 @@ int AnalogPin::read() const
 
 void AnalogPin::write(int value)
 {
-    if (this->mode != PinMode::Output)
+    if (this->mode != OUTPUT)
     {
         return;
     }

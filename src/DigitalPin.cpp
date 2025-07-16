@@ -1,9 +1,9 @@
 #include "DigitalPin.hpp"
 #include <Arduino.h>
 
-DigitalPin::DigitalPin(int number, PinMode mode, bool value) : Pin<bool>(number, mode, value)
+DigitalPin::DigitalPin(int number, int mode, bool value) : Pin<bool>(number, mode, value)
 {
-    pinMode(number, mode == PinMode::Output ? OUTPUT : INPUT);
+    pinMode(number, mode);
 }
 
 DigitalPin::~DigitalPin()
@@ -17,7 +17,7 @@ bool DigitalPin::read() const
 
 void DigitalPin::write(bool value)
 {
-    if (this->mode == PinMode::Output)
+    if (this->mode == OUTPUT)
     {
         digitalWrite(number, value ? HIGH : LOW);
         this->value = value;

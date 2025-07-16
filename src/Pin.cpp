@@ -1,6 +1,8 @@
 #include "Pin.hpp"
 
-template <typename T> Pin<T>::Pin(int number, PinMode mode, T value) : number(number), mode(mode), value(value)
+template <typename T>
+// NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
+Pin<T>::Pin(int number, int mode, T value) : number(number), mode(mode), value(value)
 {
 }
 
@@ -8,7 +10,7 @@ template <typename T> Pin<T>::~Pin()
 {
 }
 
-template <typename T> PinMode Pin<T>::getMode() const
+template <typename T> int Pin<T>::getMode() const
 {
     return mode;
 }
