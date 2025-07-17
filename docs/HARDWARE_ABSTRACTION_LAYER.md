@@ -1,7 +1,7 @@
 # Hardware Abstraction Layer
 
 `include/Peripheral.hpp` defines a lightweight base class named `Peripheral` that exposes
-only a virtual destructor. Generic device categories are provided in separate headers
+an optional UUID string via `setUuid()`/`getUuid()` in addition to a virtual destructor. Generic device categories are provided in separate headers
 (`Module.hpp`, `Sensor.hpp`, `Switch.hpp`, `Button.hpp`, and `Display.hpp`) with matching
 source files. These classes simply inherit from `Peripheral`. Specific hardware drivers
 should derive from one of these classes and perform any required setup in the constructor.
