@@ -5,7 +5,9 @@
 class LoggingDisplay : public Display
 {
     public:
-    LoggingDisplay() : Display({20, 20}) {}
+    LoggingDisplay() : Display({20, 20})
+    {
+    }
     Point lastPos{};
     std::size_t lastLen{0};
     int calls{0};
@@ -37,6 +39,14 @@ TEST_CASE("Display prevents overlapping tiles", "[displaytile]")
     REQUIRE_THROWS_AS(d.createTile({3, 0}, {5, 5}), std::runtime_error);
 }
 
+TEST_CASE("Nested tile collision throws", "[displaytile]")
+{
+    LoggingDisplay d;
+    DisplayTile rootTile = d.createTile({0, 0}, {8, 8});
+    static_cast<void>(rootTile.createTile({0, 0}, {4, 4}));
+    REQUIRE_THROWS_AS(rootTile.createTile({2, 2}, {4, 4}), std::runtime_error);
+}
+
 TEST_CASE("Nested tiles are allowed", "[displaytile]")
 {
     LoggingDisplay d;
@@ -60,6 +70,12 @@ TEST_CASE("drawBytes is clipped to tile bounds", "[displaytile]")
     t.drawBytes({4, 0}, msg, 2);
     REQUIRE(d.calls == 2);
     REQUIRE(d.lastLen == 1);
+    t.drawBytes({5, 0}, msg, 1);
+    REQUIRE(d.calls == 2); // start beyond width, ignored
+    t.drawBytes({-5, 0}, msg, 2);
+    REQUIRE(d.calls == 2); // offset exceeds length, ignored
+    t.drawBytes({0, 0}, msg, 0);
+    REQUIRE(d.calls == 2); // zero length ignored
     t.drawBytes({0, 5}, msg, 1);
     REQUIRE(d.calls == 2);
 }
@@ -114,4 +130,3 @@ TEST_CASE("isOnFocus controls border drawing", "[displaytile]")
     t.unfocus();
     REQUIRE(d.calls == before); // no redraw when already unfocused
 }
-
