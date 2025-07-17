@@ -16,9 +16,14 @@ FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tes
 CPPLINT_FILES := $(FMT_FILES)
 TIDY_FILES := $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp')
 
+BUILD_DIR ?= build
+
 build:
 	platformio run
 	platformio run --target size
+	mkdir -p $(BUILD_DIR)
+	cp .pio/build/esp32dev/firmware.bin $(BUILD_DIR)/firmware.bin
+	cp .pio/build/esp32dev/firmware.elf $(BUILD_DIR)/firmware.elf
 
 clean:
 	platformio run -t clean

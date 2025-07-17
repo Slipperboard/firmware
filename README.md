@@ -70,6 +70,26 @@ Run the full suite of formatting, linting, and tests before submitting a change:
 make precommit
 ```
 
+## Vagrant Environment
+
+If you don't have the required toolchain installed locally, you can build the
+project inside a Linux VM using Vagrant. After installing
+[Vagrant](https://www.vagrantup.com/), start the virtual machine and run the
+build:
+
+```bash
+vagrant up      # provisions an Ubuntu box with all dependencies
+vagrant ssh
+cd /vagrant && make build
+```
+
+The compiled firmware appears in the `build/` directory at the project root,
+which is shared with the host. You can then flash the `.bin` file from your
+host system without leaving the VM.
+
+Run `make precommit` in the VM to execute the full suite of formatting, linting
+and tests.
+
 ## Emulator
 
 You can run the firmware inside the [Wokwi](https://wokwi.com/) emulator to test
