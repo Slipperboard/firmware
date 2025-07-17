@@ -56,6 +56,18 @@ TEST_CASE("Nested tiles are allowed", "[displaytile]")
     REQUIRE(inner.getHeight() == 3);
 }
 
+TEST_CASE("Nested tile must fit within parent bounds", "[displaytile]")
+{
+    LoggingDisplay d;
+    DisplayTile t = d.createTile({5, 5}, {4, 4});
+    REQUIRE_THROWS_AS(t.createTile({3, 0}, {2, 2}), std::runtime_error);
+    REQUIRE_THROWS_AS(t.createTile({0, 3}, {2, 2}), std::runtime_error);
+    REQUIRE_THROWS_AS(t.createTile({-1, 0}, {2, 2}), std::runtime_error);
+    REQUIRE_THROWS_AS(t.createTile({0, 0}, {5, 5}), std::runtime_error);
+    DisplayTile ok = t.createTile({1, 1}, {2, 2});
+    REQUIRE(ok.getWidth() == 2);
+}
+
 TEST_CASE("drawBytes is clipped to tile bounds", "[displaytile]")
 {
     LoggingDisplay d;

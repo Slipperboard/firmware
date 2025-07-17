@@ -31,6 +31,11 @@ int DisplayTile::getHeight() const
 
 DisplayTile DisplayTile::createTile(Point origin, Dimensions dims)
 {
+    if (origin.x < 0 || origin.y < 0 || origin.x + dims.width > this->dims.width ||
+        origin.y + dims.height > this->dims.height)
+    {
+        throw std::runtime_error("Tile collision");
+    }
     Point abs{this->origin.x + origin.x, this->origin.y + origin.y};
     return DisplayTile(root, abs, dims, children);
 }
