@@ -2,6 +2,7 @@
 #define DISPLAY_HPP
 
 #include <cstddef>
+#include <stdexcept>
 #include <vector>
 #include "Peripheral.hpp"
 
