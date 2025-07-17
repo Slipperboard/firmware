@@ -1,12 +1,11 @@
-#include <Arduino.h>
+#include <cstdio>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
 
-void setup()
+extern "C" void app_main()
 {
-    Serial.begin(115200);
-}
-
-void loop()
-{
-    Serial.println("Hello, Flipper Zero compatible ESP32!");
-    delay(1000);
+    while (true) {
+        printf("Hello, Flipper Zero compatible ESP32!\n");
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
 }
