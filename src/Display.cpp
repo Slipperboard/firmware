@@ -3,7 +3,6 @@
 #ifdef ARDUINO
 #include <Adafruit_GFX.h>
 #include <Adafruit_SSD1306.h>
-#include <lvgl.h>
 
 static Adafruit_SSD1306 oled(128, 64, &Wire);
 #endif
@@ -13,7 +12,6 @@ Display::Display(Dimensions dims) : width(dims.width), height(dims.height)
 #ifdef ARDUINO
     oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     oled.clearDisplay();
-    lv_init();
 #endif
 }
 
