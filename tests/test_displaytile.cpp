@@ -95,3 +95,23 @@ TEST_CASE("focus and unfocus draw border", "[displaytile]")
     REQUIRE(d.calls - before == expected);
 }
 
+TEST_CASE("isOnFocus controls border drawing", "[displaytile]")
+{
+    LoggingDisplay d;
+    DisplayTile t = d.createTile({0, 0}, {4, 2});
+    REQUIRE_FALSE(t.isOnFocus());
+    int before = d.calls;
+    t.focus();
+    int expected = expected_focus_calls(4, 2);
+    REQUIRE(d.calls - before == expected);
+    REQUIRE(t.isOnFocus());
+    before = d.calls;
+    t.focus();
+    REQUIRE(d.calls == before); // no redraw when already focused
+    t.unfocus();
+    REQUIRE_FALSE(t.isOnFocus());
+    before = d.calls;
+    t.unfocus();
+    REQUIRE(d.calls == before); // no redraw when already unfocused
+}
+

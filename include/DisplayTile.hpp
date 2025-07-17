@@ -27,12 +27,15 @@ class DisplayTile
     void focus();
     void unfocus();
 
+    bool isOnFocus() const;
+
     private:
     Display& root;
     Point origin;
     Dimensions dims;
     std::vector<Rect>& siblings;
     std::vector<Rect> children;
+    bool focused{false};
 };
 
 #endif // DISPLAYTILE_HPP

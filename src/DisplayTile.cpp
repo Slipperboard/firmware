@@ -64,6 +64,11 @@ void DisplayTile::drawBytes(Point pos, const unsigned char* data,
 
 void DisplayTile::focus()
 {
+    if (isOnFocus())
+    {
+        return;
+    }
+    focused = true;
     unsigned char dot = '.';
     for (int x = 0; x < dims.width; ++x)
     {
@@ -85,6 +90,11 @@ void DisplayTile::focus()
 
 void DisplayTile::unfocus()
 {
+    if (!isOnFocus())
+    {
+        return;
+    }
+    focused = false;
     unsigned char space = ' ';
     for (int x = 0; x < dims.width; ++x)
     {
@@ -102,5 +112,10 @@ void DisplayTile::unfocus()
             drawBytes({dims.width - 1, y}, &space, 1);
         }
     }
+}
+
+bool DisplayTile::isOnFocus() const
+{
+    return focused;
 }
 
