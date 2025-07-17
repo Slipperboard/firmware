@@ -2,7 +2,11 @@
 #define DISPLAY_HPP
 
 #include <cstddef>
+#include <vector>
 #include "Peripheral.hpp"
+
+struct Rect;
+class DisplayTile;
 
 struct Dimensions
 {
@@ -29,9 +33,12 @@ class Display : public Peripheral
     // Draw a series of bytes at the given coordinate using the underlying display
     virtual void drawBytes(Point pos, const unsigned char* data, std::size_t length) = 0;
 
+    DisplayTile createTile(Point origin, Dimensions dims);
+
     protected:
     int width;
     int height;
+    std::vector<Rect> tiles;
 };
 
 #endif // DISPLAY_HPP
