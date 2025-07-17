@@ -26,7 +26,7 @@ class Display : public Peripheral
     int getWidth() const;
     int getHeight() const;
 
-    // Draw a series of bytes at the given coordinate
+    // Draw a series of bytes at the given coordinate using the underlying display
     virtual void drawBytes(Point pos, const unsigned char* data, std::size_t length) = 0;
 
     protected:

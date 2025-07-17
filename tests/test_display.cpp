@@ -10,8 +10,9 @@ class DummyDisplay : public Display
         initialized = true;
     }
     bool initialized = false;
-    void drawBytes(Point, const unsigned char*, std::size_t) override
+    void drawBytes(Point pos, const unsigned char* data, std::size_t length) override
     {
+        Display::drawBytes(pos, data, length);
     }
 };
 
@@ -22,6 +23,15 @@ TEST_CASE("Display initializes", "[display]")
     int before = allocCount.load();
     // call the virtual function to ensure coverage
     d.drawBytes({0, 0}, nullptr, 0);
+    REQUIRE(allocCount.load() == before);
+}
+
+TEST_CASE("Display drawBytes default", "[display]")
+{
+    DummyDisplay d;
+    unsigned char msg[] = "test";
+    int before = allocCount.load();
+    d.drawBytes({0, 0}, msg, sizeof(msg) - 1);
     REQUIRE(allocCount.load() == before);
 }
 
