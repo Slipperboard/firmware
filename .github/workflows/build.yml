@@ -69,24 +69,3 @@ jobs:
       - name: Run ${{ matrix.task }}
         run: make ${{ matrix.task }}
 
-  release:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    needs: [build, unit-tests, sanity]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-      - name: Install PlatformIO
-        run: pip install --upgrade platformio
-      - name: Build firmware
-        run: make build
-      - name: Create Release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: v${{ github.run_number }}
-          name: Release v${{ github.run_number }}
-          artifacts: .pio/build/esp32dev/firmware.bin
-          body: Automated release for commit ${{ github.sha }}.
