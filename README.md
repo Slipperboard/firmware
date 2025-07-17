@@ -15,7 +15,7 @@ This project is the starting point for building a Flipper Zero–compatible firm
 
 ## Entrypoint
 
-The firmware starts from an `app_main()` function instead of Arduino's `setup()` and `loop()` routines. The main loop simply prints a message every second using standard ESP-IDF APIs.
+The firmware starts from an `app_main()` function instead of Arduino's `setup()` and `loop()` routines. Weak default implementations of these Arduino hooks live in `src/main.cpp` and simply forward to `app_main()`. The main loop prints a message every second using standard ESP-IDF APIs.
 
 ### Hardware Abstraction Layer
 
@@ -23,11 +23,9 @@ See [docs/HARDWARE_ABSTRACTION_LAYER.md](docs/HARDWARE_ABSTRACTION_LAYER.md) for
 
 ### Using Arduino Libraries
 
-If you need to include `Arduino.h` for additional functionality, the build
-already provides weak stub implementations of `setup()` and `loop()` in
-`src/arduino_stubs.cpp`. This prevents linker errors when the Arduino
-framework expects those symbols, while still letting you drive the application
-from `app_main()`.
+If you need to include `Arduino.h` for additional functionality, the default weak
+`setup()` and `loop()` ensure the linker finds these symbols while letting you
+drive the application from `app_main()`.
 
 ## Building
 
