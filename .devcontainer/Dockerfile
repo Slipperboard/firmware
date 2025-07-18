@@ -10,6 +10,8 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     gcovr \
+    nodejs \
+    npm \
     && rm -rf /var/lib/apt/lists/*
 
 # Install cpplint and PlatformIO
