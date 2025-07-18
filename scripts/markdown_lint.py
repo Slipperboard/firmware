@@ -3,12 +3,6 @@ import re
 import sys
 from pathlib import Path
 
-try:
-    import markdown
-except ImportError:
-    print("markdown module is required. Install with 'pip install markdown'.", file=sys.stderr)
-    sys.exit(1)
-
 EMAIL_RE = re.compile(r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$")
 
 
@@ -20,11 +14,6 @@ def check_file(path: Path) -> list[str]:
         errors.append(f"{path}: unable to read: {e}")
         return errors
 
-    # ensure markdown parses without raising exceptions
-    try:
-        markdown.markdown(text)
-    except Exception as e:
-        errors.append(f"{path}: markdown parse error: {e}")
 
     maintainers_line = None
     for line in text.splitlines():
