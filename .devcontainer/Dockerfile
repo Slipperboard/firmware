@@ -10,9 +10,13 @@ RUN apt-get update && apt-get install -y \
     python3 \
     python3-pip \
     gcovr \
-    nodejs \
-    npm \
+    curl \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js from NodeSource to ensure npm is available
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install cpplint and PlatformIO
 # Ubuntu images enable PEP 668 which prevents system-wide pip installs.
