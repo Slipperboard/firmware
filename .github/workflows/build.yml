@@ -9,8 +9,32 @@ on:
       - master
 
 jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            code:
+              - 'src/**'
+              - 'include/**'
+              - 'lib/**'
+              - 'tests/**'
+              - 'scripts/**'
+              - 'platformio.ini'
+              - 'Makefile'
+              - 'diagram.json'
+              - 'wokwi.toml'
+
   build:
-    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
+    needs: changes
+    if: (needs.changes.outputs.code == 'true') && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,7 +54,8 @@ jobs:
         run: make wokwi-sanity
 
   unit-tests:
-    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
+    needs: changes
+    if: (needs.changes.outputs.code == 'true') && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -52,7 +77,8 @@ jobs:
         run: make ${{ matrix.task }}
 
   sanity:
-    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
+    needs: changes
+    if: (needs.changes.outputs.code == 'true') && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
