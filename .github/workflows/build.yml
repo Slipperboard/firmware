@@ -89,54 +89,40 @@ jobs:
 
   sanity:
     needs: changes
-    if: (needs.changes.outputs.code == 'true') && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
+    if: ((needs.changes.outputs.code == 'true') || (needs.changes.outputs.markdown == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        task: [check-format, lint, cpplint, tidy]
+        task: [check-format, lint, cpplint, tidy, markdown-lint, makefile-lint]
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
       - name: Install tools
         run: |
           sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy
           pip install --user cpplint
       - name: Run ${{ matrix.task }}
-        run: make ${{ matrix.task }}
-
-  markdown-lint:
-    needs: changes
-    if: needs.changes.outputs.markdown == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-      - name: Run markdown linter
         run: |
-          files="${{ needs.changes.outputs.markdown_files }}"
-          if [ -n "$files" ]; then
-            make markdown-lint FILES="$files"
+          if [ "${{ matrix.task }}" = "markdown-lint" ]; then
+            if [ "${{ needs.changes.outputs.markdown }}" = "true" ]; then
+              make markdown-lint FILES="${{ needs.changes.outputs.markdown_files }}"
+            else
+              echo "No markdown changes" && exit 0
+            fi
+          elif [ "${{ matrix.task }}" = "makefile-lint" ]; then
+            if [ "${{ needs.changes.outputs.makefile }}" = "true" ]; then
+              make makefile-lint
+            else
+              echo "No Makefile changes" && exit 0
+            fi
+          else
+            make ${{ matrix.task }}
           fi
 
-  makefile-lint:
-    needs: changes
-    if: needs.changes.outputs.makefile == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-      - name: Run makefile linter
-        run: make makefile-lint
 
