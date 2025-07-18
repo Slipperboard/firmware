@@ -1,0 +1,15 @@
+{
+    "name": "firmware-dev",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-python.python",
+                "platformio.platformio-ide"
+            ]
+        }
+    }
+}
