@@ -61,8 +61,11 @@ makefile-lint:
 	python3 scripts/makefile_lint.py Makefile
 
 dockerfile-lint:
-	python3 scripts/dockerfile_lint.py $(DOCKERFILES)
-
+	if [ -n "$(DOCKERFILES)" ]; then \
+		python3 scripts/dockerfile_lint.py $(DOCKERFILES); \
+	else \
+		echo "No Dockerfiles to lint"; \
+	fi
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
 	./test_all --reporter console --success

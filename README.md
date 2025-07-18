@@ -70,6 +70,7 @@ make check-format  # [CI]
 make lint          # [CI]
 make cpplint       # [CI]
 make tidy          # [CI]
+make dockerfile-lint  # [CI]
 make coverage      # [CI]
 ```
 

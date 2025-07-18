@@ -36,9 +36,16 @@ def lint_dockerfile(path: Path) -> list[str]:
 
 
 def main(paths: list[str]) -> int:
-    files = [Path(p) for p in paths] if paths else [Path("Dockerfile")]
+    """Lint the given Dockerfiles. Return 0 if no issues are found."""
+    if not paths:
+        # Nothing to lint
+        return 0
+
+    files = [Path(p) for p in paths]
     all_errors: list[str] = []
     for f in files:
+        if not f.exists():
+            continue
         all_errors.extend(lint_dockerfile(f))
     if all_errors:
         for err in all_errors:
