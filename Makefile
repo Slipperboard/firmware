@@ -1,16 +1,16 @@
-.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity
+.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
 	lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
 	tests/MemoryTracker.cpp \
 	tests/test_module.cpp tests/test_sensor.cpp tests/test_switch.cpp \
-        tests/Arduino.cpp \
-        tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
-        tests/test_analogpin.cpp tests/test_pwmpin.cpp tests/test_displaytile.cpp \
-        tests/test_memory.cpp \
-        src/Module.cpp src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp src/DisplayTile.cpp \
-        src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp src/PWMPin.cpp
+	tests/Arduino.cpp \
+	tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
+	tests/test_analogpin.cpp tests/test_pwmpin.cpp tests/test_displaytile.cpp \
+	tests/test_memory.cpp \
+	src/Module.cpp src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp src/DisplayTile.cpp \
+	src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp src/PWMPin.cpp
 
 FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tests/*.hpp')
 CPPLINT_FILES := $(FMT_FILES)
@@ -49,6 +49,9 @@ tidy:
 	! grep -E "(warning:|error:)" clang-tidy.log
 	rm clang-tidy.log
 
+markdown-lint:
+	python3 scripts/markdown_lint.py
+
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
 	./test_all --reporter console --success
@@ -61,6 +64,7 @@ coverage:
 
 precommit:
 	$(MAKE) build
+	$(MAKE) markdown-lint
 	$(MAKE) check-format
 	$(MAKE) cpplint
 	$(MAKE) lint
