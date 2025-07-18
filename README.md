@@ -9,7 +9,7 @@ This project is a template for building a Flipper Zero–compatible firmware for
 ## Development Setup
 
 1. Install the [PlatformIO CLI](https://platformio.org/install).
-2. (Optional) Install the Wokwi CLI with `npm install -g @wokwi/cli` to run the emulator.
+2. (Optional) Install the Wokwi CLI with `curl -L https://wokwi.com/ci/install.sh | sh` to run the emulator.
 3. Clone this repository and run `make build` to compile the firmware.
 
 ## Dev Container
@@ -97,7 +97,7 @@ remains functional.
 
 You can run the firmware inside the [Wokwi](https://wokwi.com/) emulator to test
 changes without hardware. First install the Wokwi CLI (for example with
-`npm install -g @wokwi/cli`), build the project, and launch the emulator:
+`curl -L https://wokwi.com/ci/install.sh | sh`), build the project, and launch the emulator:
 
 ```bash
 make build   # [CI]

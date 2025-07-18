@@ -24,6 +24,6 @@ RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
 RUN pip3 install --break-system-packages --no-cache-dir cpplint platformio
 
 # Install Wokwi CLI so the emulator can run inside the container
-RUN npm install -g @wokwi/cli
+RUN curl -L https://wokwi.com/ci/install.sh | sh
 
 ENV PATH="/root/.local/bin:${PATH}"
