@@ -94,7 +94,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        task: [check-format, lint, cpplint, tidy, markdown-lint, makefile-lint]
+        task: [check-format, lint, cpplint, tidy, markdown-lint, makefile-lint, dockerfile-lint]
     steps:
       - uses: actions/checkout@v3
         with:

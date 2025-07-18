@@ -1,4 +1,4 @@
-.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint env
+.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint dockerfile-lint env
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
@@ -15,6 +15,9 @@ TEST_SRCS = \
 FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tests/*.hpp')
 CPPLINT_FILES := $(FMT_FILES)
 TIDY_FILES := $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp')
+
+# Dockerfiles to lint
+DOCKERFILES := $(shell git ls-files '*Dockerfile')
 
 # Name of the dev container image
 DEV_CONTAINER_IMAGE ?= firmware-dev
@@ -57,6 +60,9 @@ markdown-lint:
 makefile-lint:
 	python3 scripts/makefile_lint.py Makefile
 
+dockerfile-lint:
+	python3 scripts/dockerfile_lint.py $(DOCKERFILES)
+
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
 	./test_all --reporter console --success
@@ -71,6 +77,7 @@ coverage:
 precommit:
 	$(MAKE) build
 	$(MAKE) makefile-lint
+	$(MAKE) dockerfile-lint
 	$(MAKE) markdown-lint
 	$(MAKE) check-format
 	$(MAKE) cpplint
