@@ -13,3 +13,5 @@ analog (`AnalogPin`), digital (`DigitalPin`) and PWM (`PWMPin`) operation.
 the button was held. The acceptable duration for a single click can be modified
 with `setClickThreshold()`, and calling `release()` returns whether the hold time
 was within this limit.
+
+Maintainers: Codex

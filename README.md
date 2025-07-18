@@ -105,3 +105,5 @@ existing files.
 ## License
 
 This project is released under the [MIT License](LICENSE).
+
+Maintainers: Codex
