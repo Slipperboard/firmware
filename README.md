@@ -87,6 +87,9 @@ Run the full suite of formatting, linting, and tests before submitting a change:
 make precommit
 ```
 
+This command also runs `make devcontainer-test` to ensure the dev container
+remains functional.
+
 ## Emulator
 
 You can run the firmware inside the [Wokwi](https://wokwi.com/) emulator to test

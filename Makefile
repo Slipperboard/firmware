@@ -88,6 +88,9 @@ precommit:
 	$(MAKE) tidy
 	$(MAKE) test
 	$(MAKE) coverage
+	if [ -z "$(SKIP_DEVCONTAINER_TEST)" ]; then \
+		$(MAKE) devcontainer-test; \
+	fi
 
 emulate: build
 	wokwi-cli .
@@ -107,4 +110,4 @@ devcontainer-test:
 	docker run --rm \
 	-v "$(CURDIR)":/workspace \
 	-w /workspace \
-	$(DEV_CONTAINER_IMAGE) bash -lc "make precommit && make build"
+	$(DEV_CONTAINER_IMAGE) bash -lc "SKIP_DEVCONTAINER_TEST=1 make precommit && make build"
