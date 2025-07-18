@@ -106,4 +106,4 @@ existing files.
 
 This project is released under the [MIT License](LICENSE).
 
-Maintainers: Sam Developer <sam@example.com>, Ann Maintainer <ann@example.com>
+Maintainers: Codex

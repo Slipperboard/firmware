@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       code: ${{ steps.filter.outputs.code }}
+      markdown: ${{ steps.filter.outputs.markdown }}
+      makefile: ${{ steps.filter.outputs.makefile }}
+      markdown_files: ${{ steps.filter.outputs.markdown_files }}
+      makefile_files: ${{ steps.filter.outputs.makefile_files }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -34,6 +38,10 @@ jobs:
               - 'Makefile'
               - 'diagram.json'
               - 'wokwi.toml'
+            markdown:
+              - '**/*.md'
+            makefile:
+              - 'Makefile'
 
   build:
     needs: changes
@@ -97,4 +105,30 @@ jobs:
           pip install --user cpplint
       - name: Run ${{ matrix.task }}
         run: make ${{ matrix.task }}
+
+  markdown-lint:
+    needs: changes
+    if: needs.changes.outputs.markdown == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+      - name: Run markdown linter
+        run: |
+          files="${{ needs.changes.outputs.markdown_files }}"
+          if [ -n "$files" ]; then
+            make markdown-lint FILES="$files"
+          fi
+
+  makefile-lint:
+    needs: changes
+    if: needs.changes.outputs.makefile == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+      - name: Run makefile linter
+        run: make makefile-lint
 

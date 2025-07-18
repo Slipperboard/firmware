@@ -8,4 +8,4 @@ unit test coverage remains at 100%. The policy applies universally—humans,
 Codex, CI jobs and bots must all run this command locally before proposing
 changes. Fix any failures before opening a pull request or pushing commits.
 
-Maintainers: Sam Developer <sam@example.com>, Ann Maintainer <ann@example.com>
+Maintainers: Codex

@@ -14,4 +14,4 @@ the button was held. The acceptable duration for a single click can be modified
 with `setClickThreshold()`, and calling `release()` returns whether the hold time
 was within this limit.
 
-Maintainers: Sam Developer <sam@example.com>, Ann Maintainer <ann@example.com>
+Maintainers: Codex

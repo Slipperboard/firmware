@@ -34,9 +34,22 @@ def check_file(path: Path) -> list[str]:
     if not maintainers_line:
         errors.append(f"{path}: missing maintainers list")
     else:
-        emails = re.findall(r"<([^>]+)>", maintainers_line)
-        if not emails:
-            errors.append(f"{path}: no email addresses found in maintainers line")
+        rest = maintainers_line[len("Maintainers:"):].strip()
+        names = []
+        emails = []
+        for part in rest.split(','):
+            part = part.strip()
+            if not part:
+                continue
+            if '<' in part and part.endswith('>'):
+                name, email = part.split('<', 1)
+                names.append(name.strip())
+                email = email[:-1].strip()
+                emails.append(email)
+            else:
+                names.append(part)
+        if not names:
+            errors.append(f"{path}: maintainer name missing")
         for email in emails:
             if not EMAIL_RE.match(email):
                 errors.append(f"{path}: invalid email address '{email}'")

@@ -1,4 +1,4 @@
-.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint
+.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
@@ -50,7 +50,10 @@ tidy:
 	rm clang-tidy.log
 
 markdown-lint:
-	python3 scripts/markdown_lint.py
+	python3 scripts/markdown_lint.py $(FILES)
+
+makefile-lint:
+	python3 scripts/makefile_lint.py Makefile
 
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
@@ -62,8 +65,10 @@ coverage:
 	gcovr -r . --exclude-directories=lib --exclude='.*Catch2.*' --print-summary --fail-under-line=100
 	$(RM) *.gcno *.gcda test_all_cov
 
+
 precommit:
 	$(MAKE) build
+	$(MAKE) makefile-lint
 	$(MAKE) markdown-lint
 	$(MAKE) check-format
 	$(MAKE) cpplint
