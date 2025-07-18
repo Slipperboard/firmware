@@ -1,4 +1,4 @@
-.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint
+.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint env
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
@@ -16,6 +16,8 @@ FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tes
 CPPLINT_FILES := $(FMT_FILES)
 TIDY_FILES := $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp')
 
+# Name of the dev container image
+DEV_CONTAINER_IMAGE ?= firmware-dev
 build:
 	platformio run
 	platformio run --target size
@@ -82,3 +84,10 @@ emulate: build
 
 wokwi-sanity:
 	python3 scripts/wokwi_sanity.py
+# Build and start the dev container with the repository mounted
+env:
+	docker build -t $(DEV_CONTAINER_IMAGE) -f .devcontainer/Dockerfile .
+	docker run --rm -it \
+		-v "$(CURDIR)":/workspace \
+		-w /workspace \
+		$(DEV_CONTAINER_IMAGE) bash
