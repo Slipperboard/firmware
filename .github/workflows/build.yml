@@ -136,18 +136,21 @@ jobs:
           fi
 
 
-  devcontainer:
+  healthcheck:
     needs: changes
     if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        task: [devcontainer]
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
-      - name: Build dev container
-        run: docker build -t firmware-dev -f .devcontainer/Dockerfile .
-      - name: Run precommit inside container
-        run: docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace firmware-dev bash -lc "make precommit"
-      - name: Build firmware inside container
-        run: docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace firmware-dev bash -lc "make build"
+      - name: Run ${{ matrix.task }}
+        run: |
+          if [ "${{ matrix.task }}" = "devcontainer" ]; then
+            make devcontainer-test
+          fi
 

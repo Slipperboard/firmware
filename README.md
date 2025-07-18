@@ -18,8 +18,7 @@ This repository includes a [dev container](https://containers.dev/) configuratio
 for VS Code. Open the project in VS Code and choose **Reopen in Container** to
 get a fully configured environment with PlatformIO and all required tools.
 You can also launch the container from the command line with `make env`. Any build output in the container appears in the repository directory on the host.
-The CI workflow builds this container and runs `make precommit` and `make build`
-inside it to verify the environment remains healthy.
+The CI workflow runs a **healthcheck** job that builds this container and executes `make precommit` and `make build` within it to verify the environment stays healthy.
 
 ## Directory Layout
 
