@@ -16,9 +16,12 @@ This project is a template for building a Flipper Zero–compatible firmware for
 
 This repository includes a [dev container](https://containers.dev/) configuration
 for VS Code. Open the project in VS Code and choose **Reopen in Container** to
-get a fully configured environment with PlatformIO and all required tools.
-You can also launch the container from the command line with `make env`. Any build output in the container appears in the repository directory on the host.
-The CI workflow runs a **healthcheck** job that builds this container and executes `make precommit` and `make build` within it to verify the environment stays healthy.
+get a fully configured environment with PlatformIO, Wokwi CLI, and all required
+tools. You can also launch the container from the command line with
+`make env`. Any build output in the container appears in the repository directory
+on the host. The CI workflow runs a **healthcheck** job that builds this
+container and executes `make precommit` and `make build` within it to verify the
+environment stays healthy.
 
 ## Directory Layout
 
