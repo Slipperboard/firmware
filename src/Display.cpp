@@ -1,4 +1,7 @@
 #include "Display.hpp"
+#include <algorithm>
+#include <stdexcept>
+#include "DisplayTile.hpp"
 
 #ifdef ARDUINO
 #include <Adafruit_GFX.h>
@@ -40,4 +43,17 @@ void Display::drawBytes(Point pos, const unsigned char* data, std::size_t length
     (void) data;
     (void) length;
 #endif
+}
+
+DisplayTile Display::createTile(Point origin, Dimensions dims)
+{
+    Rect r{origin.x, origin.y, dims.width, dims.height};
+    auto collide = [&r](const Rect& t) {
+        return !(r.x + r.width <= t.x || t.x + t.width <= r.x || r.y + r.height <= t.y || t.y + t.height <= r.y);
+    };
+    if (std::any_of(tiles.begin(), tiles.end(), collide))
+    {
+        throw std::runtime_error("Tile collision");
+    }
+    return DisplayTile(*this, origin, dims, tiles);
 }
