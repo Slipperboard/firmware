@@ -20,6 +20,9 @@ jobs:
       - id: filter
         uses: dorny/paths-filter@v2
         with:
+          # NOTE: Keep this list in sync with repository structure.
+          # Add new paths here when introducing additional code directories or
+          # build-related files.
           filters: |
             code:
               - 'src/**'

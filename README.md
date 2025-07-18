@@ -78,6 +78,10 @@ Run the full suite of formatting, linting, and tests before submitting a change:
 make precommit
 ```
 
+The CI workflow skips builds when a pull request only modifies documentation.
+Maintain the list of code paths in `.github/workflows/build.yml` whenever new
+directories or build files are added to ensure the filter remains accurate.
+
 ## Emulator
 
 You can run the firmware inside the [Wokwi](https://wokwi.com/) emulator to test
