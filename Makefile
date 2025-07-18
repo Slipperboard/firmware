@@ -110,4 +110,4 @@ devcontainer-test:
 	docker run --rm \
 	-v "$(CURDIR)":/workspace \
 	-w /workspace \
-	$(DEV_CONTAINER_IMAGE) bash -lc "SKIP_DEVCONTAINER_TEST=1 make precommit && make build"
+	$(DEV_CONTAINER_IMAGE) bash -lc "make build"

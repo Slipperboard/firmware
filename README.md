@@ -20,8 +20,8 @@ get a fully configured environment with PlatformIO, Wokwi CLI, and all required
 tools. You can also launch the container from the command line with
 `make env`. Any build output in the container appears in the repository directory
 on the host. The CI workflow runs a **healthcheck** job that builds this
-container and executes `make precommit` and `make build` within it to verify the
-environment stays healthy.
+container and executes `make build` within it to verify the environment stays
+healthy.
 
 ## Directory Layout
 
@@ -91,7 +91,7 @@ make precommit
 ```
 
 This command also runs `make devcontainer-test` to ensure the dev container
-remains functional.
+remains functional by building the firmware inside it.
 
 ## Emulator
 
