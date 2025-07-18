@@ -6,6 +6,12 @@
 
 This project is a template for building a Flipper Zero–compatible firmware for an ESP32-based board. It uses [PlatformIO](https://platformio.org/) as the build environment with the Arduino framework.
 
+## Development Setup
+
+1. Install the [PlatformIO CLI](https://platformio.org/install).
+2. (Optional) Install the Wokwi CLI with `npm install -g @wokwi/cli` to run the emulator.
+3. Clone this repository and run `make build` to compile the firmware.
+
 ## Directory Layout
 
 - `src/` – Application source files.
@@ -60,6 +66,8 @@ make tidy          # [CI]
 make coverage      # [CI]
 ```
 
+Run `make format` to automatically apply clang-format fixes.
+
 This coverage target fails if line coverage is below 100%.
 
 ## Precommit
@@ -93,3 +101,7 @@ make wokwi-sanity # [CI]
 
 This checks that `wokwi.toml` and `diagram.json` are well-formed and reference
 existing files.
+
+## License
+
+This project is released under the [MIT License](LICENSE).
