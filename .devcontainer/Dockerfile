@@ -13,7 +13,9 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Install cpplint and PlatformIO
-RUN pip3 install --no-cache-dir cpplint platformio
+# Ubuntu images enable PEP 668 which prevents system-wide pip installs.
+# --break-system-packages allows installing to the base environment.
+RUN pip3 install --break-system-packages --no-cache-dir cpplint platformio
 
 # Install Wokwi CLI
 RUN npm install -g @wokwi/cli
