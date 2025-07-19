@@ -1,11 +1,11 @@
-.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint
+.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint dockerfile-lint env devcontainer-test
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
 	lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
 	tests/MemoryTracker.cpp \
 	tests/test_sensor.cpp tests/test_switch.cpp \
-	tests/Arduino.cpp \
+		tests/Arduino.cpp \
 	tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
 	tests/test_analogpin.cpp tests/test_pwmpin.cpp tests/test_displaytile.cpp \
 	tests/test_memory.cpp \
@@ -16,6 +16,11 @@ FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tes
 CPPLINT_FILES := $(FMT_FILES)
 TIDY_FILES := $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp')
 
+# Dockerfiles to lint
+DOCKERFILES := $(shell git ls-files '*Dockerfile')
+
+# Name of the dev container image
+DEV_CONTAINER_IMAGE ?= firmware-dev
 build:
 	platformio run
 	platformio run --target size
@@ -55,6 +60,12 @@ markdown-lint:
 makefile-lint:
 	python3 scripts/makefile_lint.py Makefile
 
+dockerfile-lint:
+	if [ -n "$(DOCKERFILES)" ]; then \
+		python3 scripts/dockerfile_lint.py $(DOCKERFILES); \
+	else \
+		echo "No Dockerfiles to lint"; \
+	fi
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
 	./test_all --reporter console --success
@@ -69,6 +80,7 @@ coverage:
 precommit:
 	$(MAKE) build
 	$(MAKE) makefile-lint
+	$(MAKE) dockerfile-lint
 	$(MAKE) markdown-lint
 	$(MAKE) check-format
 	$(MAKE) cpplint
@@ -76,9 +88,26 @@ precommit:
 	$(MAKE) tidy
 	$(MAKE) test
 	$(MAKE) coverage
+	if [ -z "$(SKIP_DEVCONTAINER_TEST)" ]; then \
+		$(MAKE) devcontainer-test; \
+	fi
 
 emulate: build
 	wokwi-cli .
 
 wokwi-sanity:
 	python3 scripts/wokwi_sanity.py
+# Build and start the dev container with the repository mounted
+env:
+	docker build -t $(DEV_CONTAINER_IMAGE) -f .devcontainer/Dockerfile .
+	docker run --rm -it \
+	-v "$(CURDIR)":/workspace \
+	-w /workspace \
+	$(DEV_CONTAINER_IMAGE) bash
+
+devcontainer-test:
+	docker build -t $(DEV_CONTAINER_IMAGE) -f .devcontainer/Dockerfile .
+	docker run --rm \
+	-v "$(CURDIR)":/workspace \
+	-w /workspace \
+	$(DEV_CONTAINER_IMAGE) bash -lc "make build"
