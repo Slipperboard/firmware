@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Setup development environment dependencies for Slipperboard
 # Installs tools via apt or brew depending on OS
-set -e
+set -euo pipefail
 
 case "$(uname)" in
     Linux*)
