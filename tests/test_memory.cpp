@@ -6,25 +6,25 @@ TEST_CASE("nothrow sized delete operators", "[memory]")
 {
     char* p = new (std::nothrow) char;
     REQUIRE(static_cast<void*>(p) != nullptr);
-    delete p;
+    ::operator delete(p, sizeof(char), std::nothrow);
 
     char* q = new (std::nothrow) char;
     REQUIRE(static_cast<void*>(q) != nullptr);
-    delete q;
+    ::operator delete(q, std::nothrow);
 
     char* r = new char;
-    delete r;
+    ::operator delete(r, sizeof(char));
 
     char* arr = new (std::nothrow) char[2];
     REQUIRE(static_cast<void*>(arr) != nullptr);
-    delete[] arr;
+    ::operator delete[](arr, 2, std::nothrow);
 
     char* arr2 = new char[3];
-    delete[] arr2;
+    ::operator delete[](arr2, 3);
 
     char* arr3 = new (std::nothrow) char[4];
-    delete[] arr3;
+    ::operator delete[](arr3, std::nothrow);
 
     char* arr4 = new char[5];
-    delete[] arr4;
+    ::operator delete[](arr4);
 }
