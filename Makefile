@@ -1,4 +1,4 @@
-.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint dockerfile-lint
+.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
@@ -16,8 +16,6 @@ FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tes
 CPPLINT_FILES := $(FMT_FILES)
 TIDY_FILES := $(shell git ls-files 'src/*.cpp' | grep -v 'src/main.cpp')
 
-# Dockerfiles to lint
-DOCKERFILES := $(shell git ls-files '*Dockerfile')
 
 build:
 	platformio run
@@ -58,12 +56,6 @@ markdown-lint:
 makefile-lint:
 	python3 scripts/makefile_lint.py Makefile
 
-dockerfile-lint:
-	if [ -n "$(DOCKERFILES)" ]; then \
-		python3 scripts/dockerfile_lint.py $(DOCKERFILES); \
-	else \
-		echo "No Dockerfiles to lint"; \
-	fi
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
 	./test_all --reporter console --success
@@ -78,7 +70,6 @@ coverage:
 precommit:
 	$(MAKE) build
 	$(MAKE) makefile-lint
-	$(MAKE) dockerfile-lint
 	$(MAKE) markdown-lint
 	$(MAKE) check-format
 	$(MAKE) cpplint

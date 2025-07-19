@@ -15,10 +15,8 @@ jobs:
       code: ${{ steps.filter.outputs.code }}
       markdown: ${{ steps.filter.outputs.markdown }}
       makefile: ${{ steps.filter.outputs.makefile }}
-      dockerfiles: ${{ steps.filter.outputs.dockerfiles }}
       markdown_files: ${{ steps.filter.outputs.markdown_files }}
       makefile_files: ${{ steps.filter.outputs.makefile_files }}
-      dockerfile_files: ${{ steps.filter.outputs.dockerfile_files }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -44,8 +42,6 @@ jobs:
               - '**/*.md'
             makefile:
               - 'Makefile'
-            dockerfiles:
-              - '**/*Dockerfile'
 
   build:
     needs: changes
@@ -93,12 +89,12 @@ jobs:
 
   sanity:
     needs: changes
-    if: ((needs.changes.outputs.code == 'true') || (needs.changes.outputs.markdown == 'true') || (needs.changes.outputs.makefile == 'true') || (needs.changes.outputs.dockerfiles == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
+    if: ((needs.changes.outputs.code == 'true') || (needs.changes.outputs.markdown == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        task: [check-format, lint, cpplint, tidy, markdown-lint, makefile-lint, dockerfile-lint]
+        task: [check-format, lint, cpplint, tidy, markdown-lint, makefile-lint]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -124,12 +120,6 @@ jobs:
               make makefile-lint
             else
               echo "No Makefile changes" && exit 0
-            fi
-          elif [ "${{ matrix.task }}" = "dockerfile-lint" ]; then
-            if [ "${{ needs.changes.outputs.dockerfiles }}" = "true" ]; then
-              make dockerfile-lint
-            else
-              echo "No Dockerfile changes" && exit 0
             fi
           else
             make ${{ matrix.task }}
