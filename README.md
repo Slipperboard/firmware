@@ -12,17 +12,6 @@ This project is a template for building a Flipper Zero–compatible firmware for
 2. (Optional) Install the Wokwi CLI with `curl -L https://wokwi.com/ci/install.sh | sh` to run the emulator.
 3. Clone this repository and run `make build` to compile the firmware.
 
-## Dev Container
-
-This repository includes a [dev container](https://containers.dev/) configuration
-for VS Code. Open the project in VS Code and choose **Reopen in Container** to
-get a fully configured environment with PlatformIO, Wokwi CLI, and all required
-tools. You can also launch the container from the command line with
-`make env`. Any build output in the container appears in the repository directory
-on the host. The CI workflow runs a **healthcheck** job that builds this
-container and executes `make build` within it to verify the environment stays
-healthy.
-
 ## Directory Layout
 
 - `src/` – Application source files.
@@ -74,7 +63,6 @@ make check-format  # [CI]
 make lint          # [CI]
 make cpplint       # [CI]
 make tidy          # [CI]
-make dockerfile-lint  # [CI]
 make coverage      # [CI]
 ```
 
@@ -90,8 +78,6 @@ Run the full suite of formatting, linting, and tests before submitting a change:
 make precommit
 ```
 
-This command also runs `make devcontainer-test` to ensure the dev container
-remains functional by building the firmware inside it.
 
 ## Emulator
 
