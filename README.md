@@ -78,6 +78,12 @@ Run the full suite of formatting, linting, and tests before submitting a change:
 make precommit
 ```
 
+## Continuous Integration
+
+The GitHub Actions workflow only runs checks for the files that changed in a
+pull request. Documentation-only updates skip the build step, for example.
+See `.github/workflows/build.yml` for the path filters used.
+
 
 ## Emulator
 
