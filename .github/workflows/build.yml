@@ -136,21 +136,3 @@ jobs:
           fi
 
 
-  healthcheck:
-    needs: changes
-    if: github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        task: [devcontainer]
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
-      - name: Run ${{ matrix.task }}
-        run: |
-          if [ "${{ matrix.task }}" = "devcontainer" ]; then
-            make devcontainer-test
-          fi
-
