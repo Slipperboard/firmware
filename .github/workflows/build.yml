@@ -17,6 +17,7 @@ jobs:
       tests: ${{ steps.filter.outputs.tests }}
       markdown: ${{ steps.filter.outputs.markdown }}
       makefile: ${{ steps.filter.outputs.makefile }}
+      workflow: ${{ steps.filter.outputs.workflow }}
       markdown_files: ${{ steps.filter.outputs.markdown_files }}
       makefile_files: ${{ steps.filter.outputs.makefile_files }}
       sanity_matrix: ${{ steps.matrix.outputs.matrix }}
@@ -28,6 +29,7 @@ jobs:
         uses: dorny/paths-filter@v2
         with:
           # NOTE: Maintain this list with new directories so CI only runs needed tasks.
+          # Maintainers: update filters when files move or new directories are added.
           filters: |
             firmware:
               - 'src/**'
@@ -44,6 +46,8 @@ jobs:
               - '**/*.md'
             makefile:
               - 'Makefile'
+            workflow:
+              - '.github/workflows/build.yml'  # CI logic also runs when this file changes
       - id: matrix
         run: |
           python3 <<'EOF'
@@ -66,7 +70,7 @@ jobs:
 
   build:
     needs: changes
-    if: (needs.changes.outputs.firmware == 'true') && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
+    if: ((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.workflow == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -87,7 +91,7 @@ jobs:
 
   unit-tests:
     needs: changes
-    if: ((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.tests == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
+    if: ((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.tests == 'true') || (needs.changes.outputs.workflow == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -110,7 +114,7 @@ jobs:
 
   sanity:
     needs: changes
-    if: ((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.tests == 'true') || (needs.changes.outputs.markdown == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
+    if: ((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.tests == 'true') || (needs.changes.outputs.markdown == 'true') || (needs.changes.outputs.makefile == 'true') || (needs.changes.outputs.workflow == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
