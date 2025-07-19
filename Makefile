@@ -1,4 +1,4 @@
-.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint
+.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint env
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
@@ -84,3 +84,6 @@ emulate: build
 wokwi-sanity:
 	python3 scripts/wokwi_sanity.py
 
+env:
+	./scripts/setup_env.sh
+	
