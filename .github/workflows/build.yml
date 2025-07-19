@@ -60,6 +60,13 @@ jobs:
           if os.environ['MAKEFILE'] == 'true':
               if "makefile-lint" not in tasks:
                   tasks.append("makefile-lint")
+          if (
+              os.environ['FIRMWARE'] == 'true'
+              or os.environ['MAKEFILE'] == 'true'
+              or os.environ['WORKFLOW'] == 'true'
+          ):
+              if "env" not in tasks:
+                  tasks.append("env")
           print(f"matrix={json.dumps(tasks)}", file=open(os.environ['GITHUB_OUTPUT'], 'a'))
           EOF
         env:
@@ -136,6 +143,8 @@ jobs:
         run: |
           if [ "${{ matrix.task }}" = "markdown-lint" ]; then
             make markdown-lint FILES="${{ needs.changes.outputs.markdown_files }}"
+          elif [ "${{ matrix.task }}" = "env" ]; then
+            make env && make build
           else
             make ${{ matrix.task }}
           fi
