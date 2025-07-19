@@ -7,7 +7,7 @@ case "$(uname)" in
     Linux*)
         if command -v apt-get >/dev/null; then
             sudo apt-get update
-            sudo apt-get install -y python3-pip clang-format clang-tidy cppcheck gcovr
+            sudo apt-get install -y python3-pip clang-format clang-tidy cppcheck gcovr valgrind
         else
             echo "apt-get not found. Unsupported Linux distribution." >&2
             exit 1
@@ -16,7 +16,7 @@ case "$(uname)" in
     Darwin*)
         if command -v brew >/dev/null; then
             brew update
-            brew install clang-format clang-tidy cppcheck gcovr
+            brew install clang-format clang-tidy cppcheck gcovr valgrind
         else
             echo "Homebrew not found. Please install Homebrew." >&2
             exit 1

@@ -64,11 +64,13 @@ make lint          # [CI]
 make cpplint       # [CI]
 make tidy          # [CI]
 make coverage      # [CI]
+make memcheck      # [CI]
 ```
 
 Run `make format` to automatically apply clang-format fixes.
 
 This coverage target fails if line coverage is below 100%.
+`make memcheck` runs the unit tests under Valgrind and fails on any leak.
 
 ## Precommit
 

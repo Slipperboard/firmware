@@ -120,7 +120,7 @@ jobs:
     strategy:
       fail-fast: false  # Allow all matrix jobs to run
       matrix:
-        task: [test, coverage]  # Execute tests and coverage in parallel
+        task: [test, coverage, memcheck]  # Execute tests, coverage and leak check in parallel
     steps:
       - uses: actions/checkout@v3
         with:
@@ -132,7 +132,7 @@ jobs:
       - name: Install PlatformIO
         run: pip install --upgrade platformio  # Install the build tool
       - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y gcovr  # Coverage reporter
+        run: sudo apt-get update && sudo apt-get install -y gcovr valgrind  # Coverage and leak checker
       - name: Run ${{ matrix.task }}
         run: make ${{ matrix.task }}  # Execute the selected target
 

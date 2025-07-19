@@ -1,4 +1,4 @@
-.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint env
+.PHONY: build clean test coverage memcheck lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint env
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
@@ -66,6 +66,11 @@ coverage:
 	gcovr -r . --exclude-directories=lib --exclude='.*Catch2.*' --print-summary --fail-under-line=100
 	$(RM) *.gcno *.gcda test_all_cov
 
+memcheck:
+	g++ $(TEST_FLAGS) -g $(TEST_SRCS) -o test_all
+	valgrind --leak-check=full --error-exitcode=1 ./test_all --reporter console --success
+	$(RM) test_all
+
 
 precommit:
 	$(MAKE) build
@@ -77,6 +82,7 @@ precommit:
 	$(MAKE) tidy
 	$(MAKE) test
 	$(MAKE) coverage
+	$(MAKE) memcheck
 
 emulate: build
 	wokwi-cli .
