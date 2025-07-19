@@ -3,6 +3,7 @@
 #include "MemoryTracker.hpp"
 #include "catch_amalgamated.hpp"
 
+#ifndef DISABLE_MEMORY_TRACKING
 void* operator new(std::size_t size)
 {
     return trackAlloc(size);
@@ -51,6 +52,7 @@ void operator delete[](void* ptr, std::size_t, const std::nothrow_t&) noexcept
 {
     trackFree(ptr);
 }
+#endif
 
 int main(int argc, char* argv[])
 {

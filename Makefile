@@ -66,10 +66,11 @@ coverage:
 	gcovr -r . --exclude-directories=lib --exclude='.*Catch2.*' --print-summary --fail-under-line=100
 	$(RM) *.gcno *.gcda test_all_cov
 
+
 memcheck:
-	g++ $(TEST_FLAGS) -g $(TEST_SRCS) -o test_all
-	valgrind --leak-check=full --error-exitcode=1 ./test_all --reporter console --success
-	$(RM) test_all
+	g++ $(TEST_FLAGS) -DDISABLE_MEMORY_TRACKING -fno-sized-deallocation -g $(TEST_SRCS) -o test_all
+		valgrind --leak-check=full --error-exitcode=1 ./test_all --reporter console --success
+		$(RM) test_all
 
 
 precommit:

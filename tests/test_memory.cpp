@@ -2,6 +2,7 @@
 #include "MemoryTracker.hpp"
 #include "catch_amalgamated.hpp"
 
+#ifndef DISABLE_MEMORY_TRACKING
 TEST_CASE("nothrow sized delete operators", "[memory]")
 {
     char* p = new (std::nothrow) char;
@@ -28,3 +29,4 @@ TEST_CASE("nothrow sized delete operators", "[memory]")
     char* arr4 = new char[5];
     ::operator delete[](arr4);
 }
+#endif
