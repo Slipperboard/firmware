@@ -59,9 +59,9 @@ jobs:
           python3 <<'EOF'
           import json, os
           tasks = []
-          # Firmware or tests changed? Run format, lint and tidy checks
+          # Firmware or tests changed? Run format, lint, tidy and memcheck
           if os.environ['FIRMWARE'] == 'true' or os.environ['TESTS'] == 'true':
-              tasks.extend(["check-format", "lint", "cpplint", "tidy"])
+              tasks.extend(["check-format", "lint", "cpplint", "tidy", "memcheck"])
           # Markdown changed? run markdown linter
           if os.environ['MARKDOWN'] == 'true':
               tasks.append("markdown-lint")
@@ -120,7 +120,7 @@ jobs:
     strategy:
       fail-fast: false  # Allow all matrix jobs to run
       matrix:
-        task: [test, coverage, memcheck]  # Execute tests, coverage and leak check in parallel
+        task: [test, coverage]  # Execute tests and coverage in parallel
     steps:
       - uses: actions/checkout@v3
         with:
@@ -132,7 +132,7 @@ jobs:
       - name: Install PlatformIO
         run: pip install --upgrade platformio  # Install the build tool
       - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y gcovr valgrind  # Coverage and leak checker
+        run: sudo apt-get update && sudo apt-get install -y gcovr  # Coverage reporter
       - name: Run ${{ matrix.task }}
         run: make ${{ matrix.task }}  # Execute the selected target
 
@@ -155,8 +155,8 @@ jobs:
         with:
           python-version: '3.x'
       - name: Install tools
-        run: |  # Install linting tools for sanity checks
-          sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy  # Linting tools
+        run: |  # Install linting and analysis tools for sanity checks
+          sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy valgrind  # Linting tools and memcheck
           pip install --user cpplint  # Additional style checker
       - name: Run ${{ matrix.task }}
         run: |  # Execute the requested sanity task
