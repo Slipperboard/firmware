@@ -1,4 +1,5 @@
 name: CI
+# Tasks run only for relevant changes to save resources
 
 on:
   pull_request:
@@ -12,11 +13,14 @@ jobs:
   changes:
     runs-on: ubuntu-latest
     outputs:
-      code: ${{ steps.filter.outputs.code }}
+      firmware: ${{ steps.filter.outputs.firmware }}
+      tests: ${{ steps.filter.outputs.tests }}
       markdown: ${{ steps.filter.outputs.markdown }}
       makefile: ${{ steps.filter.outputs.makefile }}
+      workflow: ${{ steps.filter.outputs.workflow }}
       markdown_files: ${{ steps.filter.outputs.markdown_files }}
       makefile_files: ${{ steps.filter.outputs.makefile_files }}
+      sanity_matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -24,28 +28,49 @@ jobs:
       - id: filter
         uses: dorny/paths-filter@v2
         with:
-          # NOTE: Keep this list in sync with repository structure.
-          # Add new paths here when introducing additional code directories or
-          # build-related files.
+          # NOTE: Maintain this list with new directories so CI only runs needed tasks.
+          # Maintainers: update filters when files move or new directories are added.
           filters: |
-            code:
+            firmware:
               - 'src/**'
               - 'include/**'
               - 'lib/**'
-              - 'tests/**'
               - 'scripts/**'
               - 'platformio.ini'
               - 'Makefile'
               - 'diagram.json'
               - 'wokwi.toml'
+            tests:
+              - 'tests/**'
             markdown:
               - '**/*.md'
             makefile:
               - 'Makefile'
+            workflow:
+              - '.github/workflows/build.yml'  # CI logic also runs when this file changes
+      - id: matrix
+        run: |
+          python3 <<'EOF'
+          import json, os
+          tasks = []
+          if os.environ['FIRMWARE'] == 'true' or os.environ['TESTS'] == 'true':
+              tasks.extend(["check-format", "lint", "cpplint", "tidy"])
+          if os.environ['MARKDOWN'] == 'true':
+              tasks.append("markdown-lint")
+          if os.environ['MAKEFILE'] == 'true':
+              if "makefile-lint" not in tasks:
+                  tasks.append("makefile-lint")
+          print(f"matrix={json.dumps(tasks)}", file=open(os.environ['GITHUB_OUTPUT'], 'a'))
+          EOF
+        env:
+          FIRMWARE: ${{ steps.filter.outputs.firmware }}
+          TESTS: ${{ steps.filter.outputs.tests }}
+          MARKDOWN: ${{ steps.filter.outputs.markdown }}
+          MAKEFILE: ${{ steps.filter.outputs.makefile }}
 
   build:
     needs: changes
-    if: (needs.changes.outputs.code == 'true') && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
+    if: ((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.workflow == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -66,7 +91,7 @@ jobs:
 
   unit-tests:
     needs: changes
-    if: (needs.changes.outputs.code == 'true') && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
+    if: ((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.tests == 'true') || (needs.changes.outputs.workflow == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -89,12 +114,12 @@ jobs:
 
   sanity:
     needs: changes
-    if: ((needs.changes.outputs.code == 'true') || (needs.changes.outputs.markdown == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
+    if: ((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.tests == 'true') || (needs.changes.outputs.markdown == 'true') || (needs.changes.outputs.makefile == 'true') || (needs.changes.outputs.workflow == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        task: [check-format, lint, cpplint, tidy, markdown-lint, makefile-lint]
+        task: ${{ fromJSON(needs.changes.outputs.sanity_matrix) }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -110,17 +135,7 @@ jobs:
       - name: Run ${{ matrix.task }}
         run: |
           if [ "${{ matrix.task }}" = "markdown-lint" ]; then
-            if [ "${{ needs.changes.outputs.markdown }}" = "true" ]; then
-              make markdown-lint FILES="${{ needs.changes.outputs.markdown_files }}"
-            else
-              echo "No markdown changes" && exit 0
-            fi
-          elif [ "${{ matrix.task }}" = "makefile-lint" ]; then
-            if [ "${{ needs.changes.outputs.makefile }}" = "true" ]; then
-              make makefile-lint
-            else
-              echo "No Makefile changes" && exit 0
-            fi
+            make markdown-lint FILES="${{ needs.changes.outputs.markdown_files }}"
           else
             make ${{ matrix.task }}
           fi
