@@ -91,7 +91,9 @@ make precommit
 ```
 
 This command also runs `make devcontainer-test` to ensure the dev container
-remains functional by building the firmware inside it.
+remains functional by building the firmware inside it. When working inside the
+dev container, simply run `make precommit` from the container's shell—the
+environment already contains all the required tools.
 
 ## Emulator
 
