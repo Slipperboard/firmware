@@ -86,4 +86,4 @@ wokwi-sanity:
 
 env:
 	./scripts/setup_env.sh
-	
+
