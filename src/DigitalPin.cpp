@@ -1,3 +1,9 @@
+/**
+ * @file DigitalPin.cpp
+ * @brief Implementation of DigitalPin class.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include "DigitalPin.hpp"
 #include <Arduino.h>
 

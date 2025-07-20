@@ -1,6 +1,12 @@
 #ifndef DISPLAY_HPP
 #define DISPLAY_HPP
 
+/**
+ * @file Display.hpp
+ * @brief Base class for graphical display devices.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include <cstddef>
 #include <stdexcept>
 #include <vector>

@@ -1,6 +1,12 @@
 #ifndef DISPLAYTILE_HPP
 #define DISPLAYTILE_HPP
 
+/**
+ * @file DisplayTile.hpp
+ * @brief Smaller region within a Display used for layout management.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include <vector>
 #include "Display.hpp"
 

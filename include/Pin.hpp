@@ -1,6 +1,12 @@
 #ifndef PIN_HPP
 #define PIN_HPP
 
+/**
+ * @file Pin.hpp
+ * @brief Generic I/O pin template used by specific pin classes.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include <Arduino.h>
 #include "Peripheral.hpp"
 

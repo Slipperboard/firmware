@@ -1,3 +1,9 @@
+/**
+ * @file Button.cpp
+ * @brief Implementation of Button class with click duration support.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include "Button.hpp"
 
 Button::Button() : clickThreshold(std::chrono::milliseconds(200))

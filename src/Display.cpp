@@ -1,3 +1,9 @@
+/**
+ * @file Display.cpp
+ * @brief Implementation of Display interface and tile management.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include "Display.hpp"
 #include <algorithm>
 #include <stdexcept>

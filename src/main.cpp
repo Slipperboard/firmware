@@ -1,3 +1,9 @@
+/**
+ * @file main.cpp
+ * @brief Entry point for the example firmware.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include <Arduino.h>
 
 // Forward declaration for the actual application entry point

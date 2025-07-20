@@ -1,3 +1,9 @@
+/**
+ * @file PWMPin.cpp
+ * @brief Implementation of PWMPin class.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include "PWMPin.hpp"
 #include <Arduino.h>
 
