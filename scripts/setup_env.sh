@@ -6,8 +6,13 @@ set -euo pipefail
 case "$(uname)" in
     Linux*)
         if command -v apt-get >/dev/null; then
-            sudo apt-get update
-            sudo apt-get install -y python3-pip clang-format clang-tidy cppcheck gcovr
+            if command -v sudo >/dev/null; then
+                SUDO="sudo"
+            else
+                SUDO=""
+            fi
+            $SUDO apt-get update
+            $SUDO apt-get install -y python3-venv python3-pip clang-format clang-tidy cppcheck gcovr
         else
             echo "apt-get not found. Unsupported Linux distribution." >&2
             exit 1
@@ -28,4 +33,10 @@ case "$(uname)" in
         ;;
 esac
 
-pip3 install --user --break-system-packages --upgrade platformio cpplint
+# Create a Python virtual environment for Python tools
+if [ ! -d .venv ]; then
+    python3 -m venv .venv
+fi
+source .venv/bin/activate
+pip install --upgrade pip
+pip install platformio cpplint
