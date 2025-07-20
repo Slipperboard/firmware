@@ -86,4 +86,5 @@ wokwi-sanity:
 
 env:
 	./scripts/setup_env.sh
+	./scripts/install_hooks.sh
 
