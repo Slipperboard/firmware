@@ -78,6 +78,18 @@ Run the full suite of formatting, linting, and tests before submitting a change:
 make precommit
 ```
 
+## Git Hooks
+
+Install the provided git hooks to automatically run `make precommit` before
+creating a commit:
+
+```bash
+scripts/install_hooks.sh
+```
+
+This sets `core.hooksPath` to the repository's `.githooks` directory so the
+pre-commit hook runs on every commit.
+
 
 ## Emulator
 
