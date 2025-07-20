@@ -12,7 +12,7 @@ case "$(uname)" in
                 SUDO=""
             fi
             $SUDO apt-get update
-            $SUDO apt-get install -y python3-venv python3-pip clang-format clang-tidy cppcheck gcovr
+            $SUDO apt-get install -y git python3-venv python3-pip clang-format clang-tidy cppcheck gcovr
         else
             echo "apt-get not found. Unsupported Linux distribution." >&2
             exit 1

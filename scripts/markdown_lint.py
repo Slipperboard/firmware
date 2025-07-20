@@ -56,7 +56,7 @@ def check_file(path: Path) -> list[str]:
 def main(paths: list[str]) -> int:
     all_errors: list[str] = []
     files = [Path(p) for p in paths] if paths else list(Path('.').rglob('*.md'))
-    filtered = [f for f in files if '.pio' not in f.parts]
+    filtered = [f for f in files if '.pio' not in f.parts and '.venv' not in f.parts]
     for f in filtered:
         all_errors.extend(check_file(f))
     if all_errors:
