@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+msg_file="$1"
+first_line="$(head -n1 "$msg_file" | tr -d '\r')"
+
+if [[ ! "$first_line" =~ ^(HOTFIX:|FIX:|FEATURE:|ISSUE#[0-9]+:) ]]; then
+    echo "Error: commit message must start with one of: HOTFIX:, FIX:, FEATURE:, ISSUE#<number>:" >&2
+    exit 1
+fi
+
+exit 0
