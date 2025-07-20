@@ -1,17 +1,12 @@
 #!/usr/bin/env bash
 # Setup development environment dependencies for Slipperboard
-# Installs tools via apt on Linux
 set -euo pipefail
+
+script_dir="$(cd "$(dirname "$0")" && pwd)"
 
 case "$(uname)" in
     Linux*)
-        if command -v apt-get >/dev/null; then
-            sudo apt-get update
-            sudo apt-get install -y python3-pip clang-format clang-tidy cppcheck gcovr
-        else
-            echo "apt-get not found. Unsupported Linux distribution." >&2
-            exit 1
-        fi
+        "$script_dir/install_apt_packages.sh" curl clang-format clang-tidy cppcheck gcovr
         ;;
     *)
         echo "Unsupported platform" >&2
@@ -19,4 +14,6 @@ case "$(uname)" in
         ;;
 esac
 
-pip3 install --user --upgrade platformio cpplint
+"$script_dir/install_uv.sh"
+"$script_dir/install_platformio.sh"
+"$script_dir/install_cpplint.sh"

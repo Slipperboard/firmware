@@ -112,10 +112,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'  # Latest Python 3
+      - name: Install uv
+        run: bash scripts/install_uv.sh
       - name: Install PlatformIO
-        run: pip install --upgrade platformio  # Install the build tool
+        run: bash scripts/install_platformio.sh
       - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck gcovr  # Lint and coverage helpers
+        run: bash scripts/install_apt_packages.sh clang-tidy cppcheck gcovr  # Lint and coverage helpers
       - name: Build firmware
         run: make build  # Compile the code
       - name: Wokwi config sanity
@@ -139,10 +141,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+      - name: Install uv
+        run: bash scripts/install_uv.sh
       - name: Install PlatformIO
-        run: pip install --upgrade platformio  # Install the build tool
+        run: bash scripts/install_platformio.sh
       - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y gcovr  # Coverage reporter
+        run: bash scripts/install_apt_packages.sh gcovr  # Coverage reporter
       - name: Run ${{ matrix.task }}
         run: make ${{ matrix.task }}  # Execute the selected target
 
@@ -164,10 +168,12 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+      - name: Install uv
+        run: bash scripts/install_uv.sh
       - name: Install tools
         run: |  # Install linting tools for sanity checks
-          sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy  # Linting tools
-          pip install --user cpplint  # Additional style checker
+          bash scripts/install_apt_packages.sh cppcheck clang-format clang-tidy
+          bash scripts/install_cpplint.sh
       - name: Run ${{ matrix.task }}
         run: |  # Execute the requested sanity task
           if [ "${{ matrix.task }}" = "markdown-lint" ]; then
