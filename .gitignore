@@ -19,7 +19,6 @@
 
 # Compiled Dynamic libraries
 *.so
-*.dylib
 *.dll
 
 # Fortran module files
@@ -35,7 +34,6 @@
 # Executables
 *.exe
 *.out
-*.app
 
 # debug information files
 *.dwo
