@@ -78,6 +78,13 @@ Run the full suite of formatting, linting, and tests before submitting a change:
 make precommit
 ```
 
+## Continuous Integration
+
+The GitHub Actions workflow caches tool installations across jobs and
+terminates older runs of the same branch. The `install_apt_packages.sh` and
+`install_uv.sh` scripts skip downloads when tools are already present to avoid
+unnecessary network traffic.
+
 
 ## Emulator
 
