@@ -14,6 +14,7 @@ def main(base: str) -> int:
             "log",
             f"{base}..HEAD",
             "--format=%s",
+            "--no-merges",
         ], text=True)
     except subprocess.CalledProcessError as exc:
         print(f"error: unable to read git log: {exc}", file=sys.stderr)
