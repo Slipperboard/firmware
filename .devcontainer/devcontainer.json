@@ -1,0 +1,14 @@
+{
+    "name": "Slipperboard Dev Container",
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+    "postCreateCommand": "make env",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools",
+                "ms-vscode.cmake-tools",
+                "platformio.platformio-ide"
+            ]
+        }
+    }
+}
