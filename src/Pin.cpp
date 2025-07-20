@@ -1,3 +1,9 @@
+/**
+ * @file Pin.cpp
+ * @brief Implementation of generic Pin template.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include "Pin.hpp"
 #include <Arduino.h>
 

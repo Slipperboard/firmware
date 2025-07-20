@@ -1,3 +1,9 @@
+/**
+ * @file DisplayTile.cpp
+ * @brief Implementation of DisplayTile for hierarchical screen regions.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include "DisplayTile.hpp"
 #include <algorithm>
 #include <stdexcept>

@@ -1,3 +1,9 @@
+/**
+ * @file AnalogPin.cpp
+ * @brief Implementation of AnalogPin class.
+ * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
+ */
+
 #include "AnalogPin.hpp"
 #include <Arduino.h>
 
