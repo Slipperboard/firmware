@@ -6,5 +6,14 @@ if ! command -v apt-get >/dev/null; then
     exit 1
 fi
 
-sudo apt-get update
-sudo apt-get install -y "$@"
+missing=()
+for pkg in "$@"; do
+    if ! dpkg -s "$pkg" >/dev/null 2>&1; then
+        missing+=("$pkg")
+    fi
+done
+
+if [ ${#missing[@]} -gt 0 ]; then
+    sudo apt-get update
+    sudo apt-get install -y --no-install-recommends "${missing[@]}"
+fi

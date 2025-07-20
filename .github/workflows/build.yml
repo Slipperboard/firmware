@@ -1,5 +1,9 @@
 # Workflow name displayed in GitHub Actions
 name: CI
+# Cancel previous runs on the same branch
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 # Only run tasks for files that changed to save time
 
 # Events that trigger this workflow
@@ -112,6 +116,15 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'  # Latest Python 3
+      - name: Cache PlatformIO
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.platformio
+            ~/.local
+          key: ${{ runner.os }}-pio-${{ hashFiles('platformio.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-pio-
       - name: Install uv
         run: bash scripts/install_uv.sh
       - name: Install PlatformIO
@@ -141,6 +154,15 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+      - name: Cache PlatformIO
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.platformio
+            ~/.local
+          key: ${{ runner.os }}-pio-${{ hashFiles('platformio.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-pio-
       - name: Install uv
         run: bash scripts/install_uv.sh
       - name: Install PlatformIO
@@ -168,6 +190,15 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+      - name: Cache PlatformIO
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.platformio
+            ~/.local
+          key: ${{ runner.os }}-pio-${{ hashFiles('platformio.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-pio-
       - name: Install uv
         run: bash scripts/install_uv.sh
       - name: Install tools
