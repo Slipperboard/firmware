@@ -20,5 +20,6 @@ case "$(uname)" in
 esac
 
 curl -Ls https://astral.sh/uv/install.sh | bash
+source "$HOME/.local/bin/env"
 uv tool install --force platformio
 uv tool install --force cpplint
