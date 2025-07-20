@@ -112,8 +112,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'  # Latest Python 3
+      - name: Install uv
+        run: curl -Ls https://astral.sh/uv/install.sh | bash
       - name: Install PlatformIO
-        run: pip install --upgrade platformio  # Install the build tool
+        run: uv tool install platformio  # Install the build tool
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck gcovr  # Lint and coverage helpers
       - name: Build firmware
@@ -139,8 +141,10 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
+      - name: Install uv
+        run: curl -Ls https://astral.sh/uv/install.sh | bash
       - name: Install PlatformIO
-        run: pip install --upgrade platformio  # Install the build tool
+        run: uv tool install platformio  # Install the build tool
       - name: Install tools
         run: sudo apt-get update && sudo apt-get install -y gcovr  # Coverage reporter
       - name: Run ${{ matrix.task }}
@@ -167,7 +171,7 @@ jobs:
       - name: Install tools
         run: |  # Install linting tools for sanity checks
           sudo apt-get update && sudo apt-get install -y cppcheck clang-format clang-tidy  # Linting tools
-          pip install --user cpplint  # Additional style checker
+          uv tool install cpplint  # Additional style checker
       - name: Run ${{ matrix.task }}
         run: |  # Execute the requested sanity task
           if [ "${{ matrix.task }}" = "markdown-lint" ]; then
