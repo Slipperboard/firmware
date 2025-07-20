@@ -7,7 +7,7 @@ case "$(uname)" in
     Linux*)
         if command -v apt-get >/dev/null; then
             sudo apt-get update
-            sudo apt-get install -y python3-pip clang-format clang-tidy cppcheck gcovr
+            sudo apt-get install -y curl clang-format clang-tidy cppcheck gcovr
         else
             echo "apt-get not found. Unsupported Linux distribution." >&2
             exit 1
@@ -19,4 +19,7 @@ case "$(uname)" in
         ;;
 esac
 
-pip3 install --user --upgrade platformio cpplint
+curl -Ls https://astral.sh/uv/install.sh | bash
+source "$HOME/.local/bin/env"
+uv tool install --force platformio
+uv tool install --force cpplint
