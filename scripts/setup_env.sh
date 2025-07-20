@@ -28,4 +28,4 @@ case "$(uname)" in
         ;;
 esac
 
-pip3 install --user --upgrade platformio cpplint
+pip3 install --user --break-system-packages --upgrade platformio cpplint
