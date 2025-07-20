@@ -16,6 +16,15 @@ on:
 
 # All jobs start here
 jobs:
+  commit-message-check:
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Validate commit messages
+        run: scripts/check_commit_prefix.py "${{ github.event.pull_request.base.sha }}"
   # Job to figure out what changed
   changes:
     runs-on: ubuntu-latest  # Use the latest Ubuntu runner
@@ -87,65 +96,6 @@ jobs:
           MARKDOWN: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && 'true' || steps.filter.outputs.markdown }}
           MAKEFILE: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && 'true' || steps.filter.outputs.makefile }}
           WORKFLOW: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && 'true' || steps.filter.outputs.workflow }}
-
-  commit-message-check:
-    if: github.event_name == 'pull_request' && github.event.action != 'closed'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Validate commit messages
-        run: scripts/check_commit_prefix.py "${{ github.event.pull_request.base.sha }}"
-
-  # Build the firmware
-  build:
-    needs: changes  # Wait for path filtering
-    # Run when PR is merged or when relevant files change
-    if: github.event.pull_request.merged == true || (((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.workflow == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true))
-    runs-on: ubuntu-latest  # Use Ubuntu runner
-    steps:
-      - uses: actions/checkout@v3  # Checkout code again for build
-        with:
-          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}  # Use merge commit when available
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'  # Latest Python 3
-      - name: Install PlatformIO
-        run: pip install --upgrade platformio  # Install the build tool
-      - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck gcovr  # Lint and coverage helpers
-      - name: Build firmware
-        run: make build  # Compile the code
-      - name: Wokwi config sanity
-        run: make wokwi-sanity  # Check the simulator config
-
-  # Run unit tests and collect coverage
-  unit-tests:
-    needs: changes
-    # Run when PR is merged or when firmware/tests changed
-    if: github.event.pull_request.merged == true || (((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.tests == 'true') || (needs.changes.outputs.workflow == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true))
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false  # Allow all matrix jobs to run
-      matrix:
-        task: [test, coverage]  # Execute tests and coverage in parallel
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-      - name: Install PlatformIO
-        run: pip install --upgrade platformio  # Install the build tool
-      - name: Install tools
-        run: sudo apt-get update && sudo apt-get install -y gcovr  # Coverage reporter
-      - name: Run ${{ matrix.task }}
-        run: make ${{ matrix.task }}  # Execute the selected target
-
   # Perform formatting and lint sanity checks
   sanity:
     needs: changes
@@ -176,5 +126,50 @@ jobs:
             make env && make build
           else
             make ${{ matrix.task }}
-          fi
+  # Build the firmware
+  build:
+    needs: changes  # Wait for path filtering
+    # Run when PR is merged or when relevant files change
+    if: github.event.pull_request.merged == true || (((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.workflow == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true))
+    runs-on: ubuntu-latest  # Use Ubuntu runner
+    steps:
+      - uses: actions/checkout@v3  # Checkout code again for build
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}  # Use merge commit when available
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'  # Latest Python 3
+      - name: Install PlatformIO
+        run: pip install --upgrade platformio  # Install the build tool
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y clang-tidy cppcheck gcovr  # Lint and coverage helpers
+      - name: Build firmware
+        run: make build  # Compile the code
+      - name: Wokwi config sanity
+        run: make wokwi-sanity  # Check the simulator config
+  # Run tests and collect coverage
+  tests:
+    needs: changes
+    # Run when PR is merged or when firmware/tests changed
+    if: github.event.pull_request.merged == true || (((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.tests == 'true') || (needs.changes.outputs.workflow == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true))
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false  # Allow all matrix jobs to run
+      matrix:
+        task: [test, coverage]  # Execute tests and coverage in parallel
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install PlatformIO
+        run: pip install --upgrade platformio  # Install the build tool
+      - name: Install tools
+        run: sudo apt-get update && sudo apt-get install -y gcovr  # Coverage reporter
+      - name: Run ${{ matrix.task }}
+        run: make ${{ matrix.task }}  # Execute the selected target
 
