@@ -23,6 +23,7 @@ def main(base: str) -> int:
     bad = False
     for line in log.splitlines():
         line = line.strip()
+        print(line)
         if not PREFIX_RE.match(line):
             print(f"Invalid commit message prefix: {line}", file=sys.stderr)
             bad = True
