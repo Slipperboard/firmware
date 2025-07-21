@@ -1,0 +1,8 @@
+{
+    "name": "Slipperboard",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "workspaceFolder": "/workspace/firmware",
+    "postCreateCommand": "make dev"
+}

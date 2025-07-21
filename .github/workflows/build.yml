@@ -25,6 +25,7 @@ jobs:
       markdown: ${{ steps.filter.outputs.markdown }}      # Did markdown files change?
       makefile: ${{ steps.filter.outputs.makefile }}      # Did the Makefile change?
       workflow: ${{ steps.filter.outputs.workflow }}      # Did this workflow file change?
+      devcontainer: ${{ steps.filter.outputs.devcontainer }}  # Did devcontainer files change?
       markdown_files: ${{ steps.filter.outputs.markdown_files }}  # List of changed markdown files
       makefile_files: ${{ steps.filter.outputs.makefile_files }}  # List of changed makefiles
       sanity_matrix: ${{ steps.matrix.outputs.matrix }}  # Tasks to run for sanity job
@@ -54,6 +55,8 @@ jobs:
               - 'Makefile'
             workflow:
               - '.github/workflows/build.yml'  # Re-run CI when this file changes
+            devcontainer:
+              - '.devcontainer/**'
       - id: matrix
         run: |  # Build a matrix of tasks to run
           python3 <<'EOF'
@@ -183,4 +186,15 @@ jobs:
           else
             make ${{ matrix.task }}
           fi
+
+  dev-container:
+    needs: changes
+    if: github.event.pull_request.merged == true || ((needs.changes.outputs.devcontainer == 'true') && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+      - name: Build dev container
+        run: docker build -t slipperboard-dev -f .devcontainer/Dockerfile .
 
