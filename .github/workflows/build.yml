@@ -197,4 +197,10 @@ jobs:
           ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
       - name: Build dev container
         run: docker build -t slipperboard-dev -f .devcontainer/Dockerfile .
+      - name: Run post-create command
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}:/workspace/firmware" \
+            -w /workspace/firmware \
+            slipperboard-dev bash -lc "make env"
 
