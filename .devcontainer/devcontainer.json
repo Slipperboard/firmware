@@ -4,5 +4,5 @@
         "dockerfile": "Dockerfile"
     },
     "workspaceFolder": "/workspace/firmware",
-    "postCreateCommand": "make env"
+    "postCreateCommand": "make dev"
 }

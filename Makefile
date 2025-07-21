@@ -88,3 +88,6 @@ env:
 	./scripts/setup_env.sh
 	./scripts/install_hooks.sh
 
+
+dev:
+	$(MAKE) env
