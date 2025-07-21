@@ -15,5 +15,6 @@ case "$(uname)" in
 esac
 
 "$script_dir/install_uv.sh"
+export PATH="$HOME/.local/bin:$PATH"
 "$script_dir/install_platformio.sh"
 "$script_dir/install_cpplint.sh"
