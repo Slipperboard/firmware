@@ -24,3 +24,11 @@ TEST_CASE("PWMPin constructor sets hardware pin mode", "[pwmpin]")
     PWMPin inputPin(12, INPUT);
     REQUIRE(pinModes[12] == INPUT);
 }
+
+TEST_CASE("PWMPin shared flag", "[pwmpin]")
+{
+    PWMPin sharedPin(24, OUTPUT, 0, true);
+    REQUIRE(sharedPin.isShared());
+    PWMPin exclusivePin(25, OUTPUT);
+    REQUIRE_FALSE(exclusivePin.isShared());
+}

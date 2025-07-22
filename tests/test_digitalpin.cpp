@@ -46,3 +46,11 @@ TEST_CASE("DigitalPin constructor sets hardware pin mode", "[digitalpin]")
     DigitalPin inputPin(10, INPUT);
     REQUIRE(pinModes[10] == INPUT);
 }
+
+TEST_CASE("DigitalPin shared flag", "[digitalpin]")
+{
+    DigitalPin sharedPin(20, OUTPUT, false, true);
+    REQUIRE(sharedPin.isShared());
+    DigitalPin exclusivePin(21, OUTPUT);
+    REQUIRE_FALSE(exclusivePin.isShared());
+}
