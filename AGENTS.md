@@ -41,4 +41,21 @@ This command formats sources, lints the code, builds the firmware, runs tests,
 and verifies that unit test coverage remains at 100%. Fix any failures before
 opening a pull request or pushing commits.
 
+## Commit Message Format
+All commit messages **must** start with one of the following prefixes:
+
+* `HOTFIX:`
+* `FIX:`
+* `FEATURE:`
+* `ISSUE#<number>:`
+
+Example:
+
+```text
+FIX: correct sensor initialization sequence
+```
+
+This ensures a consistent project history and helps automation tools categorize
+changes correctly.
+
 Maintainers: Codex
