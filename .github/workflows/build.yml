@@ -114,8 +114,8 @@ jobs:
           python-version: '3.x'  # Latest Python 3
       - name: Install uv
         run: bash scripts/install_uv.sh
-      - name: Install PlatformIO
-        run: bash scripts/install_platformio.sh
+      - name: Install Python packages
+        run: uv pip install --system -r requirements.txt
       - name: Install tools
         run: bash scripts/install_apt_packages.sh clang-tidy cppcheck gcovr  # Lint and coverage helpers
       - name: Build firmware
@@ -143,8 +143,8 @@ jobs:
           python-version: '3.x'
       - name: Install uv
         run: bash scripts/install_uv.sh
-      - name: Install PlatformIO
-        run: bash scripts/install_platformio.sh
+      - name: Install Python packages
+        run: uv pip install --system -r requirements.txt
       - name: Install tools
         run: bash scripts/install_apt_packages.sh gcovr  # Coverage reporter
       - name: Run ${{ matrix.task }}
@@ -173,7 +173,7 @@ jobs:
       - name: Install tools
         run: |  # Install linting tools for sanity checks
           bash scripts/install_apt_packages.sh cppcheck clang-format clang-tidy
-          bash scripts/install_cpplint.sh
+          uv pip install --system -r requirements.txt
       - name: Run ${{ matrix.task }}
         run: |  # Execute the requested sanity task
           if [ "${{ matrix.task }}" = "markdown-lint" ]; then
