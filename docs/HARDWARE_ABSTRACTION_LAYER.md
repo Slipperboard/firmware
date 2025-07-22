@@ -7,7 +7,10 @@ source files. These classes simply inherit from `Peripheral`. Specific hardware 
 should derive from one of these classes and perform any required setup in the constructor.
 
 I/O pins are represented by the templated `Pin` class with concrete implementations for
-analog (`AnalogPin`), digital (`DigitalPin`) and PWM (`PWMPin`) operation.
+analog (`AnalogPin`), digital (`DigitalPin`) and PWM (`PWMPin`) operation. Each
+`Pin` instance can be flagged as *shared* using the optional `isShared`
+constructor argument to allow reuse of protocols like I2C and SPI when future
+validation prevents duplicate pin assignments.
 
 `Button` now also exposes `press()` and `release()` helpers that measure how long
 the button was held. The acceptable duration for a single click can be modified

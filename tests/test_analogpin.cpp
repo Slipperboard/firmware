@@ -42,3 +42,11 @@ TEST_CASE("AnalogPin constructor sets hardware pin mode", "[analogpin]")
     AnalogPin inputPin(30, INPUT);
     REQUIRE(pinModes[30] == INPUT);
 }
+
+TEST_CASE("AnalogPin shared flag", "[analogpin]")
+{
+    AnalogPin sharedPin(22, OUTPUT, 0, true);
+    REQUIRE(sharedPin.isShared());
+    AnalogPin exclusivePin(23, OUTPUT);
+    REQUIRE_FALSE(exclusivePin.isShared());
+}

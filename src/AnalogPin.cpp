@@ -7,7 +7,7 @@
 #include "AnalogPin.hpp"
 #include <Arduino.h>
 
-AnalogPin::AnalogPin(int number, int mode, int value) : Pin<int>(number, mode, value)
+AnalogPin::AnalogPin(int number, int mode, int value, bool shared) : Pin<int>(number, mode, value, shared)
 {
 }
 

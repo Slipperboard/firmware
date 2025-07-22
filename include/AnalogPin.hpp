@@ -14,7 +14,7 @@
 class AnalogPin : public Pin<int>
 {
     public:
-    explicit AnalogPin(int number, int mode, int value = 0);
+    explicit AnalogPin(int number, int mode, int value = 0, bool shared = false);
     ~AnalogPin() override;
 
     int read() const override;

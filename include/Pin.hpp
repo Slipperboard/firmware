@@ -13,10 +13,11 @@
 template <typename T> class Pin : public Peripheral
 {
     public:
-    Pin(int number, int mode, T value = T{});
+    Pin(int number, int mode, T value = T{}, bool shared = false);
     ~Pin() override;
     int getMode() const;
     int getPinNumber() const;
+    bool isShared() const;
     virtual T read() const = 0;
     virtual void write(T value) = 0;
 
@@ -24,6 +25,7 @@ template <typename T> class Pin : public Peripheral
     int number;
     int mode;
     T value;
+    bool shared{false};
 };
 
 #endif // PIN_HPP
