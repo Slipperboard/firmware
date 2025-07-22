@@ -5,6 +5,9 @@ import subprocess
 import sys
 
 PREFIX_RE = re.compile(r"^(HOTFIX:|FIX:|FEATURE:|ISSUE#[0-9]+:)")
+GOOD = "\u2714"  # check mark
+BAD = "X"  # invalid mark
+RETURN = "\u21a9"  # return arrow for hints
 
 
 def main(base: str) -> int:
@@ -23,9 +26,13 @@ def main(base: str) -> int:
     bad = False
     for line in log.splitlines():
         line = line.strip()
-        print(line)
-        if not PREFIX_RE.match(line):
-            print(f"Invalid commit message prefix: {line}", file=sys.stderr)
+        if PREFIX_RE.match(line):
+            print(f"{GOOD} {line}")
+        else:
+            print(f"{BAD} {line}")
+            print(
+                f"   {RETURN} commit message must start with HOTFIX:, FIX:, FEATURE:, or ISSUE#<number>:"
+            )
             bad = True
     return 1 if bad else 0
 
