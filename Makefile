@@ -51,10 +51,10 @@ tidy:
 	rm clang-tidy.log
 
 markdown-lint:
-	python3 scripts/markdown_lint.py $(FILES)
+	bash scripts/markdown_lint.sh $(FILES)
 
 makefile-lint:
-	python3 scripts/makefile_lint.py Makefile
+	bash scripts/makefile_lint.sh Makefile
 
 test:
 	g++ $(TEST_FLAGS) $(TEST_SRCS) -o test_all
@@ -82,7 +82,7 @@ emulate: build
 	wokwi-cli .
 
 wokwi-sanity:
-	python3 scripts/wokwi_sanity.py
+	bash scripts/wokwi_sanity.sh
 
 env:
 	./scripts/setup_env.sh
