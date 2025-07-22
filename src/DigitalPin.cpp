@@ -7,7 +7,7 @@
 #include "DigitalPin.hpp"
 #include <Arduino.h>
 
-DigitalPin::DigitalPin(int number, int mode, bool value) : Pin<bool>(number, mode, value)
+DigitalPin::DigitalPin(int number, int mode, bool value, bool isShared) : Pin<bool>(number, mode, value, isShared)
 {
 }
 

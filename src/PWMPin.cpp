@@ -7,7 +7,7 @@
 #include "PWMPin.hpp"
 #include <Arduino.h>
 
-PWMPin::PWMPin(int number, int mode, int value) : Pin<int>(number, mode, value)
+PWMPin::PWMPin(int number, int mode, int value, bool isShared) : Pin<int>(number, mode, value, isShared)
 {
 }
 
