@@ -9,7 +9,8 @@ This project is a template for building a Flipper Zero–compatible firmware for
 ## Development Setup
 
 1. Clone this repository.
-2. Run `make env` to install the required toolchain and Python packages.
+2. Run `make env` to install the required toolchain and Python packages from
+   `requirements.txt`.
 3. (Optional) Install the Wokwi CLI with `curl -L https://wokwi.com/ci/install.sh | sh` to run the emulator.
 4. Run `make build` to compile the firmware.
 
