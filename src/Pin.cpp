@@ -9,7 +9,7 @@
 
 template <typename T>
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
-Pin<T>::Pin(int number, int mode, T value) : number(number), mode(mode), value(value)
+Pin<T>::Pin(int number, int mode, T value, bool isShared) : number(number), mode(mode), value(value), isShared(isShared)
 {
     pinMode(number, mode);
 }
@@ -26,6 +26,16 @@ template <typename T> int Pin<T>::getMode() const
 template <typename T> int Pin<T>::getPinNumber() const
 {
     return number;
+}
+
+template <typename T> bool Pin<T>::getIsShared() const
+{
+    return isShared;
+}
+
+template <typename T> void Pin<T>::setShared(bool shared)
+{
+    isShared = shared;
 }
 
 // Explicit template instantiations for bool and int
