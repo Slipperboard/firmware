@@ -27,6 +27,10 @@ class LoggingDisplay : public Display
     {
         return buffer;
     }
+    int stackDepth() const
+    {
+        return static_cast<int>(stack.size());
+    }
 };
 
 TEST_CASE("DisplayTile dimensions", "[displaytile]")
@@ -160,4 +164,21 @@ TEST_CASE("DisplayTile clear fills region", "[displaytile]")
     {
         REQUIRE(state[1][x] == ' ');
     }
+}
+
+TEST_CASE("pushState and popState delegate to root display", "[displaytile]")
+{
+    LoggingDisplay d;
+    DisplayTile t = d.createTile({0, 0}, {4, 1});
+    unsigned char msg1[] = "1234";
+    t.drawBytes({0, 0}, msg1, 4);
+    REQUIRE(d.stackDepth() == 0);
+    t.pushState();
+    REQUIRE(d.stackDepth() == 1);
+    unsigned char msg2[] = "abcd";
+    t.drawBytes({0, 0}, msg2, 4);
+    REQUIRE(d.state()[0][0] == 'a');
+    t.popState();
+    REQUIRE(d.stackDepth() == 0);
+    REQUIRE(d.state()[0][0] == '1');
 }

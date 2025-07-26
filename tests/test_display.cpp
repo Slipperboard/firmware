@@ -85,3 +85,9 @@ TEST_CASE("clear fills display with spaces", "[display]")
         }
     }
 }
+
+TEST_CASE("popState throws if no state saved", "[display]")
+{
+    StateDisplay d;
+    REQUIRE_THROWS_AS(d.popState(), std::runtime_error);
+}

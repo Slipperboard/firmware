@@ -7,6 +7,7 @@
 #include "Display.hpp"
 #include <algorithm>
 #include <stdexcept>
+#include <vector>
 #include "DisplayTile.hpp"
 
 #ifdef ARDUINO
