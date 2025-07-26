@@ -22,6 +22,7 @@ Display::Display(Dimensions dims) : width(dims.width), height(dims.height)
     oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     oled.clearDisplay();
 #endif
+    buffer.resize(height, std::vector<unsigned char>(width, ' '));
 }
 
 Display::~Display() = default;
@@ -49,6 +50,15 @@ void Display::drawBytes(Point pos, const unsigned char* data, std::size_t length
     (void) data;
     (void) length;
 #endif
+    for (std::size_t i = 0; i < length; ++i)
+    {
+        int x = pos.x + static_cast<int>(i);
+        int y = pos.y;
+        if (x >= 0 && x < width && y >= 0 && y < height)
+        {
+            buffer[y][x] = data[i];
+        }
+    }
 }
 
 DisplayTile Display::createTile(Point origin, Dimensions dims)
@@ -62,4 +72,39 @@ DisplayTile Display::createTile(Point origin, Dimensions dims)
         throw std::runtime_error("Tile collision");
     }
     return DisplayTile(*this, origin, dims, tiles);
+}
+
+/** Save the current buffer to the stack for later restoration. */
+void Display::pushState()
+{
+    stack.push_back(buffer);
+}
+
+/** Restore the last saved buffer from the stack and redraw it. */
+void Display::popState()
+{
+    if (stack.empty())
+    {
+        throw std::runtime_error("No saved state");
+    }
+    buffer = stack.back();
+    stack.pop_back();
+    for (int y = 0; y < height; ++y)
+    {
+        drawBytes({0, y}, buffer[y].data(), buffer[y].size());
+    }
+}
+
+/** Clear the display to spaces and reset the buffer. */
+void Display::clear()
+{
+    unsigned char space = ' ';
+    for (int y = 0; y < height; ++y)
+    {
+        for (int x = 0; x < width; ++x)
+        {
+            buffer[y][x] = space;
+        }
+        drawBytes({0, y}, buffer[y].data(), buffer[y].size());
+    }
 }

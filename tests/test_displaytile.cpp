@@ -14,6 +14,7 @@ class LoggingDisplay : public Display
     unsigned char lastBuf[32]{};
     void drawBytes(Point pos, const unsigned char* data, std::size_t length) override
     {
+        Display::drawBytes(pos, data, length);
         lastPos = pos;
         lastLen = length;
         for (std::size_t i = 0; i < length && i < sizeof(lastBuf); ++i)
@@ -21,6 +22,10 @@ class LoggingDisplay : public Display
             lastBuf[i] = data[i];
         }
         ++calls;
+    }
+    const auto& state() const
+    {
+        return buffer;
     }
 };
 
@@ -141,4 +146,18 @@ TEST_CASE("isOnFocus controls border drawing", "[displaytile]")
     before = d.calls;
     t.unfocus();
     REQUIRE(d.calls == before); // no redraw when already unfocused
+}
+
+TEST_CASE("DisplayTile clear fills region", "[displaytile]")
+{
+    LoggingDisplay d;
+    DisplayTile t = d.createTile({1, 1}, {3, 1});
+    unsigned char msg[] = "abc";
+    t.drawBytes({0, 0}, msg, 3);
+    t.clear();
+    const auto& state = d.state();
+    for (int x = 1; x < 4; ++x)
+    {
+        REQUIRE(state[1][x] == ' ');
+    }
 }

@@ -34,6 +34,13 @@ class Display : public Peripheral
     explicit Display(Dimensions dims);
     ~Display() override;
 
+    /** Save the current display buffer to an internal stack. */
+    void pushState();
+    /** Restore the most recently saved buffer and redraw the screen. */
+    void popState();
+    /** Clear the display and reset the internal buffer. */
+    void clear();
+
     int getWidth() const;
     int getHeight() const;
 
@@ -46,6 +53,8 @@ class Display : public Peripheral
     int width;
     int height;
     std::vector<Rect> tiles;
+    std::vector<std::vector<unsigned char>> buffer;
+    std::vector<std::vector<std::vector<unsigned char>>> stack;
 };
 
 #endif // DISPLAY_HPP
