@@ -72,7 +72,7 @@ This coverage target fails if line coverage is below 100%.
 
 ## Precommit
 
-Run the full suite of formatting, linting, and tests before submitting a change:
+Run the full suite of formatting, linting, documentation, and tests before submitting a change:
 
 ```bash
 make precommit

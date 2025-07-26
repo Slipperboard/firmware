@@ -6,7 +6,7 @@ script_dir="$(cd "$(dirname "$0")" && pwd)"
 
 case "$(uname)" in
     Linux*)
-        "$script_dir/install_apt_packages.sh" curl clang-format clang-tidy cppcheck gcovr
+        "$script_dir/install_apt_packages.sh" curl clang-format clang-tidy cppcheck gcovr doxygen
         ;;
     *)
         echo "Unsupported platform" >&2
