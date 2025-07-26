@@ -13,13 +13,30 @@
 class Button : public Peripheral
 {
     public:
+    /** Construct a new button. */
     Button();
+
+    /** Virtual destructor. */
     ~Button() override;
 
+    /**
+     * @brief Set the time threshold used to detect a click.
+     *
+     * @param duration Maximum duration of a press considered a click.
+     */
     void setClickThreshold(std::chrono::milliseconds duration);
+
+    /** @return The configured click threshold. */
     std::chrono::milliseconds getClickThreshold() const;
 
+    /** Record the time when the button is pressed. */
     void press();
+
+    /**
+     * @brief Release the button and report if it was a click.
+     *
+     * @return true if the press duration was below the threshold.
+     */
     bool release();
 
     private:

@@ -30,23 +30,47 @@ struct Point
 class Display : public Peripheral
 {
     public:
-    // Construct a rectangular display
+    /**
+     * @brief Construct a rectangular display.
+     *
+     * @param dims Physical dimensions of the display in characters.
+     */
     explicit Display(Dimensions dims);
+
+    /** Destructor. */
     ~Display() override;
 
     /** Save the current display buffer to an internal stack. */
     void pushState();
+
     /** Restore the most recently saved buffer and redraw the screen. */
     void popState();
+
     /** Clear the display and reset the internal buffer. */
     void clear();
 
+    /** @return Display width in characters. */
     int getWidth() const;
+
+    /** @return Display height in characters. */
     int getHeight() const;
 
-    // Draw a series of bytes at the given coordinate using the underlying display
+    /**
+     * @brief Draw a sequence of bytes on the display.
+     *
+     * @param pos   Top-left coordinate of the data.
+     * @param data  Byte array to draw.
+     * @param length Number of bytes to write.
+     */
     virtual void drawBytes(Point pos, const unsigned char* data, std::size_t length) = 0;
 
+    /**
+     * @brief Create a sub-region (tile) of the display.
+     *
+     * @param origin Top-left coordinate of the tile.
+     * @param dims   Dimensions of the tile.
+     * @return A new DisplayTile managing the region.
+     */
     DisplayTile createTile(Point origin, Dimensions dims);
 
     protected:

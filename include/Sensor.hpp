@@ -12,7 +12,10 @@
 class Sensor : public Peripheral
 {
     public:
+    /** Construct the sensor base class. */
     Sensor();
+
+    /** Virtual destructor. */
     ~Sensor() override;
 };
 

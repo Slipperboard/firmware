@@ -6,5 +6,8 @@
 
 #include "Sensor.hpp"
 
+/** Default constructor. */
 Sensor::Sensor() = default;
+
+/** Destructor. */
 Sensor::~Sensor() = default;

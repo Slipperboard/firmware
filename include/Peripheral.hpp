@@ -12,7 +12,10 @@
 class Peripheral
 {
     public:
+    /** Default constructor for a peripheral. */
     Peripheral() = default;
+
+    /** Virtual destructor. */
     virtual ~Peripheral() = default;
 };
 

@@ -12,7 +12,10 @@
 class Switch : public Peripheral
 {
     public:
+    /** Construct the switch. */
     Switch();
+
+    /** Virtual destructor. */
     ~Switch() override;
 };
 
