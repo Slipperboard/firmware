@@ -17,4 +17,8 @@ the button was held. The acceptable duration for a single click can be modified
 with `setClickThreshold()`, and calling `release()` returns whether the hold time
 was within this limit.
 
+`Display` implements a simple state stack used for navigating complex screen
+flows. Call `pushState()` to save the current buffer, `popState()` to restore the
+most recently saved contents, and `clear()` to wipe the display entirely.
+
 Maintainers: Codex
