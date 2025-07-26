@@ -9,11 +9,13 @@
 #include <stdexcept>
 #include <vector>
 
+/** Check if two rectangles overlap. */
 static bool collides(const Rect& a, const Rect& b)
 {
     return !(a.x + a.width <= b.x || b.x + b.width <= a.x || a.y + a.height <= b.y || b.y + b.height <= a.y);
 }
 
+/** Create a tile managed by a parent display. */
 DisplayTile::DisplayTile(Display& root, Point origin, Dimensions dims, std::vector<Rect>& siblings)
     : root(root), origin(origin), dims(dims), siblings(siblings)
 {
@@ -26,15 +28,18 @@ DisplayTile::DisplayTile(Display& root, Point origin, Dimensions dims, std::vect
     siblings.push_back(r);
 }
 
+/** @return Tile width in characters. */
 int DisplayTile::getWidth() const
 {
     return dims.width;
 }
+/** @return Tile height in characters. */
 int DisplayTile::getHeight() const
 {
     return dims.height;
 }
 
+/** Create a child tile relative to this tile. */
 DisplayTile DisplayTile::createTile(Point origin, Dimensions dims)
 {
     if (origin.x < 0 || origin.y < 0 || origin.x + dims.width > this->dims.width ||
@@ -46,6 +51,7 @@ DisplayTile DisplayTile::createTile(Point origin, Dimensions dims)
     return DisplayTile(root, abs, dims, children);
 }
 
+/** Draw bytes relative to the tile origin. */
 void DisplayTile::drawBytes(Point pos, const unsigned char* data, std::size_t length)
 {
     if (pos.y < 0 || pos.y >= dims.height)
@@ -74,6 +80,7 @@ void DisplayTile::drawBytes(Point pos, const unsigned char* data, std::size_t le
     root.drawBytes(abs, data + offset, length);
 }
 
+/** Draw a focus rectangle around the tile. */
 void DisplayTile::focus()
 {
     if (isOnFocus())
@@ -100,6 +107,7 @@ void DisplayTile::focus()
     }
 }
 
+/** Remove the focus rectangle. */
 void DisplayTile::unfocus()
 {
     if (!isOnFocus())
@@ -126,6 +134,7 @@ void DisplayTile::unfocus()
     }
 }
 
+/** @return true if the tile currently has focus. */
 bool DisplayTile::isOnFocus() const
 {
     return focused;

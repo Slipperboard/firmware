@@ -6,5 +6,8 @@
 
 #include "Switch.hpp"
 
+/** Default constructor. */
 Switch::Switch() = default;
+
+/** Destructor. */
 Switch::~Switch() = default;

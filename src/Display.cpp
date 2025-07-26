@@ -17,6 +17,7 @@
 static Adafruit_SSD1306 oled(128, 64, &Wire);
 #endif
 
+/** Construct a display with the given dimensions. */
 Display::Display(Dimensions dims) : width(dims.width), height(dims.height)
 {
 #ifdef ARDUINO
@@ -26,17 +27,21 @@ Display::Display(Dimensions dims) : width(dims.width), height(dims.height)
     buffer.resize(height, std::vector<unsigned char>(width, ' '));
 }
 
+/** Destructor. */
 Display::~Display() = default;
 
+/** @return Width of the display in characters. */
 int Display::getWidth() const
 {
     return width;
 }
+/** @return Height of the display in characters. */
 int Display::getHeight() const
 {
     return height;
 }
 
+/** Draw raw bytes at the specified display coordinate. */
 void Display::drawBytes(Point pos, const unsigned char* data, std::size_t length)
 {
 #ifdef ARDUINO
@@ -62,6 +67,7 @@ void Display::drawBytes(Point pos, const unsigned char* data, std::size_t length
     }
 }
 
+/** Create a tile that represents a sub-region of the display. */
 DisplayTile Display::createTile(Point origin, Dimensions dims)
 {
     Rect r{origin.x, origin.y, dims.width, dims.height};

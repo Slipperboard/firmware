@@ -13,16 +13,23 @@ void app_main();
 void setup() __attribute__((weak));
 void loop() __attribute__((weak));
 
+/** Arduino setup function that delegates to app_main(). */
 void setup()
 {
     app_main();
 }
 
+/** Empty Arduino loop used when app_main() runs its own loop. */
 void loop()
 {
     // Unused when app_main() contains the main loop
 }
 
+/**
+ * @brief Application entry point.
+ *
+ * This function is executed from setup() and contains the main firmware loop.
+ */
 void app_main()
 {
     Serial.begin(115200);
