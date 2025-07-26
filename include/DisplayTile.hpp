@@ -30,6 +30,13 @@ class DisplayTile
 
     void drawBytes(Point pos, const unsigned char* data, std::size_t length);
 
+    /** Proxy to Display::pushState for this tile's root display. */
+    void pushState();
+    /** Proxy to Display::popState for this tile's root display. */
+    void popState();
+    /** Clear the contents of the tile region. */
+    void clear();
+
     void focus();
     void unfocus();
 

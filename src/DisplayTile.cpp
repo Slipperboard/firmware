@@ -130,3 +130,28 @@ bool DisplayTile::isOnFocus() const
 {
     return focused;
 }
+
+/** Forwarded to the root display. */
+void DisplayTile::pushState()
+{
+    root.pushState();
+}
+
+/** Forwarded to the root display. */
+void DisplayTile::popState()
+{
+    root.popState();
+}
+
+/** Fill the tile region with spaces. */
+void DisplayTile::clear()
+{
+    unsigned char space = ' ';
+    for (int y = 0; y < dims.height; ++y)
+    {
+        for (int x = 0; x < dims.width; ++x)
+        {
+            drawBytes({x, y}, &space, 1);
+        }
+    }
+}
