@@ -6,7 +6,7 @@ import os
 import sys
 import tomllib
 
-WOKWI_TOML = "wokwi.toml"
+WOKWI_TOML = os.path.join("sim", "wokwi.toml")
 
 
 def error(msg: str) -> int:
@@ -33,7 +33,8 @@ def main() -> int:
         if key not in wokwi_cfg:
             return error(f"Missing '{key}' in [wokwi] section")
 
-    diagram_path = wokwi_cfg["diagram"]
+    base_dir = os.path.dirname(WOKWI_TOML)
+    diagram_path = os.path.join(base_dir, wokwi_cfg["diagram"])
     if not os.path.exists(diagram_path):
         return error(f"Diagram file '{diagram_path}' not found")
 

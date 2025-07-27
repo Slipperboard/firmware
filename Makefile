@@ -83,7 +83,7 @@ precommit:
 	$(MAKE) coverage
 
 emulate: build
-	wokwi-cli .
+	wokwi-cli sim
 
 wokwi-sanity:
 	python3 scripts/wokwi_sanity.py

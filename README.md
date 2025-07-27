@@ -90,7 +90,7 @@ make build   # [CI]
 make emulate
 ```
 
-The emulator uses `wokwi.toml` and `diagram.json` to locate the firmware files
+The emulator uses `sim/wokwi.toml` and `sim/diagram.json` to locate the firmware files
 and board settings. The simulator opens a browser window with the running
 firmware.
 
@@ -100,7 +100,7 @@ To verify your emulator configuration without launching the simulator, run:
 make wokwi-sanity # [CI]
 ```
 
-This checks that `wokwi.toml` and `diagram.json` are well-formed and reference
+This checks that `sim/wokwi.toml` and `sim/diagram.json` are well-formed and reference
 existing files.
 
 ## License
