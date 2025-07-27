@@ -47,6 +47,7 @@ jobs:
               - 'Doxyfile'
               - 'diagram.json'
               - 'wokwi.toml'
+              - '**/*.toml'
             tests:
               - 'tests/**'
             markdown:

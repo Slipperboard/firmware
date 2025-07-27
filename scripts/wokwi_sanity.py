@@ -4,7 +4,10 @@
 import json
 import os
 import sys
-import tomllib
+try:  # tomllib is available in Python 3.11+
+    import tomllib
+except ModuleNotFoundError:  # pragma: no cover - fallback for older Pythons
+    import tomli as tomllib  # type: ignore
 
 WOKWI_TOML = "wokwi.toml"
 
