@@ -9,7 +9,6 @@
 // Forward declaration for the actual application entry point
 void app_main();
 
-// Empty function placeholder
 void runApp();
 
 // Provide weak Arduino hooks that simply call into app_main().
