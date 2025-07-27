@@ -45,8 +45,7 @@ jobs:
               - 'platformio.ini'
               - 'Makefile'
               - 'Doxyfile'
-              - 'diagram.json'
-              - 'wokwi.toml'
+              - 'sim/**'
             tests:
               - 'tests/**'
             markdown:
