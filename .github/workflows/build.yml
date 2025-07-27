@@ -1,6 +1,6 @@
 # Workflow name displayed in GitHub Actions
 name: CI
-# Only run tasks for files that changed to save time
+# Run all tasks for every pull request
 
 # Events that trigger this workflow
 on:
@@ -16,77 +16,6 @@ on:
 
 # All jobs start here
 jobs:
-  # Job to figure out what changed
-  changes:
-    runs-on: ubuntu-latest  # Use the latest Ubuntu runner
-    outputs:
-      firmware: ${{ steps.filter.outputs.firmware }}      # Did firmware files change?
-      tests: ${{ steps.filter.outputs.tests }}            # Did test files change?
-      markdown: ${{ steps.filter.outputs.markdown }}      # Did markdown files change?
-      makefile: ${{ steps.filter.outputs.makefile }}      # Did the Makefile change?
-      workflow: ${{ steps.filter.outputs.workflow }}      # Did this workflow file change?
-      markdown_files: ${{ steps.filter.outputs.markdown_files }}  # List of changed markdown files
-      makefile_files: ${{ steps.filter.outputs.makefile_files }}  # List of changed makefiles
-      sanity_matrix: ${{ steps.matrix.outputs.matrix }}  # Tasks to run for sanity job
-    steps:
-      - uses: actions/checkout@v3  # Grab the repository contents
-        with:
-          fetch-depth: 0  # Fetch all history so path filtering works
-      - id: filter  # Filter paths to see what changed
-        uses: dorny/paths-filter@v2
-        with:
-          # Update this list when new directories are added
-          filters: |
-            firmware:
-              - 'src/**'
-              - 'include/**'
-              - 'lib/**'
-              - 'scripts/**'
-              - 'platformio.ini'
-              - 'Makefile'
-              - 'Doxyfile'
-              - 'sim/**'
-            tests:
-              - 'tests/**'
-            markdown:
-              - '**/*.md'
-            makefile:
-              - 'Makefile'
-            workflow:
-              - '.github/workflows/build.yml'  # Re-run CI when this file changes
-      - id: matrix
-        run: |  # Build a matrix of tasks to run
-          python3 <<'EOF'
-          import json, os
-          tasks = []
-          # Firmware or tests changed? Run format, lint, tidy and docs checks
-          if os.environ['FIRMWARE'] == 'true' or os.environ['TESTS'] == 'true':
-              tasks.extend(["check-format", "lint", "cpplint", "tidy", "docs-check"])
-          # Markdown changed? run markdown linter
-          if os.environ['MARKDOWN'] == 'true':
-              tasks.append("markdown-lint")
-          # Makefile changed? run makefile linter
-          if os.environ['MAKEFILE'] == 'true':
-              if "makefile-lint" not in tasks:
-                  tasks.append("makefile-lint")
-          # Changes affecting build environment? ensure build compiles
-          if (
-              os.environ['FIRMWARE'] == 'true'
-              or os.environ['MAKEFILE'] == 'true'
-              or os.environ['WORKFLOW'] == 'true'
-          ):
-              if "env" not in tasks:
-                  tasks.append("env")
-          # Output the task matrix for the sanity job
-          print(f"matrix={json.dumps(tasks)}", file=open(os.environ['GITHUB_OUTPUT'], 'a'))
-          EOF
-        env:
-          # Force all tasks when a PR is merged, otherwise use filter output
-          FIRMWARE: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && 'true' || steps.filter.outputs.firmware }}
-          TESTS: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && 'true' || steps.filter.outputs.tests }}
-          MARKDOWN: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && 'true' || steps.filter.outputs.markdown }}
-          MAKEFILE: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && 'true' || steps.filter.outputs.makefile }}
-          WORKFLOW: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && 'true' || steps.filter.outputs.workflow }}
 
   commit-message-check:
     if: github.event_name == 'pull_request' && github.event.action != 'closed'
@@ -100,9 +29,6 @@ jobs:
 
   # Build the firmware
   build:
-    needs: changes  # Wait for path filtering
-    # Run when PR is merged or when relevant files change
-    if: github.event.pull_request.merged == true || (((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.workflow == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true))
     runs-on: ubuntu-latest  # Use Ubuntu runner
     steps:
       - uses: actions/checkout@v3  # Checkout code again for build
@@ -154,9 +80,6 @@ jobs:
 
   # Run unit tests and collect coverage
   unit-tests:
-    needs: changes
-    # Run when PR is merged or when firmware/tests changed
-    if: github.event.pull_request.merged == true || (((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.tests == 'true') || (needs.changes.outputs.workflow == 'true') || (needs.changes.outputs.makefile == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true))
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false  # Allow all matrix jobs to run
@@ -181,14 +104,11 @@ jobs:
 
   # Perform formatting and lint sanity checks
   sanity:
-    needs: changes
-    # Run when PR is merged or when any relevant files change
-    if: github.event.pull_request.merged == true || (((needs.changes.outputs.firmware == 'true') || (needs.changes.outputs.tests == 'true') || (needs.changes.outputs.markdown == 'true') || (needs.changes.outputs.makefile == 'true') || (needs.changes.outputs.workflow == 'true')) && (github.event_name != 'pull_request' || github.event.action != 'closed' || github.event.pull_request.merged == true))
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        task: ${{ fromJSON(needs.changes.outputs.sanity_matrix) }}  # Tasks computed in the changes job
+        task: [check-format, lint, cpplint, tidy, docs-check, markdown-lint, makefile-lint, env]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -206,7 +126,7 @@ jobs:
       - name: Run ${{ matrix.task }}
         run: |  # Execute the requested sanity task
           if [ "${{ matrix.task }}" = "markdown-lint" ]; then
-            make markdown-lint FILES="${{ needs.changes.outputs.markdown_files }}"
+            make markdown-lint
           elif [ "${{ matrix.task }}" = "env" ]; then
             make env && make build
           else
