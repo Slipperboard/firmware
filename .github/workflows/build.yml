@@ -120,8 +120,37 @@ jobs:
         run: bash scripts/install_apt_packages.sh clang-tidy cppcheck gcovr  # Lint and coverage helpers
       - name: Build firmware
         run: make build  # Compile the code
-      - name: Wokwi config sanity
-        run: make wokwi-sanity  # Check the simulator config
+      - name: Upload firmware artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: .pio/build/esp32dev
+          if-no-files-found: error
+
+  # Verify Wokwi configuration using built firmware
+  wokwi-sanity:
+    needs: build
+    if: needs.build.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha || github.sha }}
+      - name: Download firmware artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: firmware
+          path: .
+      - name: Place firmware files
+        run: |
+          mkdir -p .pio/build/esp32dev
+          mv firmware/esp32dev/firmware.* .pio/build/esp32dev/ 2>/dev/null || mv firmware.elf firmware.bin .pio/build/esp32dev/
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Run Wokwi config sanity
+        run: make wokwi-sanity
 
   # Run unit tests and collect coverage
   unit-tests:
