@@ -44,6 +44,7 @@ jobs:
               - 'scripts/**'
               - 'platformio.ini'
               - 'Makefile'
+              - 'Doxyfile'
               - 'diagram.json'
               - 'wokwi.toml'
             tests:
@@ -59,9 +60,9 @@ jobs:
           python3 <<'EOF'
           import json, os
           tasks = []
-          # Firmware or tests changed? Run format, lint and tidy checks
+          # Firmware or tests changed? Run format, lint, tidy and docs checks
           if os.environ['FIRMWARE'] == 'true' or os.environ['TESTS'] == 'true':
-              tasks.extend(["check-format", "lint", "cpplint", "tidy"])
+              tasks.extend(["check-format", "lint", "cpplint", "tidy", "docs-check"])
           # Markdown changed? run markdown linter
           if os.environ['MARKDOWN'] == 'true':
               tasks.append("markdown-lint")
@@ -172,7 +173,7 @@ jobs:
         run: bash scripts/install_uv.sh
       - name: Install tools
         run: |  # Install linting tools for sanity checks
-          bash scripts/install_apt_packages.sh cppcheck clang-format clang-tidy
+          bash scripts/install_apt_packages.sh cppcheck clang-format clang-tidy doxygen
           uv pip install --system -r requirements.txt
       - name: Run ${{ matrix.task }}
         run: |  # Execute the requested sanity task

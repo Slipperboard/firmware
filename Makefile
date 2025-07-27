@@ -1,4 +1,4 @@
-.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint env
+.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint env docs-check
 
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
@@ -50,6 +50,9 @@ tidy:
 	! grep -E "(warning:|error:)" clang-tidy.log
 	rm clang-tidy.log
 
+docs-check:
+	doxygen Doxyfile
+
 markdown-lint:
 	python3 scripts/markdown_lint.py $(FILES)
 
@@ -75,6 +78,7 @@ precommit:
 	$(MAKE) cpplint
 	$(MAKE) lint
 	$(MAKE) tidy
+	$(MAKE) docs-check
 	$(MAKE) test
 	$(MAKE) coverage
 
