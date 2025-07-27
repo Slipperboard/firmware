@@ -44,6 +44,7 @@ jobs:
               - 'scripts/**'
               - 'platformio.ini'
               - 'Makefile'
+              - 'Doxyfile'
               - 'diagram.json'
               - 'wokwi.toml'
             tests:
