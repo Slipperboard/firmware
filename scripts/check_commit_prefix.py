@@ -4,7 +4,10 @@ import re
 import subprocess
 import sys
 
-PREFIX_RE = re.compile(r"^(HOTFIX:|FIX:|FEATURE:|ISSUE#[0-9]+:)")
+PREFIX_RE = re.compile(
+    r"^(?:\s*(?:hotfix|fix|feature)\s*(?:[:]|-\s*)\s*|issue#[0-9]+\s*(?:[:]|-\s*)\s*|(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#\d+(?:\s*(?:[:]|-\s*)\s*)?)",
+    re.IGNORECASE,
+)
 GOOD = "\u2714"  # check mark
 BAD = "X"  # invalid mark
 RETURN = "\u21a9"  # return arrow for hints
@@ -31,7 +34,8 @@ def main(base: str) -> int:
         else:
             print(f"{BAD} {line}")
             print(
-                f"   {RETURN} commit message must start with HOTFIX:, FIX:, FEATURE:, or ISSUE#<number>:"
+                f"   {RETURN} commit message must start with HOTFIX, FIX, FEATURE, ISSUE#<number>, "
+                "or a GitHub closing keyword like 'Fixes #123'."
             )
             bad = True
     return 1 if bad else 0
