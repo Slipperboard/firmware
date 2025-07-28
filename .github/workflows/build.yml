@@ -133,3 +133,18 @@ jobs:
             make ${{ matrix.task }}
           fi
 
+
+  # Close resolved issues after merging
+  close-issues:
+    needs: [build, wokwi-sanity, unit-tests, sanity]
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.pull_request.merge_commit_sha }}
+      - name: Close referenced issues
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/close_issues.py "${{ github.event.pull_request.number }}"

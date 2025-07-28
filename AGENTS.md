@@ -58,4 +58,10 @@ FIX: correct sensor initialization sequence
 This ensures a consistent project history and helps automation tools categorize
 changes correctly.
 
+## Automatic Issue Closure
+
+After a pull request is merged, the workflow scans its commits for
+`FIXES#<number>` or `CLOSES#<number>` tokens. Any open issue with the
+`Codex` label referenced by these tokens will be closed automatically.
+
 Maintainers: Codex
