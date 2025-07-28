@@ -48,6 +48,11 @@ All commit messages **must** start with one of the following prefixes:
 * `FIX:`
 * `FEATURE:`
 * `ISSUE#<number>:`
+* `FIXES#<number>:`
+* `CLOSES#<number>:`
+
+These `FIXES#` and `CLOSES#` prefixes may be written in any mix of uppercase or
+lowercase letters.
 
 Example:
 
@@ -57,5 +62,18 @@ FIX: correct sensor initialization sequence
 
 This ensures a consistent project history and helps automation tools categorize
 changes correctly.
+
+## Post-Merge Issue Closure
+
+After a pull request is merged, the CI pipeline automatically closes issues that
+meet **all** of the following conditions:
+
+1. The issue has the `Codex` label.
+2. Any commit message in the merged range contains `fixes#<issue>` or
+   `closes#<issue>` (case-insensitive).
+3. The issue is still open.
+
+This automation only runs after merges and never closes issues based solely on
+open pull requests.
 
 Maintainers: Codex

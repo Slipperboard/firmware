@@ -4,7 +4,9 @@ import re
 import subprocess
 import sys
 
-PREFIX_RE = re.compile(r"^(HOTFIX:|FIX:|FEATURE:|ISSUE#[0-9]+:)")
+PREFIX_RE = re.compile(
+    r"^(HOTFIX:|FIX:|FEATURE:|ISSUE#[0-9]+:|(?i:(?:fixes|closes)#[0-9]+:))"
+)
 GOOD = "\u2714"  # check mark
 BAD = "X"  # invalid mark
 RETURN = "\u21a9"  # return arrow for hints
