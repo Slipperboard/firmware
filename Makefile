@@ -1,5 +1,12 @@
 .PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint env docs-check
 
+PIO := platformio
+PY := python3
+CXX := g++
+TEST_BIN := test_all
+COV_BIN := test_all_cov
+PRECOMMIT_TARGETS := build makefile-lint markdown-lint check-format cpplint lint tidy docs-check test coverage
+
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 TEST_SRCS = \
 	lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
@@ -70,17 +77,7 @@ coverage:
 	$(RM) *.gcno *.gcda test_all_cov
 
 
-precommit:
-	$(MAKE) build
-	$(MAKE) makefile-lint
-	$(MAKE) markdown-lint
-	$(MAKE) check-format
-	$(MAKE) cpplint
-	$(MAKE) lint
-	$(MAKE) tidy
-	$(MAKE) docs-check
-	$(MAKE) test
-	$(MAKE) coverage
+precommit: $(PRECOMMIT_TARGETS)
 
 emulate: build
 	wokwi-cli sim
