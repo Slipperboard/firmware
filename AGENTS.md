@@ -42,17 +42,18 @@ and verifies that unit test coverage remains at 100%. Fix any failures before
 opening a pull request or pushing commits.
 
 ## Commit Message Format
-All commit messages **must** start with one of the following prefixes:
+All commit messages **must** start with one of the following patterns:
 
-* `HOTFIX:`
-* `FIX:`
-* `FEATURE:`
-* `ISSUE#<number>:`
+* `HOTFIX`, `FIX`, `FEATURE`, or `ISSUE#<number>` followed by `:` or `-`
+* A GitHub issue-closing keyword such as `fixes`, `closes`, or `resolves` followed by `#<number>`
+
+Keywords may be written in **uppercase**, **lowercase**, or **Title Case**. A space may optionally appear around the dash.
 
 Example:
 
 ```text
-FIX: correct sensor initialization sequence
+fix - correct sensor initialization sequence
+Fixes #42 - adjust button debounce logic
 ```
 
 This ensures a consistent project history and helps automation tools categorize
