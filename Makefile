@@ -51,7 +51,7 @@ clean:
 	$(PIO) run -t clean
 	$(RM) $(TEST_BIN) $(COV_BIN)
 	$(RM) *.gcno *.gcda
-	
+
 ## Apply clang-format fixes in place
 format:
 	clang-format -i $(FMT_FILES)
@@ -63,7 +63,7 @@ check-format:
 ## Run Google's cpplint style checker
 cpplint:
 	cpplint $(CPPLINT_FILES) || (echo "cpplint style violations found" && exit 1)
-	
+
 ## Static analysis via cppcheck
 ## --force checks all preprocessor paths
 ## --max-configs suppresses "too many #ifdef" warnings
@@ -73,22 +73,22 @@ lint:
 	--suppress=missingInclude --suppress=unmatchedSuppression --suppress=unusedFunction \
 	--error-exitcode=1 -Iinclude -Isrc \
 	src include
-	
+
 ## Clang-Tidy analysis
 tidy:
 	clang-tidy $(TIDY_FILES) -- -std=c++17 -Iinclude -Itests > clang-tidy.log 2>&1
 		cat clang-tidy.log
 		! grep -E "(warning:|error:)" clang-tidy.log
 		rm clang-tidy.log
-	
+
 ## Verify Doxygen documentation builds cleanly
 docs-check:
 	doxygen Doxyfile
-	
+
 ## Lint Markdown documentation
 markdown-lint:
 	$(PY) scripts/markdown_lint.py $(FILES)
-	
+
 ## Ensure Makefile style rules are followed
 makefile-lint:
 	$(PY) scripts/makefile_lint.py Makefile
@@ -97,14 +97,14 @@ makefile-lint:
 test:
 	$(CXX) $(TEST_FLAGS) $(TEST_SRCS) -o $(TEST_BIN)
 	./$(TEST_BIN) --reporter console --success
-	
+
 ## Run tests with coverage and enforce 100% line coverage
 coverage:
 	$(CXX) $(TEST_FLAGS) --coverage $(TEST_SRCS) -o $(COV_BIN)
 	./$(COV_BIN) --reporter console --success
 	gcovr -r . --exclude-directories=lib --exclude='.*Catch2.*' --print-summary --fail-under-line=100
 	$(RM) *.gcno *.gcda $(COV_BIN)
-	
+
 
 ## Run all checks required before committing changes
 precommit: $(PRECOMMIT_TARGETS)
