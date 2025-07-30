@@ -1,10 +1,10 @@
 /**
- * @file DisplayTile.cpp
- * @brief Implementation of DisplayTile for hierarchical screen regions.
+ * @file Tile.cpp
+ * @brief Implementation of Tile for hierarchical screen regions.
  * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
  */
 
-#include "DisplayTile.hpp"
+#include "Tile.hpp"
 #include <algorithm>
 #include <stdexcept>
 #include <vector>
@@ -16,7 +16,7 @@ static bool collides(const Rect& a, const Rect& b)
 }
 
 /** Create a tile managed by a parent display. */
-DisplayTile::DisplayTile(Display& root, Point origin, Dimensions dims, std::vector<Rect>& siblings)
+Tile::Tile(Display& root, Point origin, Dimensions dims, std::vector<Rect>& siblings)
     : root(root), origin(origin), dims(dims), siblings(siblings)
 {
     Rect r{origin.x, origin.y, dims.width, dims.height};
@@ -29,18 +29,18 @@ DisplayTile::DisplayTile(Display& root, Point origin, Dimensions dims, std::vect
 }
 
 /** @return Tile width in characters. */
-int DisplayTile::getWidth() const
+int Tile::getWidth() const
 {
     return dims.width;
 }
 /** @return Tile height in characters. */
-int DisplayTile::getHeight() const
+int Tile::getHeight() const
 {
     return dims.height;
 }
 
 /** Create a child tile relative to this tile. */
-DisplayTile DisplayTile::createTile(Point origin, Dimensions dims)
+Tile Tile::createTile(Point origin, Dimensions dims)
 {
     if (origin.x < 0 || origin.y < 0 || origin.x + dims.width > this->dims.width ||
         origin.y + dims.height > this->dims.height)
@@ -48,11 +48,11 @@ DisplayTile DisplayTile::createTile(Point origin, Dimensions dims)
         throw std::runtime_error("Tile collision");
     }
     Point abs{this->origin.x + origin.x, this->origin.y + origin.y};
-    return DisplayTile(root, abs, dims, children);
+    return Tile(root, abs, dims, children);
 }
 
 /** Draw bytes relative to the tile origin. */
-void DisplayTile::drawBytes(Point pos, const unsigned char* data, std::size_t length)
+void Tile::drawBytes(Point pos, const unsigned char* data, std::size_t length)
 {
     if (pos.y < 0 || pos.y >= dims.height)
     {
@@ -81,7 +81,7 @@ void DisplayTile::drawBytes(Point pos, const unsigned char* data, std::size_t le
 }
 
 /** Draw a focus rectangle around the tile. */
-void DisplayTile::focus()
+void Tile::focus()
 {
     if (isOnFocus())
     {
@@ -108,7 +108,7 @@ void DisplayTile::focus()
 }
 
 /** Remove the focus rectangle. */
-void DisplayTile::unfocus()
+void Tile::unfocus()
 {
     if (!isOnFocus())
     {
@@ -135,25 +135,25 @@ void DisplayTile::unfocus()
 }
 
 /** @return true if the tile currently has focus. */
-bool DisplayTile::isOnFocus() const
+bool Tile::isOnFocus() const
 {
     return focused;
 }
 
 /** Forwarded to the root display. */
-void DisplayTile::pushState()
+void Tile::pushState()
 {
     root.pushState();
 }
 
 /** Forwarded to the root display. */
-void DisplayTile::popState()
+void Tile::popState()
 {
     root.popState();
 }
 
 /** Fill the tile region with spaces. */
-void DisplayTile::clear()
+void Tile::clear()
 {
     unsigned char space = ' ';
     for (int y = 0; y < dims.height; ++y)

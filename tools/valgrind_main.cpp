@@ -6,7 +6,7 @@
 #include "AnalogPin.hpp"
 #include "DigitalPin.hpp"
 #include "Display.hpp"
-#include "DisplayTile.hpp"
+#include "Tile.hpp"
 #include <vector>
 
 class DummyDisplay : public Display

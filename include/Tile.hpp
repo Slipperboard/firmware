@@ -1,8 +1,8 @@
-#ifndef DISPLAYTILE_HPP
-#define DISPLAYTILE_HPP
+#ifndef TILE_HPP
+#define TILE_HPP
 
 /**
- * @file DisplayTile.hpp
+ * @file Tile.hpp
  * @brief Smaller region within a Display used for layout management.
  * @author Fadi Hanna Al-Kass <fadi.h.alkass@gmail.com>
  */
@@ -18,7 +18,7 @@ struct Rect
     int height;
 };
 
-class DisplayTile
+class Tile
 {
     public:
     /**
@@ -29,7 +29,7 @@ class DisplayTile
      * @param dims     Dimensions of the tile.
      * @param siblings Container tracking sibling rectangles for collision detection.
      */
-    DisplayTile(Display& root, Point origin, Dimensions dims, std::vector<Rect>& siblings);
+    Tile(Display& root, Point origin, Dimensions dims, std::vector<Rect>& siblings);
 
     /** @return Width of the tile in characters. */
     int getWidth() const;
@@ -42,9 +42,9 @@ class DisplayTile
      *
      * @param origin Relative coordinate within this tile.
      * @param dims   Dimensions of the new tile.
-     * @return A new DisplayTile instance.
+     * @return A new Tile instance.
      */
-    DisplayTile createTile(Point origin, Dimensions dims);
+    Tile createTile(Point origin, Dimensions dims);
 
     /**
      * @brief Draw bytes relative to the tile origin.
@@ -82,4 +82,4 @@ class DisplayTile
     bool focused{false};
 };
 
-#endif // DISPLAYTILE_HPP
+#endif // TILE_HPP

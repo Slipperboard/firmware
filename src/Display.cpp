@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <vector>
-#include "DisplayTile.hpp"
+#include "Tile.hpp"
 
 #ifdef ARDUINO
 #include <Adafruit_GFX.h>
@@ -68,7 +68,7 @@ void Display::drawBytes(Point pos, const unsigned char* data, std::size_t length
 }
 
 /** Create a tile that represents a sub-region of the display. */
-DisplayTile Display::createTile(Point origin, Dimensions dims)
+Tile Display::createTile(Point origin, Dimensions dims)
 {
     Rect r{origin.x, origin.y, dims.width, dims.height};
     auto collide = [&r](const Rect& t) {
@@ -78,7 +78,7 @@ DisplayTile Display::createTile(Point origin, Dimensions dims)
     {
         throw std::runtime_error("Tile collision");
     }
-    return DisplayTile(*this, origin, dims, tiles);
+    return Tile(*this, origin, dims, tiles);
 }
 
 /** Save the current buffer to the stack for later restoration. */
