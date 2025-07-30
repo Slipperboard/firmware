@@ -1,5 +1,5 @@
-#include "Tile.hpp"
 #include "MemoryTracker.hpp"
+#include "Tile.hpp"
 #include "catch_amalgamated.hpp"
 
 class LoggingDisplay : public Display
