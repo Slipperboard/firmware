@@ -2,6 +2,8 @@
 #include "Tile.hpp"
 #include "catch_amalgamated.hpp"
 
+// Unit tests for the Tile class
+
 class LoggingDisplay : public Display
 {
     public:
