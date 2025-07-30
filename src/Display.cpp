@@ -18,7 +18,7 @@ static Adafruit_SSD1306 oled(128, 64, &Wire);
 #endif
 
 /** Construct a display with the given dimensions. */
-Display::Display(Dimensions dims) : width(dims.width), height(dims.height)
+Display::Display(Dimensions dims, bool border) : width(dims.width), height(dims.height), border(border)
 {
 #ifdef ARDUINO
     oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);
@@ -68,7 +68,7 @@ void Display::drawBytes(Point pos, const unsigned char* data, std::size_t length
 }
 
 /** Create a tile that represents a sub-region of the display. */
-DisplayTile Display::createTile(Point origin, Dimensions dims)
+DisplayTile Display::createTile(Point origin, Dimensions dims, bool border)
 {
     Rect r{origin.x, origin.y, dims.width, dims.height};
     auto collide = [&r](const Rect& t) {
@@ -78,7 +78,7 @@ DisplayTile Display::createTile(Point origin, Dimensions dims)
     {
         throw std::runtime_error("Tile collision");
     }
-    return DisplayTile(*this, origin, dims, tiles);
+    return DisplayTile(*this, origin, dims, tiles, border);
 }
 
 /** Save the current buffer to the stack for later restoration. */

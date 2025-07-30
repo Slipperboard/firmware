@@ -29,7 +29,7 @@ class DisplayTile
      * @param dims     Dimensions of the tile.
      * @param siblings Container tracking sibling rectangles for collision detection.
      */
-    DisplayTile(Display& root, Point origin, Dimensions dims, std::vector<Rect>& siblings);
+    DisplayTile(Display& root, Point origin, Dimensions dims, std::vector<Rect>& siblings, bool border = false);
 
     /** @return Width of the tile in characters. */
     int getWidth() const;
@@ -44,7 +44,7 @@ class DisplayTile
      * @param dims   Dimensions of the new tile.
      * @return A new DisplayTile instance.
      */
-    DisplayTile createTile(Point origin, Dimensions dims);
+    DisplayTile createTile(Point origin, Dimensions dims, bool border = false);
 
     /**
      * @brief Draw bytes relative to the tile origin.
@@ -80,6 +80,7 @@ class DisplayTile
     std::vector<Rect>& siblings;
     std::vector<Rect> children;
     bool focused{false};
+    bool border{false};
 };
 
 #endif // DISPLAYTILE_HPP

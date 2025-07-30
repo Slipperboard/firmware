@@ -16,8 +16,8 @@ static bool collides(const Rect& a, const Rect& b)
 }
 
 /** Create a tile managed by a parent display. */
-DisplayTile::DisplayTile(Display& root, Point origin, Dimensions dims, std::vector<Rect>& siblings)
-    : root(root), origin(origin), dims(dims), siblings(siblings)
+DisplayTile::DisplayTile(Display& root, Point origin, Dimensions dims, std::vector<Rect>& siblings, bool border)
+    : root(root), origin(origin), dims(dims), siblings(siblings), border(border)
 {
     Rect r{origin.x, origin.y, dims.width, dims.height};
     auto collide = [&r](const Rect& s) { return collides(r, s); };
@@ -40,7 +40,7 @@ int DisplayTile::getHeight() const
 }
 
 /** Create a child tile relative to this tile. */
-DisplayTile DisplayTile::createTile(Point origin, Dimensions dims)
+DisplayTile DisplayTile::createTile(Point origin, Dimensions dims, bool border)
 {
     if (origin.x < 0 || origin.y < 0 || origin.x + dims.width > this->dims.width ||
         origin.y + dims.height > this->dims.height)
@@ -48,7 +48,7 @@ DisplayTile DisplayTile::createTile(Point origin, Dimensions dims)
         throw std::runtime_error("Tile collision");
     }
     Point abs{this->origin.x + origin.x, this->origin.y + origin.y};
-    return DisplayTile(root, abs, dims, children);
+    return DisplayTile(root, abs, dims, children, border);
 }
 
 /** Draw bytes relative to the tile origin. */
@@ -88,6 +88,10 @@ void DisplayTile::focus()
         return;
     }
     focused = true;
+    if (!border)
+    {
+        return;
+    }
     unsigned char dot = '.';
     for (int x = 0; x < dims.width; ++x)
     {
@@ -115,6 +119,10 @@ void DisplayTile::unfocus()
         return;
     }
     focused = false;
+    if (!border)
+    {
+        return;
+    }
     unsigned char space = ' ';
     for (int x = 0; x < dims.width; ++x)
     {

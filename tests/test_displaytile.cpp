@@ -122,7 +122,7 @@ static int expected_focus_calls(int w, int h)
 TEST_CASE("focus and unfocus draw border", "[displaytile]")
 {
     LoggingDisplay d;
-    DisplayTile t = d.createTile({0, 0}, {3, 3});
+    DisplayTile t = d.createTile({0, 0}, {3, 3}, true);
     int before = d.calls;
     t.focus();
     int expected = expected_focus_calls(3, 3);
@@ -135,7 +135,7 @@ TEST_CASE("focus and unfocus draw border", "[displaytile]")
 TEST_CASE("isOnFocus controls border drawing", "[displaytile]")
 {
     LoggingDisplay d;
-    DisplayTile t = d.createTile({0, 0}, {4, 2});
+    DisplayTile t = d.createTile({0, 0}, {4, 2}, true);
     REQUIRE_FALSE(t.isOnFocus());
     int before = d.calls;
     t.focus();

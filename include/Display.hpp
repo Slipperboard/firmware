@@ -35,7 +35,7 @@ class Display : public Peripheral
      *
      * @param dims Physical dimensions of the display in characters.
      */
-    explicit Display(Dimensions dims);
+    explicit Display(Dimensions dims, bool border = false);
 
     /** Destructor. */
     ~Display() override;
@@ -71,11 +71,12 @@ class Display : public Peripheral
      * @param dims   Dimensions of the tile.
      * @return A new DisplayTile managing the region.
      */
-    DisplayTile createTile(Point origin, Dimensions dims);
+    DisplayTile createTile(Point origin, Dimensions dims, bool border = false);
 
     protected:
     int width;
     int height;
+    bool border;
     std::vector<Rect> tiles;
     std::vector<std::vector<unsigned char>> buffer;
     std::vector<std::vector<std::vector<unsigned char>>> stack;
