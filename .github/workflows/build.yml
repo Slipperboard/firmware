@@ -108,7 +108,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        task: [check-format, lint, cpplint, tidy, docs-check, markdown-lint, makefile-lint, env]
+        task: [check-format, lint, cpplint, tidy, docs-check, markdown-lint, makefile-lint, env, valgrind]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -121,7 +121,7 @@ jobs:
         run: bash scripts/install_uv.sh
       - name: Install tools
         run: |  # Install linting tools for sanity checks
-          bash scripts/install_apt_packages.sh cppcheck clang-format clang-tidy doxygen
+          bash scripts/install_apt_packages.sh cppcheck clang-format clang-tidy doxygen valgrind
           uv pip install --system -r requirements.txt
       - name: Run ${{ matrix.task }}
         run: |  # Execute the requested sanity task
@@ -129,6 +129,8 @@ jobs:
             make markdown-lint
           elif [ "${{ matrix.task }}" = "env" ]; then
             make env && make build
+          elif [ "${{ matrix.task }}" = "valgrind" ]; then
+            make valgrind
           else
             make ${{ matrix.task }}
           fi

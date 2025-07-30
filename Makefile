@@ -1,4 +1,4 @@
-.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint env docs-check
+.PHONY: build clean test coverage lint cpplint tidy format check-format precommit emulate wokwi-sanity markdown-lint makefile-lint env docs-check valgrind
 
 # Slipperboard build system
 # Convenience targets for building the firmware and running quality checks.
@@ -15,6 +15,7 @@ CXX := g++
 # -----------------------------------------------------------
 TEST_BIN := test_all
 COV_BIN  := test_all_cov
+VALGRIND_BIN := valgrind_app
 
 # -----------------------------------------------------------
 # List of tasks executed by `make precommit`
@@ -25,15 +26,21 @@ PRECOMMIT_TARGETS := build makefile-lint markdown-lint check-format cpplint lint
 TEST_FLAGS = -Ilib/Catch2 -Itests -Iinclude -DCATCH_AMALGAMATED_CUSTOM_MAIN -std=c++17 -Wall -Wextra -Werror
 # Sources compiled into the unit tests
 TEST_SRCS = \
-	lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
-	tests/MemoryTracker.cpp \
-	tests/test_sensor.cpp tests/test_switch.cpp \
-		tests/Arduino.cpp \
-	tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
-	tests/test_analogpin.cpp tests/test_pwmpin.cpp tests/test_displaytile.cpp \
-	tests/test_memory.cpp \
-	src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp src/DisplayTile.cpp \
+        lib/Catch2/catch_amalgamated.cpp tests/test_main.cpp \
+        tests/MemoryTracker.cpp \
+        tests/test_sensor.cpp tests/test_switch.cpp \
+                tests/Arduino.cpp \
+        tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
+        tests/test_analogpin.cpp tests/test_pwmpin.cpp tests/test_displaytile.cpp \
+        tests/test_memory.cpp \
+        src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp src/DisplayTile.cpp \
         src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp src/PWMPin.cpp
+
+HOST_FLAGS = -Itests -Iinclude -std=c++17 -Wall -Wextra -Werror
+VALGRIND_SRCS = tools/valgrind_main.cpp tests/Arduino.cpp \
+        src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp \
+        src/DisplayTile.cpp src/Pin.cpp src/DigitalPin.cpp \
+        src/AnalogPin.cpp src/PWMPin.cpp
 
 # File lists for code formatting and analysis tools
 FMT_FILES := $(shell git ls-files 'src/*.cpp' 'include/*.hpp' 'tests/*.cpp' 'tests/*.hpp')
@@ -104,6 +111,13 @@ coverage:
 	./$(COV_BIN) --reporter console --success
 	gcovr -r . --exclude-directories=lib --exclude='.*Catch2.*' --print-summary --fail-under-line=100
 	$(RM) *.gcno *.gcda $(COV_BIN)
+
+## Build and run the host example under Valgrind
+valgrind: $(VALGRIND_BIN)
+	valgrind --leak-check=full ./$(VALGRIND_BIN)
+
+$(VALGRIND_BIN): $(VALGRIND_SRCS)
+	$(CXX) $(HOST_FLAGS) $(VALGRIND_SRCS) -o $(VALGRIND_BIN)
 
 
 ## Run all checks required before committing changes
