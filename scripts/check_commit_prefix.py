@@ -7,7 +7,7 @@ import sys
 PREFIX_RE = re.compile(r"^(HOTFIX:|FIX:|FEATURE:|ISSUE#[0-9]+:)")
 GOOD = "\u2714"  # check mark
 BAD = "X"  # invalid mark
-RETURN = "\u21a9"  # return arrow for hints
+RETURN = "\u21a6"  # ↦ arrow for hints
 
 
 def main(base: str) -> int:
@@ -27,9 +27,9 @@ def main(base: str) -> int:
     for line in log.splitlines():
         line = line.strip()
         if PREFIX_RE.match(line):
-            print(f"{GOOD} {line}")
+            print(f"{line} {GOOD}")
         else:
-            print(f"{BAD} {line}")
+            print(f"{line} {BAD}")
             print(
                 f"   {RETURN} commit message must start with HOTFIX:, FIX:, FEATURE:, or ISSUE#<number>:"
             )
