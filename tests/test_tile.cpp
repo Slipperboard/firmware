@@ -1,4 +1,4 @@
-#include "DisplayTile.hpp"
+#include "Tile.hpp"
 #include "MemoryTracker.hpp"
 #include "catch_amalgamated.hpp"
 
@@ -33,54 +33,54 @@ class LoggingDisplay : public Display
     }
 };
 
-TEST_CASE("DisplayTile dimensions", "[displaytile]")
+TEST_CASE("Tile dimensions", "[tile]")
 {
     LoggingDisplay d;
-    DisplayTile t = d.createTile({0, 0}, {5, 5});
+    Tile t = d.createTile({0, 0}, {5, 5});
     REQUIRE(t.getWidth() == 5);
     REQUIRE(t.getHeight() == 5);
 }
 
-TEST_CASE("Display prevents overlapping tiles", "[displaytile]")
+TEST_CASE("Display prevents overlapping tiles", "[tile]")
 {
     LoggingDisplay d;
     static_cast<void>(d.createTile({0, 0}, {5, 5}));
     REQUIRE_THROWS_AS(d.createTile({3, 0}, {5, 5}), std::runtime_error);
 }
 
-TEST_CASE("Nested tile collision throws", "[displaytile]")
+TEST_CASE("Nested tile collision throws", "[tile]")
 {
     LoggingDisplay d;
-    DisplayTile rootTile = d.createTile({0, 0}, {8, 8});
+    Tile rootTile = d.createTile({0, 0}, {8, 8});
     static_cast<void>(rootTile.createTile({0, 0}, {4, 4}));
     REQUIRE_THROWS_AS(rootTile.createTile({2, 2}, {4, 4}), std::runtime_error);
 }
 
-TEST_CASE("Nested tiles are allowed", "[displaytile]")
+TEST_CASE("Nested tiles are allowed", "[tile]")
 {
     LoggingDisplay d;
-    DisplayTile t = d.createTile({0, 0}, {10, 10});
-    DisplayTile inner = t.createTile({2, 2}, {3, 3});
+    Tile t = d.createTile({0, 0}, {10, 10});
+    Tile inner = t.createTile({2, 2}, {3, 3});
     REQUIRE(inner.getWidth() == 3);
     REQUIRE(inner.getHeight() == 3);
 }
 
-TEST_CASE("Nested tile must fit within parent bounds", "[displaytile]")
+TEST_CASE("Nested tile must fit within parent bounds", "[tile]")
 {
     LoggingDisplay d;
-    DisplayTile t = d.createTile({5, 5}, {4, 4});
+    Tile t = d.createTile({5, 5}, {4, 4});
     REQUIRE_THROWS_AS(t.createTile({3, 0}, {2, 2}), std::runtime_error);
     REQUIRE_THROWS_AS(t.createTile({0, 3}, {2, 2}), std::runtime_error);
     REQUIRE_THROWS_AS(t.createTile({-1, 0}, {2, 2}), std::runtime_error);
     REQUIRE_THROWS_AS(t.createTile({0, 0}, {5, 5}), std::runtime_error);
-    DisplayTile ok = t.createTile({1, 1}, {2, 2});
+    Tile ok = t.createTile({1, 1}, {2, 2});
     REQUIRE(ok.getWidth() == 2);
 }
 
-TEST_CASE("drawBytes is clipped to tile bounds", "[displaytile]")
+TEST_CASE("drawBytes is clipped to tile bounds", "[tile]")
 {
     LoggingDisplay d;
-    DisplayTile t = d.createTile({2, 2}, {5, 5});
+    Tile t = d.createTile({2, 2}, {5, 5});
     unsigned char msg[] = "hello";
     t.drawBytes({-1, 0}, msg, 5);
     REQUIRE(d.calls == 1);
@@ -119,10 +119,10 @@ static int expected_focus_calls(int w, int h)
     return calls;
 }
 
-TEST_CASE("focus and unfocus draw border", "[displaytile]")
+TEST_CASE("focus and unfocus draw border", "[tile]")
 {
     LoggingDisplay d;
-    DisplayTile t = d.createTile({0, 0}, {3, 3});
+    Tile t = d.createTile({0, 0}, {3, 3});
     int before = d.calls;
     t.focus();
     int expected = expected_focus_calls(3, 3);
@@ -132,10 +132,10 @@ TEST_CASE("focus and unfocus draw border", "[displaytile]")
     REQUIRE(d.calls - before == expected);
 }
 
-TEST_CASE("isOnFocus controls border drawing", "[displaytile]")
+TEST_CASE("isOnFocus controls border drawing", "[tile]")
 {
     LoggingDisplay d;
-    DisplayTile t = d.createTile({0, 0}, {4, 2});
+    Tile t = d.createTile({0, 0}, {4, 2});
     REQUIRE_FALSE(t.isOnFocus());
     int before = d.calls;
     t.focus();
@@ -152,10 +152,10 @@ TEST_CASE("isOnFocus controls border drawing", "[displaytile]")
     REQUIRE(d.calls == before); // no redraw when already unfocused
 }
 
-TEST_CASE("DisplayTile clear fills region", "[displaytile]")
+TEST_CASE("Tile clear fills region", "[tile]")
 {
     LoggingDisplay d;
-    DisplayTile t = d.createTile({1, 1}, {3, 1});
+    Tile t = d.createTile({1, 1}, {3, 1});
     unsigned char msg[] = "abc";
     t.drawBytes({0, 0}, msg, 3);
     t.clear();
@@ -166,10 +166,10 @@ TEST_CASE("DisplayTile clear fills region", "[displaytile]")
     }
 }
 
-TEST_CASE("pushState and popState delegate to root display", "[displaytile]")
+TEST_CASE("pushState and popState delegate to root display", "[tile]")
 {
     LoggingDisplay d;
-    DisplayTile t = d.createTile({0, 0}, {4, 1});
+    Tile t = d.createTile({0, 0}, {4, 1});
     unsigned char msg1[] = "1234";
     t.drawBytes({0, 0}, msg1, 4);
     REQUIRE(d.stackDepth() == 0);

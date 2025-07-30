@@ -13,7 +13,7 @@
 #include "Peripheral.hpp"
 
 struct Rect;
-class DisplayTile;
+class Tile;
 
 struct Dimensions
 {
@@ -69,9 +69,9 @@ class Display : public Peripheral
      *
      * @param origin Top-left coordinate of the tile.
      * @param dims   Dimensions of the tile.
-     * @return A new DisplayTile managing the region.
+     * @return A new Tile managing the region.
      */
-    DisplayTile createTile(Point origin, Dimensions dims);
+    Tile createTile(Point origin, Dimensions dims);
 
     protected:
     int width;
