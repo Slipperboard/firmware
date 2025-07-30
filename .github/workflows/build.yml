@@ -25,14 +25,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Validate commit messages
-        run: |
-          output=$(scripts/check_commit_prefix.py "${{ github.event.pull_request.base.sha }}")
-          echo "$output"
-          {
-            echo '```'
-            echo "$output"
-            echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+        run: scripts/check_commit_prefix.py "${{ github.event.pull_request.base.sha }}"
 
   # Build the firmware
   build:
