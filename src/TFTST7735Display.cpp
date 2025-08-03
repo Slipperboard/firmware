@@ -7,6 +7,7 @@
 
 #ifdef ARDUINO
 #include <SPI.h>
+#include <Adafruit_ST7735.h>
 #endif
 
 // NOLINTNEXTLINE(bugprone-easily-swappable-parameters)
