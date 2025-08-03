@@ -1,5 +1,6 @@
 #include "Display.hpp"
 #include "MemoryTracker.hpp"
+#include "TFTST7735Display.hpp"
 #include "catch_amalgamated.hpp"
 
 class DummyDisplay : public Display
@@ -90,4 +91,13 @@ TEST_CASE("popState throws if no state saved", "[display]")
 {
     StateDisplay d;
     REQUIRE_THROWS_AS(d.popState(), std::runtime_error);
+}
+
+TEST_CASE("TFTST7735Display stores dimensions", "[display]")
+{
+    TFTST7735Display d({128, 160}, 0, 0, 0);
+    unsigned char msg[] = "abcd";
+    d.drawBytes({0, 0}, msg, 4);
+    REQUIRE(d.getWidth() == 128);
+    REQUIRE(d.getHeight() == 160);
 }

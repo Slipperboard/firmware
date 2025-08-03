@@ -10,20 +10,9 @@
 #include <vector>
 #include "Tile.hpp"
 
-#ifdef ARDUINO
-#include <Adafruit_GFX.h>
-#include <Adafruit_SSD1306.h>
-
-static Adafruit_SSD1306 oled(128, 64, &Wire);
-#endif
-
 /** Construct a display with the given dimensions. */
 Display::Display(Dimensions dims) : width(dims.width), height(dims.height)
 {
-#ifdef ARDUINO
-    oled.begin(SSD1306_SWITCHCAPVCC, 0x3C);
-    oled.clearDisplay();
-#endif
     buffer.resize(height, std::vector<unsigned char>(width, ' '));
 }
 
@@ -44,18 +33,9 @@ int Display::getHeight() const
 /** Draw raw bytes at the specified display coordinate. */
 void Display::drawBytes(Point pos, const unsigned char* data, std::size_t length)
 {
-#ifdef ARDUINO
-    oled.setCursor(pos.x, pos.y);
-    for (std::size_t i = 0; i < length; ++i)
-    {
-        oled.write(data[i]);
-    }
-    oled.display();
-#else
     (void) pos;
     (void) data;
     (void) length;
-#endif
     for (std::size_t i = 0; i < length; ++i)
     {
         int x = pos.x + static_cast<int>(i);

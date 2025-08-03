@@ -33,12 +33,12 @@ TEST_SRCS = \
         tests/test_button.cpp tests/test_display.cpp tests/test_digitalpin.cpp \
         tests/test_analogpin.cpp tests/test_pwmpin.cpp tests/test_tile.cpp \
         tests/test_memory.cpp \
-        src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp src/Tile.cpp \
+        src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp src/TFTST7735Display.cpp src/Tile.cpp \
         src/Pin.cpp src/DigitalPin.cpp src/AnalogPin.cpp src/PWMPin.cpp
 
 HOST_FLAGS = -Itests -Iinclude -std=c++17 -Wall -Wextra -Werror
 VALGRIND_SRCS = tools/valgrind_main.cpp tests/Arduino.cpp \
-        src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp \
+        src/Sensor.cpp src/Switch.cpp src/Button.cpp src/Display.cpp src/TFTST7735Display.cpp \
         src/Tile.cpp src/Pin.cpp src/DigitalPin.cpp \
         src/AnalogPin.cpp src/PWMPin.cpp
 
