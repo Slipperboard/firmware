@@ -8,6 +8,9 @@ case "$(uname)" in
     Linux*)
         "$script_dir/install_apt_packages.sh" curl clang-format clang-tidy cppcheck gcovr doxygen
         ;;
+    Darwin*)
+        "$script_dir/install_brew_packages.sh" curl clang-format clang-tidy cppcheck gcovr doxygen
+        ;;
     *)
         echo "Unsupported platform" >&2
         exit 1

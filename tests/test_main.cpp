@@ -54,5 +54,7 @@ void operator delete[](void* ptr, std::size_t, const std::nothrow_t&) noexcept
 
 int main(int argc, char* argv[])
 {
-    return Catch::Session().run(argc, argv);
+    int result = Catch::Session().run(argc, argv);
+    // Ensure coverage of main function completion
+    return result;
 }

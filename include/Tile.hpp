@@ -77,7 +77,7 @@ class Tile
     Display& root;
     Point origin;
     Dimensions dims;
-    std::vector<Rect>& siblings;
+    std::vector<Rect>& siblings; // Used for collision detection in constructor
     std::vector<Rect> children;
     bool focused{false};
 };

@@ -184,3 +184,21 @@ TEST_CASE("pushState and popState delegate to root display", "[tile]")
     REQUIRE(d.stackDepth() == 0);
     REQUIRE(d.state()[0][0] == '1');
 }
+
+TEST_CASE("createTile returns child tile successfully", "[tile]")
+{
+    LoggingDisplay d;
+    Tile parent = d.createTile({1, 1}, {8, 8});
+    // Test successful child tile creation - this should cover the return statement
+    Tile child = parent.createTile({2, 2}, {3, 3});
+    REQUIRE(child.getWidth() == 3);
+    REQUIRE(child.getHeight() == 3);
+    // Use the child tile to ensure it's properly constructed
+    unsigned char msg[] = "abc";
+    child.drawBytes({0, 0}, msg, 3);
+    const auto& state = d.state();
+    // Child tile at (2,2) relative to parent at (1,1) -> absolute (3,3)
+    REQUIRE(state[3][3] == 'a');
+    REQUIRE(state[3][4] == 'b');
+    REQUIRE(state[3][5] == 'c');
+}

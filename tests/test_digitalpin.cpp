@@ -54,3 +54,11 @@ TEST_CASE("DigitalPin shared flag", "[digitalpin]")
     DigitalPin exclusivePin(21, OUTPUT);
     REQUIRE_FALSE(exclusivePin.isShared());
 }
+
+TEST_CASE("DigitalPin dynamic alloc", "[digitalpin]")
+{
+    int before = allocCount.load();
+    auto* pin = new DigitalPin(22, OUTPUT);
+    delete pin; // This should trigger the destructor for coverage
+    REQUIRE(allocCount.load() == before);
+}

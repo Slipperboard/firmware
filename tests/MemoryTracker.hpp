@@ -2,6 +2,7 @@
 #define MEMORY_TRACKER_HPP
 #include <atomic>
 #include <cstdlib>
+#include <new>
 
 extern std::atomic<int> allocCount;
 

@@ -68,7 +68,7 @@ void Display::drawBytes(Point pos, const unsigned char* data, std::size_t length
 }
 
 /** Create a tile that represents a sub-region of the display. */
-Tile Display::createTile(Point origin, Dimensions dims)
+__attribute__((noinline)) Tile Display::createTile(Point origin, Dimensions dims)
 {
     Rect r{origin.x, origin.y, dims.width, dims.height};
     auto collide = [&r](const Rect& t) {

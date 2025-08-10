@@ -45,3 +45,6 @@ libdeps/
 coverage*
 test_all_cov
 test_all
+
+# Generated documentation
+docs/doxygen/

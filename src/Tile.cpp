@@ -40,7 +40,7 @@ int Tile::getHeight() const
 }
 
 /** Create a child tile relative to this tile. */
-Tile Tile::createTile(Point origin, Dimensions dims)
+__attribute__((noinline)) Tile Tile::createTile(Point origin, Dimensions dims)
 {
     if (origin.x < 0 || origin.y < 0 || origin.x + dims.width > this->dims.width ||
         origin.y + dims.height > this->dims.height)
