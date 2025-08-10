@@ -56,13 +56,13 @@ class Display : public Peripheral
     int getHeight() const;
 
     /**
-     * @brief Draw a sequence of bytes on the display.
+     * @brief Draw a sequence of bytes on the display and update the buffer.
      *
      * @param pos   Top-left coordinate of the data.
      * @param data  Byte array to draw.
      * @param length Number of bytes to write.
      */
-    virtual void drawBytes(Point pos, const unsigned char* data, std::size_t length) = 0;
+    virtual void drawBytes(Point pos, const unsigned char* data, std::size_t length);
 
     /**
      * @brief Create a sub-region (tile) of the display.
@@ -79,6 +79,16 @@ class Display : public Peripheral
     std::vector<Rect> tiles;
     std::vector<std::vector<unsigned char>> buffer;
     std::vector<std::vector<std::vector<unsigned char>>> stack;
+
+    /**
+     * @brief Write bytes to the physical display device.
+     *
+     * Implementations must send the given bytes to the underlying hardware.
+     * @param pos   Top-left coordinate of the data.
+     * @param data  Byte array to draw.
+     * @param length Number of bytes to write.
+     */
+    virtual void writeBytes(Point pos, const unsigned char* data, std::size_t length) = 0;
 };
 
 #endif // DISPLAY_HPP
