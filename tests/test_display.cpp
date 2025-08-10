@@ -15,6 +15,14 @@ class DummyDisplay : public Display
     {
         Display::drawBytes(pos, data, length);
     }
+
+    protected:
+    void writeBytes(Point pos, const unsigned char* data, std::size_t length) override
+    {
+        (void) pos;
+        (void) data;
+        (void) length;
+    }
 };
 
 TEST_CASE("Display initializes", "[display]")
@@ -56,6 +64,14 @@ class StateDisplay : public Display
     const auto& state() const
     {
         return buffer;
+    }
+
+    protected:
+    void writeBytes(Point pos, const unsigned char* data, std::size_t length) override
+    {
+        (void) pos;
+        (void) data;
+        (void) length;
     }
 };
 

@@ -3,26 +3,36 @@
  * @brief Minimal host application used for Valgrind checks.
  */
 
+#include <vector>
 #include "AnalogPin.hpp"
 #include "DigitalPin.hpp"
 #include "Display.hpp"
 #include "Tile.hpp"
-#include <vector>
 
 class DummyDisplay : public Display
 {
-public:
-    DummyDisplay() : Display({4, 4}) {}
+    public:
+    DummyDisplay() : Display({4, 4})
+    {
+    }
     void drawBytes(Point pos, const unsigned char* data, std::size_t length) override
     {
         Display::drawBytes(pos, data, length);
     }
+
+    protected:
+    void writeBytes(Point pos, const unsigned char* data, std::size_t length) override
+    {
+        (void) pos;
+        (void) data;
+        (void) length;
+    }
 };
-#include "PWMPin.hpp"
+#include "Arduino.h"
 #include "Button.hpp"
+#include "PWMPin.hpp"
 #include "Sensor.hpp"
 #include "Switch.hpp"
-#include "Arduino.h"
 
 int main()
 {
