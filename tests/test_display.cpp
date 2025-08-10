@@ -1,5 +1,6 @@
 #include "Display.hpp"
 #include "MemoryTracker.hpp"
+#include "Tile.hpp"
 #include "catch_amalgamated.hpp"
 
 class DummyDisplay : public Display
@@ -90,4 +91,18 @@ TEST_CASE("popState throws if no state saved", "[display]")
 {
     StateDisplay d;
     REQUIRE_THROWS_AS(d.popState(), std::runtime_error);
+}
+
+TEST_CASE("createTile returns tile successfully", "[display]")
+{
+    StateDisplay d;
+    // Test successful tile creation - this should cover the return statement
+    Tile t = d.createTile({0, 0}, {2, 2});
+    REQUIRE(t.getWidth() == 2);
+    REQUIRE(t.getHeight() == 2);
+    // Use the tile to ensure it's properly constructed
+    unsigned char msg[] = "hi";
+    t.drawBytes({0, 0}, msg, 2);
+    REQUIRE(d.state()[0][0] == 'h');
+    REQUIRE(d.state()[0][1] == 'i');
 }
